@@ -7,7 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Hotel.h"
+#import "Room.h"
+
+
 
 @interface JSONParser : NSObject
+@property (strong, nonatomic) NSArray *Hotels;
+
+
+-(NSArray *) hotelsFromJSONData: (NSData*)jsonData;
 
 @end
+
