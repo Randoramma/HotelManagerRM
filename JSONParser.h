@@ -16,7 +16,7 @@
 @property (strong, nonatomic) NSArray *Hotels;
 
 
--(NSArray *) hotelsFromJSONData: (NSData*)jsonData;
++(void) hotelsFromJSONData: (NSManagedObjectContext*)context;
 
 @end
 

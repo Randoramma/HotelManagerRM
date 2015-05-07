@@ -6,8 +6,9 @@
 //  Copyright (c) 2015 Randy McLain. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-@interface HotelViewController : NSObject
+@interface HotelViewController : UIViewController
+
 
 @end
