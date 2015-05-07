@@ -25,15 +25,22 @@
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   [self.window makeKeyAndVisible];
   // instanitate root VC
-//  ViewController *rootVC = [[ViewController alloc] init];
-//  self.window.rootViewController = rootVC;
-//  rootVC.view.backgroundColor = [UIColor redColor];
-
-  HotelViewController *rootVC = [[HotelViewController alloc] init];
-  FromDateViewController *fromDateVC = [[FromDateViewController alloc] init];
+  //  ViewController *rootVC = [[ViewController alloc] init];
+  //  self.window.rootViewController = rootVC;
+  //  rootVC.view.backgroundColor = [UIColor redColor];
   
-
-  self.window.rootViewController = fromDateVC;
+  
+  
+  //HotelViewController *rootVC = [[HotelViewController alloc] init];
+  FromDateViewController *fromDateVC = [[FromDateViewController alloc] init];
+  UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:fromDateVC];
+  
+  
+  
+  
+  
+  
+  self.window.rootViewController = navController;
   
   [self seedWithJSON];
   return YES;

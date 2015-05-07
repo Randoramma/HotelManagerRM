@@ -6,8 +6,11 @@
 //  Copyright (c) 2015 Randy McLain. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "DateViewController.h"
 
-@interface FromDateViewController : UIViewController
+@interface FromDateViewController : DateViewController
+
+
+
 
 @end
