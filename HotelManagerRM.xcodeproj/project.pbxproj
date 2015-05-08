@@ -11,6 +11,10 @@
 		D008B6C51AFBDAD800EAC22B /* FromDateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D008B6C41AFBDAD800EAC22B /* FromDateViewController.m */; };
 		D008B6C81AFBE2AB00EAC22B /* ToDateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D008B6C71AFBE2AB00EAC22B /* ToDateViewController.m */; };
 		D008B6D11AFBEA3200EAC22B /* AvailabilityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D008B6D01AFBEA3200EAC22B /* AvailabilityTableViewController.m */; };
+		D008B6DB1AFD314300EAC22B /* RoomTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D008B6DA1AFD314300EAC22B /* RoomTableViewController.m */; };
+		D008B6DF1AFD339600EAC22B /* HotelService.m in Sources */ = {isa = PBXBuildFile; fileRef = D008B6DE1AFD339600EAC22B /* HotelService.m */; };
+		D008B6E21AFD34EA00EAC22B /* CoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = D008B6E11AFD34EA00EAC22B /* CoreDataStack.m */; };
+		D008B6E51AFD728D00EAC22B /* LoadViewControllerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D008B6E41AFD728D00EAC22B /* LoadViewControllerTableViewController.m */; };
 		D04D2AFB1AF92C3D00E23AA0 /* seed.json in Resources */ = {isa = PBXBuildFile; fileRef = D04D2AFA1AF92C3D00E23AA0 /* seed.json */; };
 		D0EEF58D1AF809DA0061905D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D0EEF58C1AF809DA0061905D /* main.m */; };
 		D0EEF5901AF809DA0061905D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0EEF58F1AF809DA0061905D /* AppDelegate.m */; };
@@ -48,6 +52,14 @@
 		D008B6C71AFBE2AB00EAC22B /* ToDateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ToDateViewController.m; path = ../ToDateViewController.m; sourceTree = "<group>"; };
 		D008B6CF1AFBEA3200EAC22B /* AvailabilityTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AvailabilityTableViewController.h; path = ../AvailabilityTableViewController.h; sourceTree = "<group>"; };
 		D008B6D01AFBEA3200EAC22B /* AvailabilityTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AvailabilityTableViewController.m; path = ../AvailabilityTableViewController.m; sourceTree = "<group>"; };
+		D008B6D91AFD314300EAC22B /* RoomTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RoomTableViewController.h; path = ../RoomTableViewController.h; sourceTree = "<group>"; };
+		D008B6DA1AFD314300EAC22B /* RoomTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RoomTableViewController.m; path = ../RoomTableViewController.m; sourceTree = "<group>"; };
+		D008B6DD1AFD339600EAC22B /* HotelService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HotelService.h; path = ../HotelService.h; sourceTree = "<group>"; };
+		D008B6DE1AFD339600EAC22B /* HotelService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HotelService.m; path = ../HotelService.m; sourceTree = "<group>"; };
+		D008B6E01AFD34EA00EAC22B /* CoreDataStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataStack.h; sourceTree = "<group>"; };
+		D008B6E11AFD34EA00EAC22B /* CoreDataStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataStack.m; sourceTree = "<group>"; };
+		D008B6E31AFD728D00EAC22B /* LoadViewControllerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoadViewControllerTableViewController.h; path = ../HotelManagerRM/LoadViewControllerTableViewController.h; sourceTree = "<group>"; };
+		D008B6E41AFD728D00EAC22B /* LoadViewControllerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoadViewControllerTableViewController.m; path = ../HotelManagerRM/LoadViewControllerTableViewController.m; sourceTree = "<group>"; };
 		D04D2AFA1AF92C3D00E23AA0 /* seed.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = seed.json; sourceTree = "<group>"; };
 		D0EEF5871AF809DA0061905D /* HotelManagerRM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HotelManagerRM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0EEF58B1AF809DA0061905D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -158,6 +170,10 @@
 		D0F0AD751AF87A17009F1AA3 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				D008B6D91AFD314300EAC22B /* RoomTableViewController.h */,
+				D008B6DA1AFD314300EAC22B /* RoomTableViewController.m */,
+				D008B6E31AFD728D00EAC22B /* LoadViewControllerTableViewController.h */,
+				D008B6E41AFD728D00EAC22B /* LoadViewControllerTableViewController.m */,
 				D008B6CF1AFBEA3200EAC22B /* AvailabilityTableViewController.h */,
 				D008B6D01AFBEA3200EAC22B /* AvailabilityTableViewController.m */,
 				D008B6C61AFBE2AB00EAC22B /* ToDateViewController.h */,
@@ -170,6 +186,8 @@
 				D0F0AD731AF879FB009F1AA3 /* HotelViewController.m */,
 				D0EEF5941AF809DA0061905D /* ViewController.h */,
 				D0EEF5951AF809DA0061905D /* ViewController.m */,
+				D008B6E01AFD34EA00EAC22B /* CoreDataStack.h */,
+				D008B6E11AFD34EA00EAC22B /* CoreDataStack.m */,
 			);
 			name = Controller;
 			path = HotelManagerRM.xcodeproj;
@@ -189,6 +207,8 @@
 		D0F0AD771AF87A17009F1AA3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D008B6DD1AFD339600EAC22B /* HotelService.h */,
+				D008B6DE1AFD339600EAC22B /* HotelService.m */,
 				D0F059551AFA6D6100914A7A /* Room.h */,
 				D0F059561AFA6D6100914A7A /* Room.m */,
 				D0F059521AFA6D6100914A7A /* Hotel.h */,
@@ -314,11 +334,15 @@
 				D0F0594E1AFA6D6000914A7A /* Reservation.m in Sources */,
 				D008B6C51AFBDAD800EAC22B /* FromDateViewController.m in Sources */,
 				D0F0AD711AF879EA009F1AA3 /* JSONParser.m in Sources */,
+				D008B6DF1AFD339600EAC22B /* HotelService.m in Sources */,
+				D008B6DB1AFD314300EAC22B /* RoomTableViewController.m in Sources */,
 				D0EEF5931AF809DA0061905D /* HotelManagerRM.xcdatamodeld in Sources */,
 				D0F059511AFA6D6100914A7A /* Guest.m in Sources */,
 				D008B6C81AFBE2AB00EAC22B /* ToDateViewController.m in Sources */,
 				D008B6C21AFBB9D900EAC22B /* DateViewController.m in Sources */,
+				D008B6E51AFD728D00EAC22B /* LoadViewControllerTableViewController.m in Sources */,
 				D008B6D11AFBEA3200EAC22B /* AvailabilityTableViewController.m in Sources */,
+				D008B6E21AFD34EA00EAC22B /* CoreDataStack.m in Sources */,
 				D0EEF5961AF809DA0061905D /* ViewController.m in Sources */,
 				D0F059541AFA6D6100914A7A /* Hotel.m in Sources */,
 				D0EEF58D1AF809DA0061905D /* main.m in Sources */,

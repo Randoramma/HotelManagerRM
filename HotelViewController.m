@@ -9,9 +9,12 @@
 #import "AppDelegate.h"
 #import <CoreData/CoreData.h>
 #import "HotelViewController.h"
+#import "HotelService.h"
+#import "CoreDataStack.h"
+#import "RoomTableViewController.h"
 #import "Hotel.h"
 
-@interface HotelViewController () <UITableViewDataSource>
+@interface HotelViewController () <UITableViewDataSource,UITableViewDelegate>
 
 @property (strong, nonatomic) UITableView *myTableView;
 @property (strong, nonatomic) NSArray *myHotels;
@@ -39,7 +42,8 @@
   [super viewDidLoad];
   // declare this VC as the delegate of the AppDelegate class.
   AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-  NSManagedObjectContext *context = appDelegate.managedObjectContext;
+  HotelService *hotelService = appDelegate.hotelService; 
+  NSManagedObjectContext *context = hotelService.coreDataStack.managedObjectContext;
   
   // fetch the data to build out the VC
   NSFetchRequest *theHotelFetch = [NSFetchRequest fetchRequestWithEntityName:@"Hotel"];
@@ -54,6 +58,8 @@
   
   [self.myTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"HotelCell"];
   self.myTableView.dataSource = self;
+  self.myTableView.delegate = self;
+
 }
 
 
@@ -69,6 +75,15 @@
   theCell.textLabel.text = theHotel.name;
   
   return theCell;
+}
+
+-(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+  
+  // push on the new VC. Segue to rooms VC.
+  RoomTableViewController *roomVC = [[RoomTableViewController alloc] init];
+  [self.navigationController pushViewController:roomVC animated:true];
+//
+//  self.myHotels[indexPath.row] = 
 }
 
 -(void) addConstraintsToRootView:(UIView *)theRootView withViews:(NSDictionary *)views {
