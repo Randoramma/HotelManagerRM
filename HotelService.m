@@ -14,7 +14,7 @@
 #import "CoreDataStack.h"
 
 @interface HotelService()
-
+@property (strong, nonatomic)CoreDataStack *coreDataStack; 
 
 @end
 
@@ -27,14 +27,27 @@
     self.coreDataStack = coreDataStack;
   }
   return self;
-}
+} // initCoreDataStack
+
+-(NSArray *)fetchAllHotels {
+
+  NSFetchRequest *hotelListFetch = [NSFetchRequest fetchRequestWithEntityName:@"Hotel"];
+  NSError *fetchError;
+  
+  NSArray *hotelList = [self.coreDataStack.managedObjectContext executeFetchRequest:hotelListFetch error:&fetchError];
+  if (fetchError) {
+    NSLog(@"%@", fetchError.localizedDescription);
+    return nil;
+  }
+  return hotelList;
+} // fetchAllHotels
 
 - (void)saveContext {
   
   [self.coreDataStack saveContext];
   
   
-}
+} // saveContext
 
 
 @end

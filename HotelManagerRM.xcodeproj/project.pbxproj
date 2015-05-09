@@ -67,8 +67,8 @@
 		D0EEF58E1AF809DA0061905D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../HotelManagerRM/AppDelegate.h; sourceTree = "<group>"; };
 		D0EEF58F1AF809DA0061905D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = ../HotelManagerRM/AppDelegate.m; sourceTree = "<group>"; };
 		D0EEF5921AF809DA0061905D /* HotelManagerRM.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HotelManagerRM.xcdatamodel; sourceTree = "<group>"; };
-		D0EEF5941AF809DA0061905D /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = ../HotelManagerRM/ViewController.h; sourceTree = "<group>"; };
-		D0EEF5951AF809DA0061905D /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ViewController.m; path = ../HotelManagerRM/ViewController.m; sourceTree = "<group>"; };
+		D0EEF5941AF809DA0061905D /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		D0EEF5951AF809DA0061905D /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		D0EEF5981AF809DA0061905D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D0EEF59A1AF809DA0061905D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../HotelManagerRM/Images.xcassets; sourceTree = "<group>"; };
 		D0EEF59D1AF809DA0061905D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -143,6 +143,8 @@
 		D0EEF58A1AF809DA0061905D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D0EEF5941AF809DA0061905D /* ViewController.h */,
+				D0EEF5951AF809DA0061905D /* ViewController.m */,
 				D04D2AFA1AF92C3D00E23AA0 /* seed.json */,
 				D0EEF58B1AF809DA0061905D /* Info.plist */,
 				D0EEF58C1AF809DA0061905D /* main.m */,
@@ -184,10 +186,6 @@
 				D008B6C11AFBB9D900EAC22B /* DateViewController.m */,
 				D0F0AD721AF879FB009F1AA3 /* HotelViewController.h */,
 				D0F0AD731AF879FB009F1AA3 /* HotelViewController.m */,
-				D0EEF5941AF809DA0061905D /* ViewController.h */,
-				D0EEF5951AF809DA0061905D /* ViewController.m */,
-				D008B6E01AFD34EA00EAC22B /* CoreDataStack.h */,
-				D008B6E11AFD34EA00EAC22B /* CoreDataStack.m */,
 			);
 			name = Controller;
 			path = HotelManagerRM.xcodeproj;
@@ -207,6 +205,8 @@
 		D0F0AD771AF87A17009F1AA3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D008B6E01AFD34EA00EAC22B /* CoreDataStack.h */,
+				D008B6E11AFD34EA00EAC22B /* CoreDataStack.m */,
 				D008B6DD1AFD339600EAC22B /* HotelService.h */,
 				D008B6DE1AFD339600EAC22B /* HotelService.m */,
 				D0F059551AFA6D6100914A7A /* Room.h */,

@@ -43,19 +43,10 @@
   // declare this VC as the delegate of the AppDelegate class.
   AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
   HotelService *hotelService = appDelegate.hotelService; 
-  NSManagedObjectContext *context = hotelService.coreDataStack.managedObjectContext;
-  
-  // fetch the data to build out the VC
-  NSFetchRequest *theHotelFetch = [NSFetchRequest fetchRequestWithEntityName:@"Hotel"];
-  // add the Error
-  NSError *theHotelFetchError;
-  
-  self.myHotels = [context executeFetchRequest:theHotelFetch error:&theHotelFetchError];
-  
-  if (theHotelFetchError) {
-    NSLog(@"%@", theHotelFetchError.localizedDescription);
-  }
-  
+  // fetch list of hotels from hotel service;
+  self.myHotels = hotelService.fetchAllHotels;
+
+  // setup table view.
   [self.myTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"HotelCell"];
   self.myTableView.dataSource = self;
   self.myTableView.delegate = self;

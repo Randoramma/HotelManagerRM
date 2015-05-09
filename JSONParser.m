@@ -9,6 +9,7 @@
 #import "JSONParser.h"
 #import "AppDelegate.h"
 #import "Hotel.h"
+#import "Room.h"
 
 @implementation JSONParser
 

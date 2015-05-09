@@ -7,9 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Hotel.h"
-#import "Room.h"
-
+#import "CoreDataStack.h"
 
 
 @interface JSONParser : NSObject

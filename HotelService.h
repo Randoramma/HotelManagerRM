@@ -13,7 +13,8 @@
 
 -(instancetype) initCoreDataStack: (CoreDataStack *)coreDataStack;
 
--(void) saveContext; 
+-(void) saveContext;
 
-@property (strong, nonatomic)CoreDataStack *coreDataStack; 
+-(NSArray*) fetchAllHotels;
+
 @end
