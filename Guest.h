@@ -2,7 +2,7 @@
 //  Guest.h
 //  HotelManagerRM
 //
-//  Created by Randy McLain on 5/6/15.
+//  Created by Randy McLain on 5/9/15.
 //  Copyright (c) 2015 Randy McLain. All rights reserved.
 //
 
@@ -13,9 +13,9 @@
 
 @interface Guest : NSManagedObject
 
-@property (nonatomic, retain) NSDate * date;
-@property (nonatomic, retain) NSNumber * persons;
-@property (nonatomic, retain) NSNumber * room;
+@property (nonatomic, retain) NSString * firstName;
+@property (nonatomic, retain) NSString * lastName;
+@property (nonatomic, retain) NSNumber * memberNumber;
 @property (nonatomic, retain) NSSet *reservations;
 @end
 

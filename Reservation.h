@@ -2,28 +2,21 @@
 //  Reservation.h
 //  HotelManagerRM
 //
-//  Created by Randy McLain on 5/6/15.
+//  Created by Randy McLain on 5/9/15.
 //  Copyright (c) 2015 Randy McLain. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class NSManagedObject;
+@class Guest, Room;
 
 @interface Reservation : NSManagedObject
 
-@property (nonatomic, retain) NSDate * date;
-@property (nonatomic, retain) NSNumber * room;
-@property (nonatomic, retain) NSSet *guest;
-@property (nonatomic, retain) NSManagedObject *rooms;
-@end
-
-@interface Reservation (CoreDataGeneratedAccessors)
-
-- (void)addGuestObject:(NSManagedObject *)value;
-- (void)removeGuestObject:(NSManagedObject *)value;
-- (void)addGuest:(NSSet *)values;
-- (void)removeGuest:(NSSet *)values;
+@property (nonatomic, retain) NSDecimalNumber * cost;
+@property (nonatomic, retain) NSDate * endDate;
+@property (nonatomic, retain) NSDate * startDate;
+@property (nonatomic, retain) Guest *guest;
+@property (nonatomic, retain) Room *rooms;
 
 @end

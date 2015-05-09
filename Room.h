@@ -2,7 +2,7 @@
 //  Room.h
 //  HotelManagerRM
 //
-//  Created by Randy McLain on 5/6/15.
+//  Created by Randy McLain on 5/9/15.
 //  Copyright (c) 2015 Randy McLain. All rights reserved.
 //
 
@@ -15,7 +15,8 @@
 
 @property (nonatomic, retain) NSNumber * beds;
 @property (nonatomic, retain) NSNumber * number;
-@property (nonatomic, retain) NSNumber * rate;
+@property (nonatomic, retain) NSDecimalNumber * rate;
+@property (nonatomic, retain) NSNumber * rating;
 @property (nonatomic, retain) Hotel *hotel;
 @property (nonatomic, retain) NSSet *reservation;
 @end
