@@ -10,7 +10,4 @@
 
 @interface FromDateViewController : DateViewController
 
-
-
-
 @end

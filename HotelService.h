@@ -13,6 +13,7 @@
 @class CoreDataStack;
 
 @interface HotelService : NSObject
+@property (strong,nonatomic) CoreDataStack *coreDataStack;
 
 -(instancetype) initCoreDataStack: (CoreDataStack *)coreDataStack;
 
@@ -22,5 +23,5 @@
 
 -(NSArray *)fetchAvailableRoomsForFromDate:(NSDate*)fromDate toDate:(NSDate *)toDate;
 
--(Reservation *)bookReservationForRoom:(Room *)room startDate:(NSDate *)startDate endDate:(NSDate *)endDate;
+-(Reservation *)bookReservationForRoom:(Room *)room startDate:(NSDate *)startDate endDate:(NSDate *)endDate withGuest:(Guest*)guest;
 @end

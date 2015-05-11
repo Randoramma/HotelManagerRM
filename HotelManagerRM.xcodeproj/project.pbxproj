@@ -17,6 +17,9 @@
 		D008B6E51AFD728D00EAC22B /* LoadViewControllerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D008B6E41AFD728D00EAC22B /* LoadViewControllerTableViewController.m */; };
 		D04D2AFB1AF92C3D00E23AA0 /* seed.json in Resources */ = {isa = PBXBuildFile; fileRef = D04D2AFA1AF92C3D00E23AA0 /* seed.json */; };
 		D064CCAF1AFFF15400771D60 /* GuestServicesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D064CCAE1AFFF15400771D60 /* GuestServicesViewController.m */; };
+		D064CCB21B01121D00771D60 /* GuestReservationsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D064CCB11B01121D00771D60 /* GuestReservationsTableViewController.m */; };
+		D064CCB51B01150E00771D60 /* GuestCheckInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D064CCB41B01150E00771D60 /* GuestCheckInViewController.m */; };
+		D064CCB81B01152500771D60 /* GuestCheckOutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D064CCB71B01152500771D60 /* GuestCheckOutViewController.m */; };
 		D08B1F051AFE9DE70038F345 /* Hotel.m in Sources */ = {isa = PBXBuildFile; fileRef = D08B1F041AFE9DE70038F345 /* Hotel.m */; };
 		D08B1F081AFE9DE70038F345 /* Guest.m in Sources */ = {isa = PBXBuildFile; fileRef = D08B1F071AFE9DE70038F345 /* Guest.m */; };
 		D08B1F0B1AFE9DE70038F345 /* Reservation.m in Sources */ = {isa = PBXBuildFile; fileRef = D08B1F0A1AFE9DE70038F345 /* Reservation.m */; };
@@ -64,6 +67,12 @@
 		D04D2AFA1AF92C3D00E23AA0 /* seed.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = seed.json; sourceTree = "<group>"; };
 		D064CCAD1AFFF15400771D60 /* GuestServicesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GuestServicesViewController.h; path = ../GuestServicesViewController.h; sourceTree = "<group>"; };
 		D064CCAE1AFFF15400771D60 /* GuestServicesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GuestServicesViewController.m; path = ../GuestServicesViewController.m; sourceTree = "<group>"; };
+		D064CCB01B01121D00771D60 /* GuestReservationsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GuestReservationsTableViewController.h; path = ../GuestReservationsTableViewController.h; sourceTree = "<group>"; };
+		D064CCB11B01121D00771D60 /* GuestReservationsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GuestReservationsTableViewController.m; path = ../GuestReservationsTableViewController.m; sourceTree = "<group>"; };
+		D064CCB31B01150E00771D60 /* GuestCheckInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GuestCheckInViewController.h; path = ../GuestCheckInViewController.h; sourceTree = "<group>"; };
+		D064CCB41B01150E00771D60 /* GuestCheckInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GuestCheckInViewController.m; path = ../GuestCheckInViewController.m; sourceTree = "<group>"; };
+		D064CCB61B01152500771D60 /* GuestCheckOutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GuestCheckOutViewController.h; path = ../GuestCheckOutViewController.h; sourceTree = "<group>"; };
+		D064CCB71B01152500771D60 /* GuestCheckOutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GuestCheckOutViewController.m; path = ../GuestCheckOutViewController.m; sourceTree = "<group>"; };
 		D08B1F031AFE9DE70038F345 /* Hotel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Hotel.h; path = ../Hotel.h; sourceTree = "<group>"; };
 		D08B1F041AFE9DE70038F345 /* Hotel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Hotel.m; path = ../Hotel.m; sourceTree = "<group>"; };
 		D08B1F061AFE9DE70038F345 /* Guest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Guest.h; path = ../Guest.h; sourceTree = "<group>"; };
@@ -175,6 +184,12 @@
 		D0F0AD751AF87A17009F1AA3 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				D064CCB61B01152500771D60 /* GuestCheckOutViewController.h */,
+				D064CCB71B01152500771D60 /* GuestCheckOutViewController.m */,
+				D064CCB31B01150E00771D60 /* GuestCheckInViewController.h */,
+				D064CCB41B01150E00771D60 /* GuestCheckInViewController.m */,
+				D064CCB01B01121D00771D60 /* GuestReservationsTableViewController.h */,
+				D064CCB11B01121D00771D60 /* GuestReservationsTableViewController.m */,
 				D064CCAD1AFFF15400771D60 /* GuestServicesViewController.h */,
 				D064CCAE1AFFF15400771D60 /* GuestServicesViewController.m */,
 				D008B6D91AFD314300EAC22B /* RoomTableViewController.h */,
@@ -342,14 +357,17 @@
 				D064CCAF1AFFF15400771D60 /* GuestServicesViewController.m in Sources */,
 				D008B6DF1AFD339600EAC22B /* HotelService.m in Sources */,
 				D008B6DB1AFD314300EAC22B /* RoomTableViewController.m in Sources */,
+				D064CCB81B01152500771D60 /* GuestCheckOutViewController.m in Sources */,
 				D0EEF5931AF809DA0061905D /* HotelManagerRM.xcdatamodeld in Sources */,
 				D008B6C81AFBE2AB00EAC22B /* ToDateViewController.m in Sources */,
 				D008B6C21AFBB9D900EAC22B /* DateViewController.m in Sources */,
+				D064CCB51B01150E00771D60 /* GuestCheckInViewController.m in Sources */,
 				D08B1F081AFE9DE70038F345 /* Guest.m in Sources */,
 				D08B1F0E1AFE9DE70038F345 /* Room.m in Sources */,
 				D008B6E51AFD728D00EAC22B /* LoadViewControllerTableViewController.m in Sources */,
 				D008B6D11AFBEA3200EAC22B /* AvailabilityTableViewController.m in Sources */,
 				D008B6E21AFD34EA00EAC22B /* CoreDataStack.m in Sources */,
+				D064CCB21B01121D00771D60 /* GuestReservationsTableViewController.m in Sources */,
 				D0EEF5961AF809DA0061905D /* ViewController.m in Sources */,
 				D0EEF58D1AF809DA0061905D /* main.m in Sources */,
 			);

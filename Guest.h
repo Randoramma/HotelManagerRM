@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-
+@class HotelService;
 @class Reservation;
+@class AppDelegate; 
 
 @interface Guest : NSManagedObject
 
@@ -17,7 +18,10 @@
 @property (nonatomic, retain) NSString * lastName;
 @property (nonatomic, retain) NSNumber * memberNumber;
 @property (nonatomic, retain) NSSet *reservations;
+
++(Guest*)setupGuestWithFirstName: (NSString *)theFirstName LastName:(NSString*)theLastName Context: (NSManagedObjectContext*)theContext;
 @end
+
 
 @interface Guest (CoreDataGeneratedAccessors)
 
@@ -25,5 +29,4 @@
 - (void)removeReservationsObject:(Reservation *)value;
 - (void)addReservations:(NSSet *)values;
 - (void)removeReservations:(NSSet *)values;
-
 @end
