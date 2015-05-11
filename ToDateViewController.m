@@ -21,7 +21,7 @@
   self.myPickerLabel.text = @"Please select the end date for your stay.";
   // pass in button eventController.
   [self.myDateSelectionButton addTarget:self action:@selector(endPressed) forControlEvents:UIControlEventTouchUpInside];
-  [self.myDateSelectionButton addTarget:self action:@selector(nextPressed) forControlEvents:UIControlEventTouchUpInside];
+//  [self.myDateSelectionButton addTarget:self action:@selector(nextPressed) forControlEvents:UIControlEventTouchUpInside];
 }
 
 -(void) endPressed {

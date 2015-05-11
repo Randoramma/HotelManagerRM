@@ -7,17 +7,13 @@
 //
 
 #import "GuestServicesViewController.h"
-#import "FromDateViewController.h"
-#import "ToDateViewController.h"
+#import "GuestReservationsTableViewController.h"
 #import "Guest.h"
 
 @interface GuestServicesViewController ()
 @property (strong, nonatomic) UILabel *myGuestIntro;
 @property (strong, nonatomic) UILabel *myFirstNameLabel;
 @property (strong, nonatomic) UILabel *myLastNameLabel;
-
-@property (strong, nonatomic) UITextField *myFirstNameField;
-@property (strong, nonatomic) UITextField *myLastNameField;
 
 @end
 
@@ -71,16 +67,16 @@
   [myRootView addSubview:self.myLastNameField];
   [self.myLastNameField setTranslatesAutoresizingMaskIntoConstraints:false];
   
-  self.myLoginButton = [[UIButton alloc] init];
-  [self.myLoginButton setTitle:@"Next" forState:UIControlStateNormal];
-  [self.myLoginButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-  [myRootView addSubview:self.myLoginButton];
-  [self.myLoginButton setTranslatesAutoresizingMaskIntoConstraints:false];
+  self.myButton = [[UIButton alloc] init];
+  [self.myButton setTitle:@"Next" forState:UIControlStateNormal];
+  [self.myButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+  [myRootView addSubview:self.myButton];
+  [self.myButton setTranslatesAutoresizingMaskIntoConstraints:false];
   
   
   
   
-  NSDictionary *views = @{@"guestIntro" : self.myGuestIntro, @"firstNameLabel" : self.myFirstNameLabel, @"lastNameLabel" : self.myLastNameLabel, @"firstNameField": self.myFirstNameField, @"lastNameField" : self.myLastNameField, @"loginButton"  : self.myLoginButton};
+  NSDictionary *views = @{@"guestIntro" : self.myGuestIntro, @"firstNameLabel" : self.myFirstNameLabel, @"lastNameLabel" : self.myLastNameLabel, @"firstNameField": self.myFirstNameField, @"lastNameField" : self.myLastNameField, @"button"  : self.myButton};
   [self addConstraintsToRootView:myRootView forViews:views];
   // set the views.
   self.view = myRootView;
@@ -92,23 +88,8 @@
   self.myFirstNameLabel.text = @"Please enter your first name.";
   self.myLastNameLabel.text = @"Please enter your last name.";
 
-  [self.myLoginButton addTarget:self action:@selector(loginPressed) forControlEvents:UIControlEventTouchUpInside];
 }
 
--(void) loginPressed {
-  // record the date
-  
-  
-  NSString *firstName = self.myFirstNameField.text;
-  NSString *lastName = self.myLastNameField.text;
-  
-  // push on the new VC.
-  FromDateViewController *fromVC = [[FromDateViewController alloc]init];
-  [self.navigationController pushViewController:fromVC animated:true];
-  
-  
-  
-} // nextPressed
 
 -(void) addConstraintsToRootView: (UIView *)rootView forViews:(NSDictionary *)views {
   //myGuestIntro constraints.
@@ -137,11 +118,11 @@
   [rootView addConstraints:lastNameFieldY];
   NSLayoutConstraint *lastNameFieldX =  [NSLayoutConstraint constraintWithItem:(self.myLastNameField) attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:rootView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
   [rootView addConstraint:lastNameFieldX];
-  // loginButton
-  NSLayoutConstraint *loginButtonX =  [NSLayoutConstraint constraintWithItem:(self.myLoginButton) attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:rootView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
-  [rootView addConstraint:loginButtonX];
-  NSArray *loginButtonY = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[lastNameField]-[loginButton]" options:0 metrics:nil views:views];
-  [rootView addConstraints:loginButtonY];
+  // button
+  NSLayoutConstraint *buttonX =  [NSLayoutConstraint constraintWithItem:(self.myButton) attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:rootView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
+  [rootView addConstraint:buttonX];
+  NSArray *buttonY = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[lastNameField]-[button]" options:0 metrics:nil views:views];
+  [rootView addConstraints:buttonY];
 
 }
 

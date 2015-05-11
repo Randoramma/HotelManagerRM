@@ -10,7 +10,8 @@
 #import "AppDelegate.h"
 
 @interface GuestServicesViewController : UIViewController
-@property (strong, nonatomic) UIButton *myLoginButton;
-
+@property (strong, nonatomic) UIButton *myButton;
+@property (strong, nonatomic) UITextField *myFirstNameField;
+@property (strong, nonatomic) UITextField *myLastNameField;
 
 @end

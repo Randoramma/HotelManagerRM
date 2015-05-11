@@ -12,8 +12,6 @@
 #import "CoreDataStack.h"
 
 @interface HotelService()
-@property (strong, nonatomic)CoreDataStack *coreDataStack; 
-
 @end
 
 @implementation HotelService
@@ -40,20 +38,12 @@
   return hotelList;
 } // fetchAllHotels
 
--(Reservation *)bookReservationForRoom:(Room *)room startDate:(NSDate *)startDate endDate:(NSDate *)endDate {
+-(Reservation *)bookReservationForRoom:(Room *)room startDate:(NSDate *)startDate endDate:(NSDate *)endDate withGuest:(Guest *)guest {
   
   Reservation *reservation = [NSEntityDescription insertNewObjectForEntityForName:@"Reservation" inManagedObjectContext:self.coreDataStack.managedObjectContext];
   reservation.rooms = room;
   reservation.startDate = startDate;
   reservation.endDate = endDate;
-  
-  Guest *guest = [NSEntityDescription insertNewObjectForEntityForName:@"Guest" inManagedObjectContext:self.coreDataStack.managedObjectContext];
-  
-  // to be completed when VC's are in place.  
-  NSNumber *theMemberNumber = [NSNumber numberWithInteger:16];
-  guest.firstName = @"Randy";
-  guest.lastName = @"Kitt";
-  guest.memberNumber = theMemberNumber;
   reservation.guest = guest;
   
   NSError *saveError;
@@ -61,19 +51,22 @@
   [self.coreDataStack.managedObjectContext save:&saveError];
   
   if (saveError) {
+    NSLog(@"%@", saveError); 
     return nil;
   }
   
   return reservation;
-}
+} // bookReservationForRoom
+
+-(NSArray *)fetchAvailableRoomsForFromDate:(NSDate *)fromDate toDate:(NSDate *)toDate {
+  //Tod
+  #warning Incomplete method implementation.
+  return nil;
+} // fetchAvailableRoomsForFromDate
 
 
 - (void)saveContext {
-  
   [self.coreDataStack saveContext];
-  
-  
 } // saveContext
-
 
 @end
