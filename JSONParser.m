@@ -42,7 +42,7 @@
       // assing the properties.
       myHotel.name = hotelDictionary[@"name"];
       myHotel.location = hotelDictionary[@"location"];
-      myHotel.stars = hotelDictionary[@"stars"];
+      myHotel.rating = hotelDictionary[@"stars"];
       // each room is an array of dictionaries.  This process is the same as the hotel above.
       for (NSDictionary *roomDictionary in hotelDictionary[@"rooms"]) {
       Room *myRoom = [NSEntityDescription insertNewObjectForEntityForName:@"Room" inManagedObjectContext:context];
