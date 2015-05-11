@@ -9,6 +9,7 @@
 #import "LoadViewControllerTableViewController.h"
 #import "HotelViewController.h"
 #import "FromDateViewController.h"
+#import "GuestServicesViewController.h"
 #import "AppDelegate.h"
 
 
@@ -65,10 +66,12 @@
       break;
     }
       
-    case 2:
+    case 2: {
       // push on the list of reservations.
-      NSLog(@"Got to 2");
+      GuestServicesViewController *guestVC = [[GuestServicesViewController alloc] init];
+      [self.navigationController pushViewController:guestVC animated:true];
       break;
+    }
       
       
     default:

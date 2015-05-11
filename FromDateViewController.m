@@ -26,12 +26,11 @@
 } // viewDidLoad
 
 -(void) nextPressed {
-  // record the date
-  NSDate *selectedDate = self.myDatePicker.date;
-  
   // push on the new VC.
   ToDateViewController *toDateVC = [[ToDateViewController alloc] init];
   [self.navigationController pushViewController:toDateVC animated:true];
+  // record the date
+  NSDate *selectedDate = self.myDatePicker.date;
   
   
 } // nextPressed

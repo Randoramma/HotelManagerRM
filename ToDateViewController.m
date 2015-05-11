@@ -21,7 +21,7 @@
   self.myPickerLabel.text = @"Please select the end date for your stay.";
   // pass in button eventController.
   [self.myDateSelectionButton addTarget:self action:@selector(endPressed) forControlEvents:UIControlEventTouchUpInside];
-  
+  [self.myDateSelectionButton addTarget:self action:@selector(nextPressed) forControlEvents:UIControlEventTouchUpInside];
 }
 
 -(void) endPressed {
@@ -31,7 +31,6 @@
   AvailabilityTableViewController *availablityVC = [[AvailabilityTableViewController alloc] init];
 
   availablityVC.toDate = endDate;
-  availablityVC.fromDate = self.fromDate;
   // push on new VC.
   [self.navigationController pushViewController:availablityVC animated:true];
 
