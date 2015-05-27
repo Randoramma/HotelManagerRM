@@ -12,7 +12,5 @@
 @interface ToDateViewController : DateViewController
 
 @property (strong,nonatomic) NSDate *myFromDate;
-@property (strong, nonatomic) NSString *myFirstName;
-@property (strong, nonatomic) NSString *myLastName;
 
 @end

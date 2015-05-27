@@ -8,8 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Reservation.h"
-#import "Room.h"
-
+@class Room;
 @class CoreDataStack;
 
 @interface HotelService : NSObject
@@ -21,7 +20,7 @@
 
 -(NSArray*) fetchAllHotels;
 
--(NSArray *)fetchAvailableRoomsForFromDate:(NSDate*)fromDate toDate:(NSDate *)toDate;
+-(NSArray*)fetchAvailableRoomsForFromDate:(NSDate*)fromDate toDate:(NSDate *)toDate;
 
 -(Reservation *)bookReservationForRoom:(Room *)room startDate:(NSDate *)startDate endDate:(NSDate *)endDate withGuest:(Guest*)guest;
 @end
