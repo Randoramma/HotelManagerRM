@@ -26,11 +26,11 @@
 
 -(void) endPressed {
   
-  NSDate *endDate = self.myDatePicker.date;
+  NSDate *myEndDate = self.myDatePicker.date;
   
   AvailabilityTableViewController *availablityVC = [[AvailabilityTableViewController alloc] init];
-
-  availablityVC.toDate = endDate;
+  availablityVC.fromDate = self.myFromDate;
+  availablityVC.toDate = myEndDate;
   // push on new VC.
   [self.navigationController pushViewController:availablityVC animated:true];
 

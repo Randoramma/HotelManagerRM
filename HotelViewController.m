@@ -73,8 +73,6 @@
   // push on the new VC. Segue to rooms VC.
   RoomTableViewController *roomVC = [[RoomTableViewController alloc] init];
   [self.navigationController pushViewController:roomVC animated:true];
-//
-//  self.myHotels[indexPath.row] = 
 }
 
 -(void) addConstraintsToRootView:(UIView *)theRootView withViews:(NSDictionary *)views {

@@ -7,21 +7,31 @@
 //
 
 #import "AvailabilityTableViewController.h"
+#import "HotelService.h"
+#import "CoreDataStack.h"
+#import "AppDelegate.h"
+#import "Room.h"
 
-@interface AvailabilityTableViewController ()
+
+@interface AvailabilityTableViewController () <NSFetchedResultsControllerDelegate>
+@property (strong, nonatomic) NSArray *myRooms;
+@property (strong, nonatomic) NSFetchedResultsController *fetchMyResults;
+
 
 @end
 
 @implementation AvailabilityTableViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+  // declare this VC as the delegate of the AppDelegate class.
+  AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+  HotelService *hotelService = appDelegate.hotelService;
+  // fetch list of rooms from hotel service;
+  self.myRooms = [hotelService fetchAvailableRoomsForFromDate:self.fromDate toDate:self.toDate];
+  
+  
 }
 
 - (void)didReceiveMemoryWarning {
@@ -32,26 +42,44 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+  
+
+    return [self.myRooms count];
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomRow" forIndexPath:indexPath];
+  if ([self.fetchMyResults.sections count] !=0) {
     // Configure the cell...
+    Room *theRoom = self.myRooms[indexPath.row];
+    cell.textLabel.text = @("%@", theRoom.number);
     
     return cell;
+  } else {
+
+  
+    
+    return cell;
+  }
 }
-*/
+
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+  return [theRoom.hotel.text];
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+  
+  
+  
+}
+
 
 /*
 // Override to support conditional editing of the table view.

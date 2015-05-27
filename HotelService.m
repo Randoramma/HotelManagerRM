@@ -10,6 +10,8 @@
 #import "Hotel.h"
 #import "Guest.h"
 #import "CoreDataStack.h"
+#import "Reservation.h"
+#import "Room.h"
 
 @interface HotelService()
 @end
@@ -59,9 +61,34 @@
 } // bookReservationForRoom
 
 -(NSArray *)fetchAvailableRoomsForFromDate:(NSDate *)fromDate toDate:(NSDate *)toDate {
-  //Tod
-  #warning Incomplete method implementation.
-  return nil;
+  //Make the fetch (request "Reservation" and predicate with variables).
+  NSFetchRequest *theRequest = [NSFetchRequest fetchRequestWithEntityName:@"Reservation"];
+  NSPredicate *thePredicate = [NSPredicate predicateWithFormat:@"startDate <= %@ AND endDate >= %@", toDate, fromDate];
+  
+  theRequest.predicate = thePredicate;
+  NSError *theFetchError;
+  NSArray *fetchResults = [self.coreDataStack.managedObjectContext executeFetchRequest:theRequest error:&theFetchError];
+  
+  // add any rooms with reservations to the badRooms array.
+  NSMutableArray *bookedRooms = [[NSMutableArray alloc] init];
+  for(Reservation *reservation in fetchResults) {
+    [bookedRooms addObject:reservation.rooms];
+  }
+  
+  // make a second fetch for rooms not in the above array.
+  NSFetchRequest *finalRoomRequest = [NSFetchRequest fetchRequestWithEntityName:@"Room"];
+  NSPredicate *roomPredicate = [NSPredicate predicateWithFormat:@"NOT self IN %@", bookedRooms];
+  finalRoomRequest.predicate = roomPredicate;
+  
+  // list the array of rooms.
+  NSError *theFetchRoomError;
+  NSArray *fetchRoomResults = [self.coreDataStack.managedObjectContext executeFetchRequest:finalRoomRequest error:&theFetchRoomError];
+  
+  if (theFetchRoomError) {
+    return nil;
+  }
+  return fetchRoomResults;
+
 } // fetchAvailableRoomsForFromDate
 
 
