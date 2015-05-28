@@ -37,13 +37,10 @@
   [self.contentView addConstraints:hNumberLayoutConstraint];
   NSArray *vNumberLayoutConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[roomNumberLabel]" options:0 metrics:nil views:views];
   [self.contentView addConstraints:vNumberLayoutConstraint];
-  
-  
   NSArray *hRateLayoutConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:[roomRateLabel]-8-|" options:0 metrics:nil views:views];
   [self.contentView addConstraints:hRateLayoutConstraint];
   NSArray *vRateLayoutConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[roomRateLabel]" options:0 metrics:nil views:views];
   [self.contentView addConstraints:vRateLayoutConstraint];
-  
   NSArray *hLocationLayoutConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:[numberOfBedsLabel]-8-|" options:0 metrics:nil views:views];
   [self.contentView addConstraints:hLocationLayoutConstraint];
   NSArray *vLocationLayoutConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[roomRateLabel]-8-[numberOfBedsLabel]" options:0 metrics:nil views:views];

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D007EE5F1B169502000FE400 /* HotelManagerGraphicsKit.m in Sources */ = {isa = PBXBuildFile; fileRef = D007EE5E1B169502000FE400 /* HotelManagerGraphicsKit.m */; };
 		D008B6C21AFBB9D900EAC22B /* DateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D008B6C11AFBB9D900EAC22B /* DateViewController.m */; };
 		D008B6C51AFBDAD800EAC22B /* FromDateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D008B6C41AFBDAD800EAC22B /* FromDateViewController.m */; };
 		D008B6C81AFBE2AB00EAC22B /* ToDateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D008B6C71AFBE2AB00EAC22B /* ToDateViewController.m */; };
@@ -49,6 +50,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D007EE5D1B169502000FE400 /* HotelManagerGraphicsKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotelManagerGraphicsKit.h; sourceTree = "<group>"; };
+		D007EE5E1B169502000FE400 /* HotelManagerGraphicsKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotelManagerGraphicsKit.m; sourceTree = "<group>"; };
 		D008B6C01AFBB9D900EAC22B /* DateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DateViewController.h; path = ../DateViewController.h; sourceTree = "<group>"; };
 		D008B6C11AFBB9D900EAC22B /* DateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DateViewController.m; path = ../DateViewController.m; sourceTree = "<group>"; };
 		D008B6C31AFBDAD800EAC22B /* FromDateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FromDateViewController.h; path = ../FromDateViewController.h; sourceTree = "<group>"; };
@@ -201,6 +204,8 @@
 				D008B6E41AFD728D00EAC22B /* LoadViewControllerTableViewController.m */,
 				D008B6CF1AFBEA3200EAC22B /* AvailabilityTableViewController.h */,
 				D008B6D01AFBEA3200EAC22B /* AvailabilityTableViewController.m */,
+				D007EE5D1B169502000FE400 /* HotelManagerGraphicsKit.h */,
+				D007EE5E1B169502000FE400 /* HotelManagerGraphicsKit.m */,
 				D008B6C61AFBE2AB00EAC22B /* ToDateViewController.h */,
 				D008B6C71AFBE2AB00EAC22B /* ToDateViewController.m */,
 				D008B6C31AFBDAD800EAC22B /* FromDateViewController.h */,
@@ -357,6 +362,7 @@
 				D0F0AD741AF879FB009F1AA3 /* HotelViewController.m in Sources */,
 				D0EEF5901AF809DA0061905D /* AppDelegate.m in Sources */,
 				D008B6C51AFBDAD800EAC22B /* FromDateViewController.m in Sources */,
+				D007EE5F1B169502000FE400 /* HotelManagerGraphicsKit.m in Sources */,
 				D08B1F051AFE9DE70038F345 /* Hotel.m in Sources */,
 				D0F0AD711AF879EA009F1AA3 /* JSONParser.m in Sources */,
 				D08B1F0B1AFE9DE70038F345 /* Reservation.m in Sources */,

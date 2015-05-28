@@ -7,6 +7,7 @@
 //
 
 #import "AvailabilityTableViewController.h"
+#import "AvailableRoomTableViewCell.h"
 #import "HotelService.h"
 #import "CoreDataStack.h"
 #import "AppDelegate.h"
@@ -31,7 +32,8 @@
   // fetch list of rooms from hotel service;
   self.myRooms = [hotelService fetchAvailableRoomsForFromDate:self.fromDate toDate:self.toDate];
   
-  
+  [self.tableView registerClass:[AvailableRoomTableViewCell class]forCellReuseIdentifier:@"AvailableRoomCell"];
+  [self.tableView registerClass:[AvailableRoomTableViewCell class]forCellReuseIdentifier:@"NoRooms"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -55,15 +57,16 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomRow" forIndexPath:indexPath];
+  
   if ([self.fetchMyResults.sections count] !=0) {
     // Configure the cell...
-    Room *theRoom = self.myRooms[indexPath.row];
-    cell.textLabel.text = @("%@", theRoom.number);
+    AvailableRoomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AvailableRoomCell" forIndexPath:indexPath];
+    [self cellLayout:cell atIndexPath:indexPath];
     
     return cell;
   } else {
-
+    AvailableRoomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NoRooms" forIndexPath:indexPath];
+    cell.roomNumberLabel.text = @"No room available";
   
     
     return cell;
@@ -71,7 +74,7 @@
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-  return [theRoom.hotel.text];
+  return @("The Available Rooms");
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -80,6 +83,12 @@
   
 }
 
+
+-(void)cellLayout:(AvailableRoomTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+  Room *room = [self.fetchMyResults objectAtIndexPath:indexPath];
+  cell.roomNumberLabel.text = [NSString stringWithFormat:@"Room #%@",room.number];
+  cell.roomRateLabel.text = [NSString stringWithFormat:@"$%@ / night",room.rate];
+}
 
 /*
 // Override to support conditional editing of the table view.
