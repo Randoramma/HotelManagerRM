@@ -7,6 +7,7 @@
 //
 
 #import "AvailabilityTableViewController.h"
+#import "AvailableRoomTableViewCell.h"
 #import "HotelService.h"
 #import "CoreDataStack.h"
 #import "AppDelegate.h"
@@ -15,7 +16,7 @@
 
 @interface AvailabilityTableViewController () <NSFetchedResultsControllerDelegate>
 @property (strong, nonatomic) NSArray *myRooms;
-@property (strong, nonatomic) NSFetchedResultsController *fetchMyResults;
+@property (strong, nonatomic) NSFetchedResultsController *fetchResultsController;
 
 
 @end
@@ -25,45 +26,51 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-  // declare this VC as the delegate of the AppDelegate class.
-  AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-  HotelService *hotelService = appDelegate.hotelService;
-  // fetch list of rooms from hotel service;
-  self.myRooms = [hotelService fetchAvailableRoomsForFromDate:self.fromDate toDate:self.toDate];
+  // setup up view here.
+  self.title = @"Our available rooms.";
   
-  
+  [self.tableView registerClass:[AvailableRoomTableViewCell class]forCellReuseIdentifier:@"AvailableRoomCell"];
+  [self.tableView registerClass:[AvailableRoomTableViewCell class]forCellReuseIdentifier:@"NoRooms"];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)viewDidAppear:(BOOL)animated {
+  // declare this VC as the delegate of the AppDelegate class.
+  AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+  self.fetchResultsController = [appDelegate.hotelService fetchAvailableRoomsForFromDate:self.fromDate toDate:self.toDate];
+  self.fetchResultsController.delegate = self;
+  NSError *theFetchError;
+  [NSFetchedResultsController deleteCacheWithName:self.fetchResultsController.cacheName];
+  [self.fetchResultsController performFetch:&theFetchError];
+  [self.tableView reloadData];
 }
+
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    // Return the number of sections.
-    return 1;
+    return self.fetchResultsController.sections.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    // Return the number of rows in the section.
-  
-
-    return [self.myRooms count];
+  if ([[self.fetchResultsController sections] count] > 0) {
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchResultsController sections] objectAtIndex:section];
+    return [sectionInfo numberOfObjects];
+  } else
+    return 0;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomRow" forIndexPath:indexPath];
-  if ([self.fetchMyResults.sections count] !=0) {
+  
+  if ([self.fetchResultsController.sections count] !=0) {
     // Configure the cell...
-    Room *theRoom = self.myRooms[indexPath.row];
-    cell.textLabel.text = @("%@", theRoom.number);
+    AvailableRoomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AvailableRoomCell" forIndexPath:indexPath];
+    [self cellLayout:cell atIndexPath:indexPath];
     
     return cell;
   } else {
-
+    AvailableRoomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NoRooms" forIndexPath:indexPath];
+    cell.roomNumberLabel.text = @"No room available";
   
     
     return cell;
@@ -71,15 +78,24 @@
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-  return [theRoom.hotel.text];
+  id<NSFetchedResultsSectionInfo> theSectionInfo = [[self.fetchResultsController sections] objectAtIndex: section];
+  Room *theRoom = (Room *)theSectionInfo.objects[0];
+  Hotel *hotel = theRoom.hotel;
+  NSString *description = [[NSString alloc] initWithFormat:@"%@ located in %@", hotel.name, hotel.location];
+  
+  return description;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-  
-  
-  
+ 
 }
 
+#pragma mark - Cell Layout
+-(void)cellLayout:(AvailableRoomTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+  Room *room = [self.fetchResultsController objectAtIndexPath:indexPath];
+  cell.roomNumberLabel.text = [NSString stringWithFormat:@"Room #%@",room.number];
+  cell.roomRateLabel.text = [NSString stringWithFormat:@"$%@ / night",room.rate];
+}
 
 /*
 // Override to support conditional editing of the table view.
@@ -124,5 +140,11 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+
+- (void)didReceiveMemoryWarning {
+  [super didReceiveMemoryWarning];
+  // Dispose of any resources that can be recreated.
+}
 
 @end
