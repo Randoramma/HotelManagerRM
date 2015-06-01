@@ -68,11 +68,14 @@
   return theCell;
 }
 
--(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   
   // push on the new VC. Segue to rooms VC.
   RoomTableViewController *roomVC = [[RoomTableViewController alloc] init];
   [self.navigationController pushViewController:roomVC animated:true];
+  roomVC.theHotel = self.myHotels[indexPath.row];
+  [self.myTableView deselectRowAtIndexPath:indexPath animated:false];
+  
 }
 
 -(void) addConstraintsToRootView:(UIView *)theRootView withViews:(NSDictionary *)views {

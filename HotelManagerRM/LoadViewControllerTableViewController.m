@@ -25,9 +25,9 @@
   
   // Uncomment the following line to preserve selection between presentations.
   // self.clearsSelectionOnViewWillAppear = NO;
-
+  
   // instantiate options menu
-  self.myOptions = @[@"Hotel List", @"Todays Rooms", @"Customer Reservations"];
+  self.myOptions = @[@"Hotel List", @"Available Rooms", @"Customer Reservations"];
   [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"optionCell"];
   
 }
@@ -50,7 +50,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   // enable switch statement to call the varying VC's based on row selected..
-
+  
   switch (indexPath.row) {
     case 0: {
       // push on the Hotel's List VC.

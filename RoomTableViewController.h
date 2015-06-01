@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "HotelViewController.h"
+#import "Hotel.h"
 
 @interface RoomTableViewController : UITableViewController
-
-//@property (strong, nonatomic)
+// create an array of rooms to list.
+@property (strong, nonatomic)Hotel *theHotel;
 @end
