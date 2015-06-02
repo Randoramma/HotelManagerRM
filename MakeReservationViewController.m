@@ -1,19 +1,19 @@
 //
-//  GuestCheckOutViewController.m
+//  MakeReservationViewController.m
 //  HotelManagerRM
 //
 //  Created by Randy McLain on 5/11/15.
 //  Copyright (c) 2015 Randy McLain. All rights reserved.
 //
 
-#import "GuestCheckOutViewController.h"
+#import "MakeReservationViewController.h"
 #import "Guest.h"
 
-@interface GuestCheckOutViewController ()
+@interface MakeReservationViewController ()
 
 @end
 
-@implementation GuestCheckOutViewController
+@implementation MakeReservationViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -36,6 +36,8 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
 
 /*
 #pragma mark - Navigation
