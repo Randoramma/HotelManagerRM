@@ -21,7 +21,7 @@
 		D064CCAF1AFFF15400771D60 /* GuestServicesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D064CCAE1AFFF15400771D60 /* GuestServicesViewController.m */; };
 		D064CCB21B01121D00771D60 /* GuestReservationsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D064CCB11B01121D00771D60 /* GuestReservationsTableViewController.m */; };
 		D064CCB51B01150E00771D60 /* GuestCheckInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D064CCB41B01150E00771D60 /* GuestCheckInViewController.m */; };
-		D064CCB81B01152500771D60 /* GuestCheckOutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D064CCB71B01152500771D60 /* GuestCheckOutViewController.m */; };
+		D064CCB81B01152500771D60 /* MakeReservationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D064CCB71B01152500771D60 /* MakeReservationViewController.m */; };
 		D08B1F051AFE9DE70038F345 /* Hotel.m in Sources */ = {isa = PBXBuildFile; fileRef = D08B1F041AFE9DE70038F345 /* Hotel.m */; };
 		D08B1F081AFE9DE70038F345 /* Guest.m in Sources */ = {isa = PBXBuildFile; fileRef = D08B1F071AFE9DE70038F345 /* Guest.m */; };
 		D08B1F0B1AFE9DE70038F345 /* Reservation.m in Sources */ = {isa = PBXBuildFile; fileRef = D08B1F0A1AFE9DE70038F345 /* Reservation.m */; };
@@ -37,6 +37,10 @@
 		D0F0594A1AF9D7F400914A7A /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0F059491AF9D7F400914A7A /* CoreData.framework */; };
 		D0F0AD711AF879EA009F1AA3 /* JSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D0F0AD701AF879EA009F1AA3 /* JSONParser.m */; };
 		D0F0AD741AF879FB009F1AA3 /* HotelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0F0AD731AF879FB009F1AA3 /* HotelViewController.m */; };
+		D0F0EB691B1E6ED30042BCFC /* RoomImageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0F0EB681B1E6ED30042BCFC /* RoomImageTableViewCell.m */; };
+		D0F0EB6C1B1E76340042BCFC /* RoomInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0F0EB6B1B1E76340042BCFC /* RoomInfoTableViewCell.m */; };
+		D0F0EB6F1B1E76940042BCFC /* CheckIn_OutTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0F0EB6E1B1E76940042BCFC /* CheckIn_OutTableViewCell.m */; };
+		D0F0EB721B1E76CA0042BCFC /* CredentialsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0F0EB711B1E76CA0042BCFC /* CredentialsTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,8 +81,8 @@
 		D064CCB11B01121D00771D60 /* GuestReservationsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GuestReservationsTableViewController.m; path = ../GuestReservationsTableViewController.m; sourceTree = "<group>"; };
 		D064CCB31B01150E00771D60 /* GuestCheckInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GuestCheckInViewController.h; path = ../GuestCheckInViewController.h; sourceTree = "<group>"; };
 		D064CCB41B01150E00771D60 /* GuestCheckInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GuestCheckInViewController.m; path = ../GuestCheckInViewController.m; sourceTree = "<group>"; };
-		D064CCB61B01152500771D60 /* GuestCheckOutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GuestCheckOutViewController.h; path = ../GuestCheckOutViewController.h; sourceTree = "<group>"; };
-		D064CCB71B01152500771D60 /* GuestCheckOutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GuestCheckOutViewController.m; path = ../GuestCheckOutViewController.m; sourceTree = "<group>"; };
+		D064CCB61B01152500771D60 /* MakeReservationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MakeReservationViewController.h; path = ../MakeReservationViewController.h; sourceTree = "<group>"; };
+		D064CCB71B01152500771D60 /* MakeReservationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MakeReservationViewController.m; path = ../MakeReservationViewController.m; sourceTree = "<group>"; };
 		D08B1F031AFE9DE70038F345 /* Hotel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Hotel.h; path = ../Hotel.h; sourceTree = "<group>"; };
 		D08B1F041AFE9DE70038F345 /* Hotel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Hotel.m; path = ../Hotel.m; sourceTree = "<group>"; };
 		D08B1F061AFE9DE70038F345 /* Guest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Guest.h; path = ../Guest.h; sourceTree = "<group>"; };
@@ -107,6 +111,14 @@
 		D0F0AD701AF879EA009F1AA3 /* JSONParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONParser.m; path = ../JSONParser.m; sourceTree = "<group>"; };
 		D0F0AD721AF879FB009F1AA3 /* HotelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HotelViewController.h; path = ../HotelViewController.h; sourceTree = "<group>"; };
 		D0F0AD731AF879FB009F1AA3 /* HotelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HotelViewController.m; path = ../HotelViewController.m; sourceTree = "<group>"; };
+		D0F0EB671B1E6ED30042BCFC /* RoomImageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoomImageTableViewCell.h; sourceTree = "<group>"; };
+		D0F0EB681B1E6ED30042BCFC /* RoomImageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomImageTableViewCell.m; sourceTree = "<group>"; };
+		D0F0EB6A1B1E76340042BCFC /* RoomInfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RoomInfoTableViewCell.h; path = ../RoomInfoTableViewCell.h; sourceTree = "<group>"; };
+		D0F0EB6B1B1E76340042BCFC /* RoomInfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RoomInfoTableViewCell.m; path = ../RoomInfoTableViewCell.m; sourceTree = "<group>"; };
+		D0F0EB6D1B1E76940042BCFC /* CheckIn_OutTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CheckIn_OutTableViewCell.h; path = ../CheckIn_OutTableViewCell.h; sourceTree = "<group>"; };
+		D0F0EB6E1B1E76940042BCFC /* CheckIn_OutTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CheckIn_OutTableViewCell.m; path = ../CheckIn_OutTableViewCell.m; sourceTree = "<group>"; };
+		D0F0EB701B1E76CA0042BCFC /* CredentialsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CredentialsTableViewCell.h; path = ../CredentialsTableViewCell.h; sourceTree = "<group>"; };
+		D0F0EB711B1E76CA0042BCFC /* CredentialsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CredentialsTableViewCell.m; path = ../CredentialsTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,8 +202,8 @@
 		D0F0AD751AF87A17009F1AA3 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				D064CCB61B01152500771D60 /* GuestCheckOutViewController.h */,
-				D064CCB71B01152500771D60 /* GuestCheckOutViewController.m */,
+				D064CCB61B01152500771D60 /* MakeReservationViewController.h */,
+				D064CCB71B01152500771D60 /* MakeReservationViewController.m */,
 				D064CCB31B01150E00771D60 /* GuestCheckInViewController.h */,
 				D064CCB41B01150E00771D60 /* GuestCheckInViewController.m */,
 				D064CCB01B01121D00771D60 /* GuestReservationsTableViewController.h */,
@@ -227,6 +239,14 @@
 				D0EEF59C1AF809DA0061905D /* LaunchScreen.xib */,
 				D010A02B1B163DEC003D773F /* AvailableRoomTableViewCell.h */,
 				D010A02C1B163DEC003D773F /* AvailableRoomTableViewCell.m */,
+				D0F0EB6D1B1E76940042BCFC /* CheckIn_OutTableViewCell.h */,
+				D0F0EB6E1B1E76940042BCFC /* CheckIn_OutTableViewCell.m */,
+				D0F0EB701B1E76CA0042BCFC /* CredentialsTableViewCell.h */,
+				D0F0EB711B1E76CA0042BCFC /* CredentialsTableViewCell.m */,
+				D0F0EB6A1B1E76340042BCFC /* RoomInfoTableViewCell.h */,
+				D0F0EB6B1B1E76340042BCFC /* RoomInfoTableViewCell.m */,
+				D0F0EB671B1E6ED30042BCFC /* RoomImageTableViewCell.h */,
+				D0F0EB681B1E6ED30042BCFC /* RoomImageTableViewCell.m */,
 			);
 			name = View;
 			path = HotelManagerRM.xcodeproj;
@@ -362,18 +382,21 @@
 				D0F0AD741AF879FB009F1AA3 /* HotelViewController.m in Sources */,
 				D0EEF5901AF809DA0061905D /* AppDelegate.m in Sources */,
 				D008B6C51AFBDAD800EAC22B /* FromDateViewController.m in Sources */,
+				D0F0EB6C1B1E76340042BCFC /* RoomInfoTableViewCell.m in Sources */,
 				D007EE5F1B169502000FE400 /* HotelManagerGraphicsKit.m in Sources */,
 				D08B1F051AFE9DE70038F345 /* Hotel.m in Sources */,
 				D0F0AD711AF879EA009F1AA3 /* JSONParser.m in Sources */,
+				D0F0EB6F1B1E76940042BCFC /* CheckIn_OutTableViewCell.m in Sources */,
 				D08B1F0B1AFE9DE70038F345 /* Reservation.m in Sources */,
 				D064CCAF1AFFF15400771D60 /* GuestServicesViewController.m in Sources */,
 				D008B6DF1AFD339600EAC22B /* HotelService.m in Sources */,
 				D008B6DB1AFD314300EAC22B /* RoomTableViewController.m in Sources */,
-				D064CCB81B01152500771D60 /* GuestCheckOutViewController.m in Sources */,
+				D064CCB81B01152500771D60 /* MakeReservationViewController.m in Sources */,
 				D0EEF5931AF809DA0061905D /* HotelManagerRM.xcdatamodeld in Sources */,
 				D008B6C81AFBE2AB00EAC22B /* ToDateViewController.m in Sources */,
 				D008B6C21AFBB9D900EAC22B /* DateViewController.m in Sources */,
 				D064CCB51B01150E00771D60 /* GuestCheckInViewController.m in Sources */,
+				D0F0EB691B1E6ED30042BCFC /* RoomImageTableViewCell.m in Sources */,
 				D08B1F081AFE9DE70038F345 /* Guest.m in Sources */,
 				D08B1F0E1AFE9DE70038F345 /* Room.m in Sources */,
 				D008B6E51AFD728D00EAC22B /* LoadViewControllerTableViewController.m in Sources */,
@@ -381,6 +404,7 @@
 				D008B6E21AFD34EA00EAC22B /* CoreDataStack.m in Sources */,
 				D064CCB21B01121D00771D60 /* GuestReservationsTableViewController.m in Sources */,
 				D0EEF5961AF809DA0061905D /* ViewController.m in Sources */,
+				D0F0EB721B1E76CA0042BCFC /* CredentialsTableViewCell.m in Sources */,
 				D0EEF58D1AF809DA0061905D /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

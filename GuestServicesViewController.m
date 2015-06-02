@@ -90,7 +90,11 @@
 
 }
 
+/* Will proceed to the Guest reservation table view controller to display a list of the guest reservations this guest currently has 
+ based on the four different hotels.  
+ */
 
+#pragma mark - Layout Constraints
 -(void) addConstraintsToRootView: (UIView *)rootView forViews:(NSDictionary *)views {
   //myGuestIntro constraints.
   NSLayoutConstraint *fromGuestIntroX = [NSLayoutConstraint constraintWithItem:self.myGuestIntro attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:rootView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
