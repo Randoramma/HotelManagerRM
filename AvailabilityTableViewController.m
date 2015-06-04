@@ -11,7 +11,7 @@
 #import "HotelService.h"
 #import "CoreDataStack.h"
 #import "AppDelegate.h"
-#import "MakeReservationViewController.h"
+#import "MakeReservationTableViewController.h"
 #import "Room.h"
 #import "Reservation.h"
 

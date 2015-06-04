@@ -10,7 +10,6 @@
 #import <CoreData/CoreData.h>
 #import "ToDateViewController.h"
 #import "Hotel.h"
-#import "Room.h"
 
 
 @interface AvailabilityTableViewController : UITableViewController
