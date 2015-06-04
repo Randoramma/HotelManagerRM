@@ -10,10 +10,7 @@
 #import "Constants.h"
 #import "Guest.h"
 
-
-
-
-@implementation MakeReservationTableViewController
+@implementation MakeReservationTableViewController  
 -(void)loadView {
   [super loadView];
   // setup title.
