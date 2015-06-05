@@ -33,6 +33,10 @@
   [theRootView addSubview:self.myTableView];
   // set the rootVC as the view
   self.view = theRootView;
+  self.title = @"Our Hotels";
+  self.view.backgroundColor = [UIColor blackColor];
+  self.myTableView.tableFooterView = [[UIView alloc] init];
+  
   // call custom method to constrain the table view into the rootVC.
   [self addConstraintsToRootView:theRootView withViews:@{@"tableView" : self.myTableView}];
   

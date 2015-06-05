@@ -9,17 +9,13 @@
 #import <UIKit/UIKit.h>
 
 
-const CGFloat TITLE_LABEL_HEIGHT = 20;
-const CGFloat TITLE_LABEL_WIDTH = 100;
-const CGFloat TITLE_FONT_SIZE = 15;
+extern const CGFloat TITLE_LABEL_HEIGHT;
+extern const CGFloat TITLE_LABEL_WIDTH;
+extern const CGFloat TITLE_FONT_SIZE;
 
-const CGFloat NAV_BAR_FONT_SIZE = 15;
+extern const CGFloat NAV_BAR_FONT_SIZE;
+extern NSString* const TITLE_FONT;
 
-
-
-
-
-
-NSString* const TITLE_FONT = @"Helvetica Neue";
+extern const CGFloat TABLE_ROW_HEIGHT; 
 @interface Constants : NSObject
 @end

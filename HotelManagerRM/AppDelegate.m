@@ -37,10 +37,17 @@
   
   //navigation bar setup
   // Navigation bar appearance (background and title)
+  NSDictionary *textTitleOptions = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    [UIColor whiteColor],NSForegroundColorAttributeName,
+                                    [UIFont fontWithName:@"Helvetica Neue" size:NAV_BAR_FONT_SIZE], NSFontAttributeName, nil];
   
-[[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],  [UIFont fontWithName:@"Helvetica Neue" size:NAV_BAR_FONT_SIZE], NSFontAttributeName, nil]];
-  [[UINavigationBar appearance] setTintColor:[UIColor blackColor]];
+  [[UINavigationBar appearance] setTitleTextAttributes:textTitleOptions];
+  [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
   [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
+  
+  // status bar setup
+  // Set "View controller-based status bar appearance” to NO in your info.list file;
+  [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
    
   return YES;
 }

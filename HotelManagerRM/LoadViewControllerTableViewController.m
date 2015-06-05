@@ -11,6 +11,7 @@
 #import "FromDateViewController.h"
 #import "GuestServicesViewController.h"
 #import "AppDelegate.h"
+#import "Constants.h"
 
 
 @interface LoadViewControllerTableViewController ()
@@ -27,8 +28,11 @@
   // self.clearsSelectionOnViewWillAppear = NO;
   
   // instantiate options menu
+  self.title = @"Hotel Manager";
   self.myOptions = @[@"Hotel List", @"Available Rooms", @"Customer Reservations"];
   [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"optionCell"];
+  self.view.backgroundColor = [UIColor blackColor];
+  self.tableView.tableFooterView = [[UIView alloc] init];
   
 }
 
@@ -40,10 +44,16 @@
   return self.myOptions.count;
 }
 
+-(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+  return TABLE_ROW_HEIGHT;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   UITableViewCell *theCell = [tableView dequeueReusableCellWithIdentifier:@"optionCell" forIndexPath:indexPath];
   
   theCell.textLabel.text = self.myOptions[indexPath.row];
+  theCell.textLabel.textColor = [UIColor whiteColor];
+  theCell.backgroundColor = [UIColor blackColor];
   
   return theCell;
 } // cellForRowAtIndexPath
