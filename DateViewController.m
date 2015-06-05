@@ -23,6 +23,7 @@
   
   // instantiate date Picker. Add the object.  Remove autoconstraints.
   self.myDatePicker = [[UIDatePicker alloc] init];
+  self.myDatePicker.backgroundColor = [UIColor blackColor];
   [myRootView addSubview:self.myDatePicker];
   [self.myDatePicker setTranslatesAutoresizingMaskIntoConstraints:false];
 
