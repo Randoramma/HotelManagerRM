@@ -21,17 +21,35 @@
   self.navigationItem.titleView = titleLabel;
   // setup view.
   self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
-  
-  
-  
+  self.tableView.backgroundColor = [UIColor blackColor];
+  self.tableView.tableFooterView = [[UIView alloc] init];
+ 
 }
 
 -(void)viewDidLoad {
   self.tableView.delegate = self;
   self.tableView.dataSource = self;
-  
-  
+}
+
+#pragma mark - Table view data source
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+  // Return the number of rows in the section.
+  return 5;
+}
+
+-(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+ 
+  if (indexPath.row == 0) {
+      return 160.0;
+  } else {
+    return 76;
+  }
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+  // setup nibs for each of the different types of cells required for this table view controller.
   
   
 }
+
 @end
