@@ -26,20 +26,20 @@
 @implementation AvailabilityTableViewController
 
 -(void) loadView {
-  [super loadView]; 
+  [super loadView];
   self.tableView.backgroundColor = [UIColor blackColor];
   self.tableView.tableFooterView = [[UIView alloc] init];
-
+  
 }
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+  [super viewDidLoad];
   // setup up view here.
   self.title = @"Our available rooms";
   
   [self.tableView registerClass:[AvailableRoomTableViewCell class]forCellReuseIdentifier:@"AvailableRoomCell"];
   [self.tableView registerClass:[AvailableRoomTableViewCell class]forCellReuseIdentifier:@"NoRooms"];
-
+  
   
 }
 
@@ -58,7 +58,7 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return self.fetchResultsController.sections.count;
+  return self.fetchResultsController.sections.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -76,12 +76,12 @@
     // Configure the cell...
     AvailableRoomTableViewCell *theCell = [tableView dequeueReusableCellWithIdentifier:@"AvailableRoomCell" forIndexPath:indexPath];
     [self cellLayout:theCell atIndexPath:indexPath];
-         theCell.backgroundColor = [UIColor blackColor];
+    theCell.backgroundColor = [UIColor blackColor];
     return theCell;
   } else {
     AvailableRoomTableViewCell *theCell = [tableView dequeueReusableCellWithIdentifier:@"NoRooms" forIndexPath:indexPath];
     theCell.roomNumberLabel.text = @"No room available";
-         theCell.backgroundColor = [UIColor blackColor];
+    theCell.backgroundColor = [UIColor blackColor];
     return theCell;
   }
 }
@@ -96,10 +96,18 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-
+  // make a reservationVC.
+  MakeReservationTableViewController *theReservation = [[MakeReservationTableViewController alloc] init];
+  // pass the start date
+  theReservation.fromDate = self.fromDate;
+  // pass the end date
+  theReservation.toDate = self.toDate;
+  // pass the room
+  theReservation.theRoom = self.myRooms[indexPath.row];
+  // pass the hotel
+  theReservation.theHotel = theReservation.theRoom.hotel;
   
-  
-  
+  [self.navigationController pushViewController:theReservation animated:true]; 
 }
 
 #pragma mark - Cell Layout
@@ -110,26 +118,26 @@
 }
 
 /*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
+ // Override to support editing the table view.
+ - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+ if (editingStyle == UITableViewCellEditingStyleDelete) {
+ // Delete the row from the data source
+ [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+ } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+ // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+ }
+ }
+ */
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 
 - (void)didReceiveMemoryWarning {
