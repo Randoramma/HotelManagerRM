@@ -19,10 +19,12 @@
 -(void)loadView {
   UIView *myRootView = [[UIView alloc] init];
 
-  myRootView.backgroundColor = [UIColor whiteColor];
+  myRootView.backgroundColor = [UIColor blackColor];
   
   // instantiate date Picker. Add the object.  Remove autoconstraints.
   self.myDatePicker = [[UIDatePicker alloc] init];
+  self.myDatePicker.backgroundColor = [UIColor blackColor];
+  
   [myRootView addSubview:self.myDatePicker];
   [self.myDatePicker setTranslatesAutoresizingMaskIntoConstraints:false];
 
@@ -36,7 +38,7 @@
   [self.myDateSelectionButton setTranslatesAutoresizingMaskIntoConstraints:false];
   // add UI to selection button.
   [self.myDateSelectionButton setTitle:@"Next" forState:UIControlStateNormal];
-  [self.myDateSelectionButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+  [self.myDateSelectionButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [myRootView addSubview:self.myDateSelectionButton];
   // add all views to dictionary and constrain the container to the view(s).
   NSDictionary *views = @{@"datePicker" : self.myDatePicker, @"pickerLabel" : self.myPickerLabel, @"dateButton" : self.myDateSelectionButton};
@@ -47,6 +49,16 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+  // date picker font adjustments found here:
+  [self.myDatePicker setValue:[UIColor whiteColor] forKeyPath:@"textColor"];
+  SEL selector = NSSelectorFromString( @"setHighlightsToday:" );
+  NSInvocation *invocation = [NSInvocation invocationWithMethodSignature :
+                              [UIDatePicker
+                               instanceMethodSignatureForSelector:selector]];
+  BOOL no = NO;
+  [invocation setSelector:selector];
+  [invocation setArgument:&no atIndex:2];
+  [invocation invokeWithTarget:self.myDatePicker];
 }
 
 - (void)didReceiveMemoryWarning {

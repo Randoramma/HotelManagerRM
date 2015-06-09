@@ -13,6 +13,7 @@
 #import "CoreDataStack.h"
 #import "RoomTableViewController.h"
 #import "Hotel.h"
+#import "Constants.h"
 
 @interface HotelViewController () <UITableViewDataSource,UITableViewDelegate>
 
@@ -33,6 +34,10 @@
   [theRootView addSubview:self.myTableView];
   // set the rootVC as the view
   self.view = theRootView;
+  self.title = @"Our Hotels";
+  self.myTableView.backgroundColor = [UIColor blackColor];
+  self.myTableView.tableFooterView = [[UIView alloc] init];
+  
   // call custom method to constrain the table view into the rootVC.
   [self addConstraintsToRootView:theRootView withViews:@{@"tableView" : self.myTableView}];
   
@@ -53,6 +58,9 @@
 
 }
 
+-(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+  return TABLE_ROW_HEIGHT;
+}
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -61,7 +69,8 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   UITableViewCell *theCell = [tableView dequeueReusableCellWithIdentifier:@"HotelCell" forIndexPath:indexPath];
-  
+  theCell.textLabel.textColor = [UIColor whiteColor];
+  theCell.backgroundColor = [UIColor blackColor];
   Hotel *theHotel = self.myHotels[indexPath.row];
   theCell.textLabel.text = theHotel.name;
   

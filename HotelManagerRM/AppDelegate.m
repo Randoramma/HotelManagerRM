@@ -10,6 +10,7 @@
 #import "CoreDataStack.h"
 #import "FromDateViewController.h"
 #import "LoadViewControllerTableViewController.h"
+#import "Constants.h"
 
 @interface AppDelegate ()
 @property (readwrite, strong, nonatomic) HotelService *hotelService;
@@ -33,6 +34,23 @@
   self.window.rootViewController = navController;
   // must include to test for initial seeding of objects if applicable.
   [coreDataStack seedWithJSON];
+  
+  [[UILabel appearanceWhenContainedIn:[UITableViewHeaderFooterView class], nil] setTextColor:[UIColor whiteColor]];
+  
+  //navigation bar setup
+  // Navigation bar appearance (background and title)
+  NSDictionary *textTitleOptions = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    [UIColor whiteColor],NSForegroundColorAttributeName,
+                                    [UIFont fontWithName:@"Helvetica Neue" size:NAV_BAR_FONT_SIZE], NSFontAttributeName, nil];
+  
+  [[UINavigationBar appearance] setTitleTextAttributes:textTitleOptions];
+  [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+  [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
+  
+  // status bar setup
+  // Set "View controller-based status bar appearance” to NO in your info.list file;
+  [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+   
   return YES;
 }
 

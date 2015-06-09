@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "HotelService.h"
 #import "Room.h"
+#import "Constants.h"
 
 @interface RoomTableViewController ()
 @property (strong, nonatomic) UITableView *myTableView;
@@ -38,6 +39,9 @@
   self.myTableView.dataSource = self;
   self.myTableView.delegate = self;
   
+  self.myTableView.backgroundColor = [UIColor blackColor];
+  self.myTableView.tableFooterView = [[UIView alloc] init];
+  
   // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
   // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
@@ -52,6 +56,10 @@
   return self.theRooms.count;
 }
 
+-(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+  return TABLE_ROW_HEIGHT;
+}
+
 -(void) addConstraintsToRootView: (UIView *)rootView withViews:(NSDictionary *)views {
   NSArray *tableViewVertical = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[tableView]|" options:0 metrics:nil views:views];
   [rootView addConstraints:tableViewVertical];
@@ -61,14 +69,16 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomCell" forIndexPath:indexPath];
+  UITableViewCell *theCell = [tableView dequeueReusableCellWithIdentifier:@"RoomCell" forIndexPath:indexPath];
   
   // Configure the cell...
+  theCell.textLabel.textColor = [UIColor whiteColor];
+  theCell.backgroundColor = [UIColor blackColor];
   Room *theRoom = self.theRooms[indexPath.row];
   NSString *theRoomInfo = [NSString stringWithFormat:@"Room number: %@  Beds: %@", theRoom.number, theRoom.beds];
-  cell.textLabel.text = theRoomInfo;
+  theCell.textLabel.text = theRoomInfo;
   
-  return cell;
+  return theCell;
 }
 
 

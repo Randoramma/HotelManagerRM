@@ -20,6 +20,8 @@
   // bring over the button and label id from the dateVC.
   // add text to label.
   self.myPickerLabel.text = @"Please select the start date for your stay.";
+  self.myPickerLabel.textColor = [UIColor whiteColor];
+  
   // pass in button eventController.
   [self.myDateSelectionButton addTarget:self action:@selector(nextPressed) forControlEvents:UIControlEventTouchUpInside];
   

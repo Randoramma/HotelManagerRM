@@ -11,7 +11,7 @@
 #import "HotelService.h"
 #import "CoreDataStack.h"
 #import "AppDelegate.h"
-#import "MakeReservationViewController.h"
+#import "MakeReservationTableViewController.h"
 #import "Room.h"
 #import "Reservation.h"
 
@@ -25,14 +25,22 @@
 
 @implementation AvailabilityTableViewController
 
+-(void) loadView {
+  [super loadView]; 
+  self.tableView.backgroundColor = [UIColor blackColor];
+  self.tableView.tableFooterView = [[UIView alloc] init];
+
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
   // setup up view here.
-  self.title = @"Our available rooms.";
+  self.title = @"Our available rooms";
   
   [self.tableView registerClass:[AvailableRoomTableViewCell class]forCellReuseIdentifier:@"AvailableRoomCell"];
   [self.tableView registerClass:[AvailableRoomTableViewCell class]forCellReuseIdentifier:@"NoRooms"];
+
+  
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -66,16 +74,15 @@
   
   if ([self.fetchResultsController.sections count] !=0) {
     // Configure the cell...
-    AvailableRoomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AvailableRoomCell" forIndexPath:indexPath];
-    [self cellLayout:cell atIndexPath:indexPath];
-    
-    return cell;
+    AvailableRoomTableViewCell *theCell = [tableView dequeueReusableCellWithIdentifier:@"AvailableRoomCell" forIndexPath:indexPath];
+    [self cellLayout:theCell atIndexPath:indexPath];
+         theCell.backgroundColor = [UIColor blackColor];
+    return theCell;
   } else {
-    AvailableRoomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NoRooms" forIndexPath:indexPath];
-    cell.roomNumberLabel.text = @"No room available";
-  
-    
-    return cell;
+    AvailableRoomTableViewCell *theCell = [tableView dequeueReusableCellWithIdentifier:@"NoRooms" forIndexPath:indexPath];
+    theCell.roomNumberLabel.text = @"No room available";
+         theCell.backgroundColor = [UIColor blackColor];
+    return theCell;
   }
 }
 
