@@ -15,15 +15,17 @@
   
   if (self) {
     self.numberOfBedsLabel = [[UILabel alloc] init];
+    self.numberOfBedsLabel.textColor = [UIColor whiteColor];
     self.numberOfBedsLabel.translatesAutoresizingMaskIntoConstraints = false;
     [self.contentView addSubview:self.numberOfBedsLabel];
     self.roomNumberLabel = [[UILabel alloc] init];
+    self.roomNumberLabel.textColor = [UIColor whiteColor];
     self.roomNumberLabel.translatesAutoresizingMaskIntoConstraints = false;
     [self.contentView addSubview:self.roomNumberLabel];
     self.roomRateLabel = [[UILabel alloc] init];
     self.roomRateLabel.translatesAutoresizingMaskIntoConstraints = false;
+    self.roomRateLabel.textColor = [UIColor whiteColor];
     [self.contentView addSubview:self.roomRateLabel];
-    
     NSDictionary *cellViews = @{@"numberOfBedsLabel" : self.numberOfBedsLabel, @"roomNumberLabel": self.roomNumberLabel, @"roomRateLabel" : self.roomRateLabel};
     [self setConstranitsForCellViewWithViews:cellViews];
   }

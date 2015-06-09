@@ -35,6 +35,8 @@
   // must include to test for initial seeding of objects if applicable.
   [coreDataStack seedWithJSON];
   
+  [[UILabel appearanceWhenContainedIn:[UITableViewHeaderFooterView class], nil] setTextColor:[UIColor whiteColor]];
+  
   //navigation bar setup
   // Navigation bar appearance (background and title)
   NSDictionary *textTitleOptions = [NSDictionary dictionaryWithObjectsAndKeys:

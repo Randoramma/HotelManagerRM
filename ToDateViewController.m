@@ -19,6 +19,7 @@
     [super viewDidLoad];
   
   self.myPickerLabel.text = @"Please select the end date for your stay.";
+  self.myPickerLabel.textColor = [UIColor whiteColor];
   // pass in button eventController.
   [self.myDateSelectionButton addTarget:self action:@selector(endPressed) forControlEvents:UIControlEventTouchUpInside];
 }
