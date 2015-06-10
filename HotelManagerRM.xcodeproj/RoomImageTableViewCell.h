@@ -10,8 +10,5 @@
 #import "Room.h"
 
 @interface RoomImageTableViewCell : UITableViewCell
-@property (strong, nonatomic) UITextField* firstNameField;
-@property (strong, nonatomic) UITextField* lastNameField;
 @property (strong, nonatomic) UIImageView* cellImageView;
-@property (strong, nonatomic) UIButton* checkoutButton;
 @end

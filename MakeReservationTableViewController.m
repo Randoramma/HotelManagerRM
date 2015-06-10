@@ -9,8 +9,14 @@
 #import "MakeReservationTableViewController.h"
 #import "Constants.h"
 #import "Guest.h"
+#import "RoomImageTableViewCell.h"
 
-@implementation MakeReservationTableViewController  
+
+@interface MakeReservationTableViewController () <NSFetchedResultsControllerDelegate>
+@property (strong, nonatomic) NSFetchedResultsController *fetchResultsController;
+@end
+
+@implementation MakeReservationTableViewController
 -(void)loadView {
   [super loadView];
   // setup title.
@@ -23,12 +29,14 @@
   self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
   self.tableView.backgroundColor = [UIColor blackColor];
   self.tableView.tableFooterView = [[UIView alloc] init];
- 
+  
 }
 
 -(void)viewDidLoad {
   self.tableView.delegate = self;
   self.tableView.dataSource = self;
+  
+  [self.tableView registerClass:[RoomImageTableViewCell class]forCellReuseIdentifier:@"RoomImageCell"];
 }
 
 #pragma mark - Table view data source
@@ -38,9 +46,9 @@
 }
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
- 
+  
   if (indexPath.row == 0) {
-      return 160.0;
+    return 160.0;
   } else {
     return 76;
   }
@@ -48,8 +56,28 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   // setup nibs for each of the different types of cells required for this table view controller.
-  
-  
+  if ([self.fetchResultsController.sections count] !=0) {
+    switch (indexPath.row) {
+      case 0:
+        // place image cell nib here.
+        break;
+      case 1:
+        // place room cell nib here.
+        break;
+      case 2:
+        // place from-to cell nib here.
+        break;
+      case 3:
+        // place name cell nib here.
+        break;
+      case 4:
+        // place checkout cell nib here.
+        break;
+        
+      default:
+        break;
+    }
+  }
 }
 
 @end
