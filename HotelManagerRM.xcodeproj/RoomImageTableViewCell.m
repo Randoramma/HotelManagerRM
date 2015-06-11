@@ -25,12 +25,12 @@
     self.cellImageView = [[UIImageView alloc] initWithImage:theImage];
     [self.contentView addSubview:self.cellImageView];
     NSDictionary *cellViews = @{@"cellImageView" : self.cellImageView};
-    [self setConstranitsForCellViewWithViews:cellViews];
+    [self setConstraintsForCellViewWithViews:cellViews];
   }
   return self;
 }
 
--(void) setConstranitsForCellViewWithViews: (NSDictionary *)views {
+-(void) setConstraintsForCellViewWithViews: (NSDictionary *)views {
   // map out what you want the cell to look like.
   NSArray *hNumberLayoutConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-8-[cellImageView]" options:0 metrics:nil views:views];
   [self.contentView addConstraints:hNumberLayoutConstraint];

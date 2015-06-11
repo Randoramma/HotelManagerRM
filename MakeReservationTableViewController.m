@@ -10,10 +10,23 @@
 #import "Constants.h"
 #import "Guest.h"
 #import "RoomImageTableViewCell.h"
+#import "RoomInfoTableViewCell.h"
+#import "CredentialsTableViewCell.h"
+#import "CheckIn_OutTableViewCell.h"
+#import "CheckoutButtonTableViewCell.h"
+
 
 
 @interface MakeReservationTableViewController () <NSFetchedResultsControllerDelegate>
 @property (strong, nonatomic) NSFetchedResultsController *fetchResultsController;
+//instantiate the tableview cells
+@property (strong, nonatomic) RoomImageTableViewCell *myRoomImageCell;
+@property (strong, nonatomic) RoomInfoTableViewCell *myRoomInfoCell;
+@property (strong, nonatomic) CredentialsTableViewCell *myRoomCredentialsCell;
+@property (strong, nonatomic) CheckIn_OutTableViewCell *myRoomDatesCell;
+@property (strong, nonatomic) CheckoutButtonTableViewCell *myRoomButtonCell;
+
+
 @end
 
 @implementation MakeReservationTableViewController
@@ -35,8 +48,11 @@
 -(void)viewDidLoad {
   self.tableView.delegate = self;
   self.tableView.dataSource = self;
-  
   [self.tableView registerClass:[RoomImageTableViewCell class]forCellReuseIdentifier:@"RoomImageCell"];
+  [self.tableView registerClass:[RoomInfoTableViewCell class]forCellReuseIdentifier:@"RoomInfoCell"];
+  [self.tableView registerClass:[CredentialsTableViewCell class]forCellReuseIdentifier:@"RoomCretentialsCell"];
+  [self.tableView registerClass:[CheckIn_OutTableViewCell class]forCellReuseIdentifier:@"RoomDatesCell"];
+  [self.tableView registerClass:[CheckoutButtonTableViewCell class]forCellReuseIdentifier:@"RoomCheckoutCell"];
 }
 
 #pragma mark - Table view data source
@@ -54,29 +70,53 @@
   }
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+-(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   // setup nibs for each of the different types of cells required for this table view controller.
-  if ([self.fetchResultsController.sections count] !=0) {
+//  
+//  RoomImageTableViewCell *theCell = [tableView dequeueReusableCellWithIdentifier:@"RoomImageCell" forIndexPath:0];
+//  [self cellLayout:theCell atIndexPath:indexPath];
+//  theCell.backgroundColor = [UIColor blackColor];
+//  return theCell;
     switch (indexPath.row) {
       case 0:
-        // place image cell nib here.
+        if (self.myRoomImageCell == nil) {
+          self.myRoomImageCell = [self.myRoomImageCell initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomImageCell"];
+        }
+        self.myRoomButtonCell.backgroundColor = [UIColor blackColor];
+        return self.myRoomImageCell;
         break;
       case 1:
-        // place room cell nib here.
+        if (self.myRoomInfoCell == nil) {
+          self.myRoomInfoCell = [self.myRoomInfoCell initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomInfoCell"];
+        }
+        self.myRoomInfoCell.backgroundColor = [UIColor blackColor];
+        return self.myRoomInfoCell;
         break;
       case 2:
-        // place from-to cell nib here.
+        if (self.myRoomDatesCell == nil) {
+          self.myRoomDatesCell = [self.myRoomDatesCell initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomDatesCell"];
+        }
+        self.myRoomDatesCell.backgroundColor = [UIColor blackColor];
+        return self.myRoomDatesCell;
         break;
       case 3:
-        // place name cell nib here.
+        if (self.myRoomCredentialsCell == nil) {
+          self.myRoomCredentialsCell = [self.myRoomCredentialsCell initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomCretentialsCell"];
+        }
+        self.myRoomCredentialsCell.backgroundColor = [UIColor blackColor];
+        return self.myRoomCredentialsCell;
         break;
       case 4:
-        // place checkout cell nib here.
+        if (self.myRoomButtonCell == nil) {
+          self.myRoomButtonCell = [self.myRoomButtonCell initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomButtonCell"];
+        }
+        self.myRoomButtonCell.backgroundColor = [UIColor blackColor];
+        return self.myRoomButtonCell;
         break;
         
       default:
+        return [[UITableViewCell alloc]init];
         break;
-    }
   }
 }
 
