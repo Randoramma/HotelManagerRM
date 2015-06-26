@@ -23,18 +23,19 @@
   
   if (self) {
     self.cellImageView = [[UIImageView alloc] initWithImage:self.theImage];
-    //[self.contentView addSubview:self.cellImageView];
+    self.cellImageView.translatesAutoresizingMaskIntoConstraints = false;
+    [self.contentView addSubview:self.cellImageView];
     NSDictionary *cellViews = @{@"cellImageView" : self.cellImageView};
-    //[self setConstraintsForCellViewWithViews:cellViews];
+    [self setConstraintsForCellViewWithViews:cellViews];
   }
   return self;
 }
 
 -(void) setConstraintsForCellViewWithViews: (NSDictionary *)views {
   // map out what you want the cell to look like.
-  NSArray *hNumberLayoutConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-8-[cellImageView]" options:0 metrics:nil views:views];
+  NSArray *hNumberLayoutConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-8-[cellImageView]-8-|" options:0 metrics:nil views:views];
   [self.contentView addConstraints:hNumberLayoutConstraint];
-  NSArray *vNumberLayoutConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[cellImageView]" options:0 metrics:nil views:views];
+  NSArray *vNumberLayoutConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[cellImageView]-8-|" options:0 metrics:nil views:views];
   [self.contentView addConstraints:vNumberLayoutConstraint];
   }
 

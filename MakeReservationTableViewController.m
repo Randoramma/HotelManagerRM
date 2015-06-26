@@ -44,9 +44,9 @@ NSInteger ROWS = 5;
   titleLabel.text = self.theHotel.name;
   self.navigationItem.titleView = titleLabel;
   // setup view.
-//  self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
-  self.tableView.backgroundColor = [UIColor blackColor];
-  self.tableView.tableFooterView = [[UIView alloc] init];
+  //  self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+//  self.tableView.backgroundColor = [UIColor blackColor];
+//  self.tableView.tableFooterView = [[UIView alloc] init];
   
 }
 
@@ -77,7 +77,7 @@ NSInteger ROWS = 5;
 }
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  if (indexPath.section) {
+  if (indexPath.section == 0) {
     switch (indexPath.row) {
       case 0:
         return 160.0;
@@ -97,30 +97,20 @@ NSInteger ROWS = 5;
   
   if (indexPath.section == 0) {
     // we are seeing the section 0 appear.
-//    AvailableRoomTableViewCell *theCell = [tableView dequeueReusableCellWithIdentifier:@"NoRooms" forIndexPath:indexPath];
-//    theCell.roomNumberLabel.text = @"No room available";
-//    theCell.backgroundColor = [UIColor blackColor];
-//    return theCell;
+    //    AvailableRoomTableViewCell *theCell = [tableView dequeueReusableCellWithIdentifier:@"NoRooms" forIndexPath:indexPath];
+    //    theCell.roomNumberLabel.text = @"No room available";
+    //    theCell.backgroundColor = [UIColor blackColor];
+    //    return theCell;
     switch (indexPath.row) {
       case 0: {
-        if (self.myRoomInfoCell == nil) {
-          self.myRoomInfoCell = [self.myRoomInfoCell initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomInfoCell"];
-        }
-        self.myRoomInfoCell.backgroundColor = [UIColor blueColor];
-        return self.myRoomInfoCell;
+        RoomImageTableViewCell *theCell = [tableView dequeueReusableCellWithIdentifier:@"RoomImageCell" forIndexPath:indexPath];
+        NSLog(@"%@ the hotel's name", self.theRoom.hotel.name); 
+        theCell.theImage = [self setImageForAppropriateHotelRoom:self.theRoom];
+        //must set the below again after the cell has init.
+        theCell.cellImageView.image = theCell.theImage;
+        theCell.backgroundColor = [UIColor blackColor];
+        return theCell;
         break;
-
-        
-//        if (self.myRoomImageCell == nil) {
-//          self.myRoomImageCell = [self.myRoomImageCell initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomImageCell"];
-//        }
-//        
-//       // RoomImageTableViewCell *cell;
-////        RoomImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomImageCell" forIndexPath:indexPath];
-////        cell.theImage = [self setImageForAppropriateHotelRoom:self.theRoom];
-//        self.myRoomImageCell.backgroundColor = [UIColor redColor];
-//        return self.myRoomImageCell;
-//        break;
       }
       case 1:
         if (self.myRoomInfoCell == nil) {
@@ -166,15 +156,15 @@ NSInteger ROWS = 5;
 -(UIImage *) setImageForAppropriateHotelRoom: (Room *)theRoom {
   
   if([self.theRoom.hotel.name isEqualToString:@"Fancy Estates"]) {
-    self.myImage = [[UIImage alloc] initWithContentsOfFile:@"FancyEstateRoomImage"];
+    self.myImage = [UIImage imageNamed:@"FancyEstateRoomImage"];
   } else if ([self.theRoom.hotel.name isEqualToString:@"Solid Stay"]) {
-    self.myImage = [[UIImage alloc] initWithContentsOfFile:@"SolidStayRoomImage"];
+    self.myImage = [UIImage imageNamed:@"SolidStayRoomImage"];
   } else if ([self.theRoom.hotel.name isEqualToString:@"Decent Inn"]) {
-    self.myImage = [[UIImage alloc] initWithContentsOfFile:@"DecentInnRoomImage"];
+    self.myImage = [UIImage imageNamed:@"DecentInnRoomImage"];
   } else if ([self.theRoom.hotel.name isEqualToString:@"Okay Motel"]) {
-    self.myImage = [[UIImage alloc] initWithContentsOfFile:@"OKRoomImage"];
+    self.myImage = [UIImage imageNamed:@"OKRoomImage"];
   } else {
-    self.myImage = [[UIImage alloc] initWithContentsOfFile:@"PlaceHolderImage"];
+    self.myImage = [UIImage imageNamed:@"PlaceHolderImage"];
   }
   return self.myImage;
 }
