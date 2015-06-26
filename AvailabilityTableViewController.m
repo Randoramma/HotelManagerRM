@@ -30,6 +30,7 @@
   self.tableView.backgroundColor = [UIColor blackColor];
   self.tableView.tableFooterView = [[UIView alloc] init];
   
+  
 }
 
 - (void)viewDidLoad {
@@ -103,7 +104,7 @@
   // pass the end date
   theReservation.toDate = self.toDate;
   // pass the room
-  theReservation.theRoom = self.myRooms[indexPath.row];
+  theReservation.theRoom = [self.fetchResultsController objectAtIndexPath:indexPath];
   // pass the hotel
   theReservation.theHotel = theReservation.theRoom.hotel;
   

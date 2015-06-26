@@ -18,14 +18,14 @@
 @implementation RoomImageTableViewCell
 
 // counting on the particular ReservationVC delivering a valid Image with the message request here...
--(instancetype) initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier withImage: (UIImage *)theImage{
+-(instancetype) initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
   
-  if (self && theImage) {
-    self.cellImageView = [[UIImageView alloc] initWithImage:theImage];
-    [self.contentView addSubview:self.cellImageView];
+  if (self) {
+    self.cellImageView = [[UIImageView alloc] initWithImage:self.theImage];
+    //[self.contentView addSubview:self.cellImageView];
     NSDictionary *cellViews = @{@"cellImageView" : self.cellImageView};
-    [self setConstraintsForCellViewWithViews:cellViews];
+    //[self setConstraintsForCellViewWithViews:cellViews];
   }
   return self;
 }

@@ -11,4 +11,6 @@
 
 @interface RoomImageTableViewCell : UITableViewCell
 @property (strong, nonatomic) UIImageView* cellImageView;
+@property (strong, nonatomic) UIImage* theImage; 
+
 @end
