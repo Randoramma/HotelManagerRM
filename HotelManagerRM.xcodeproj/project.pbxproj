@@ -25,6 +25,7 @@
 		D08B1F081AFE9DE70038F345 /* Guest.m in Sources */ = {isa = PBXBuildFile; fileRef = D08B1F071AFE9DE70038F345 /* Guest.m */; };
 		D08B1F0B1AFE9DE70038F345 /* Reservation.m in Sources */ = {isa = PBXBuildFile; fileRef = D08B1F0A1AFE9DE70038F345 /* Reservation.m */; };
 		D08B1F0E1AFE9DE70038F345 /* Room.m in Sources */ = {isa = PBXBuildFile; fileRef = D08B1F0D1AFE9DE70038F345 /* Room.m */; };
+		D0A929121B2A178D00CC7715 /* CheckoutButtonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A929111B2A178D00CC7715 /* CheckoutButtonTableViewCell.m */; };
 		D0EEF58D1AF809DA0061905D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D0EEF58C1AF809DA0061905D /* main.m */; };
 		D0EEF5901AF809DA0061905D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0EEF58F1AF809DA0061905D /* AppDelegate.m */; };
 		D0EEF5931AF809DA0061905D /* HotelManagerRM.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D0EEF5911AF809DA0061905D /* HotelManagerRM.xcdatamodeld */; };
@@ -90,6 +91,8 @@
 		D08B1F0A1AFE9DE70038F345 /* Reservation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reservation.m; path = ../Reservation.m; sourceTree = "<group>"; };
 		D08B1F0C1AFE9DE70038F345 /* Room.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Room.h; path = ../Room.h; sourceTree = "<group>"; };
 		D08B1F0D1AFE9DE70038F345 /* Room.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Room.m; path = ../Room.m; sourceTree = "<group>"; };
+		D0A929101B2A178D00CC7715 /* CheckoutButtonTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CheckoutButtonTableViewCell.h; path = ../CheckoutButtonTableViewCell.h; sourceTree = "<group>"; };
+		D0A929111B2A178D00CC7715 /* CheckoutButtonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CheckoutButtonTableViewCell.m; path = ../CheckoutButtonTableViewCell.m; sourceTree = "<group>"; };
 		D0EEF5871AF809DA0061905D /* HotelManagerRM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HotelManagerRM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0EEF58B1AF809DA0061905D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D0EEF58C1AF809DA0061905D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -244,6 +247,8 @@
 				D010A02C1B163DEC003D773F /* AvailableRoomTableViewCell.m */,
 				D0F0EB6D1B1E76940042BCFC /* CheckIn_OutTableViewCell.h */,
 				D0F0EB6E1B1E76940042BCFC /* CheckIn_OutTableViewCell.m */,
+				D0A929101B2A178D00CC7715 /* CheckoutButtonTableViewCell.h */,
+				D0A929111B2A178D00CC7715 /* CheckoutButtonTableViewCell.m */,
 				D0F0EB701B1E76CA0042BCFC /* CredentialsTableViewCell.h */,
 				D0F0EB711B1E76CA0042BCFC /* CredentialsTableViewCell.m */,
 				D0F0EB6A1B1E76340042BCFC /* RoomInfoTableViewCell.h */,
@@ -388,6 +393,7 @@
 				D0EEF5901AF809DA0061905D /* AppDelegate.m in Sources */,
 				D008B6C51AFBDAD800EAC22B /* FromDateViewController.m in Sources */,
 				D0F0EB6C1B1E76340042BCFC /* RoomInfoTableViewCell.m in Sources */,
+				D0A929121B2A178D00CC7715 /* CheckoutButtonTableViewCell.m in Sources */,
 				D007EE5F1B169502000FE400 /* HotelManagerGraphicsKit.m in Sources */,
 				D08B1F051AFE9DE70038F345 /* Hotel.m in Sources */,
 				D0F0AD711AF879EA009F1AA3 /* JSONParser.m in Sources */,
