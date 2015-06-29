@@ -45,8 +45,8 @@ NSInteger ROWS = 5;
   self.navigationItem.titleView = titleLabel;
   // setup view.
   //  self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
-//  self.tableView.backgroundColor = [UIColor blackColor];
-//  self.tableView.tableFooterView = [[UIView alloc] init];
+  self.tableView.backgroundColor = [UIColor blackColor];
+  self.tableView.tableFooterView = [[UIView alloc] init];
   
 }
 
@@ -104,43 +104,48 @@ NSInteger ROWS = 5;
     switch (indexPath.row) {
       case 0: {
         RoomImageTableViewCell *theCell = [tableView dequeueReusableCellWithIdentifier:@"RoomImageCell" forIndexPath:indexPath];
-        NSLog(@"%@ the hotel's name", self.theRoom.hotel.name); 
         theCell.theImage = [self setImageForAppropriateHotelRoom:self.theRoom];
         //must set the below again after the cell has init.
         theCell.cellImageView.image = theCell.theImage;
         theCell.backgroundColor = [UIColor blackColor];
+        theCell.selectionStyle = UITableViewCellSelectionStyleNone;
         return theCell;
         break;
       }
-      case 1:
-        if (self.myRoomInfoCell == nil) {
-          self.myRoomInfoCell = [self.myRoomInfoCell initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomInfoCell"];
-        }
-        self.myRoomInfoCell.backgroundColor = [UIColor blueColor];
-        return self.myRoomInfoCell;
+      case 1: {
+        RoomInfoTableViewCell *theCell = [tableView dequeueReusableCellWithIdentifier:@"RoomInfoCell" forIndexPath:indexPath];
+        theCell.roomNumberLabel.text = [NSString stringWithFormat:@"Room #%@",self.theRoom.number];
+        theCell.roomRateLabel.text = [NSString stringWithFormat:@"Rate $%@",self.theRoom.rate];
+        theCell.roomRatingLabel.text = [NSString stringWithFormat:@"Rating %@",self.theRoom.rating];
+        theCell.numberOfBedsLabel.text = [NSString stringWithFormat:@"Beds %@",self.theRoom.beds];
+        theCell.backgroundColor = [UIColor blackColor];
+        theCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return theCell;
         break;
-      case 2:
-        if (self.myRoomDatesCell == nil) {
-          self.myRoomDatesCell = [self.myRoomDatesCell initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomDatesCell"];
-        }
-        self.myRoomDatesCell.backgroundColor = [UIColor whiteColor];
-        return self.myRoomDatesCell;
+      }
+      case 2: {
+        CheckIn_OutTableViewCell *theCell = [tableView dequeueReusableCellWithIdentifier:@"RoomDatesCell" forIndexPath:indexPath];
+        theCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        theCell.fromDateLabel.text = [NSString stringWithFormat:@"Check in: %@",self.fromDate];
+        theCell.toDateLabel.text = [NSString stringWithFormat:@"Check out: %@",self.toDate];
+        theCell.backgroundColor = [UIColor blackColor];
+        return theCell;
         break;
-      case 3:
-        if (self.myRoomCredentialsCell == nil) {
-          self.myRoomCredentialsCell = [self.myRoomCredentialsCell initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomCredentialsCell"];
-        }
-        self.myRoomCredentialsCell.backgroundColor = [UIColor blackColor];
-        return self.myRoomCredentialsCell;
+      }
+      case 3: {
+        CheckIn_OutTableViewCell *theCell2 = [tableView dequeueReusableCellWithIdentifier:@"RoomDatesCell" forIndexPath:indexPath];
+        theCell2.selectionStyle = UITableViewCellSelectionStyleNone;
+        theCell2.fromDateLabel.text = [NSString stringWithFormat:@"Beds %@",self.fromDate];
+        return theCell2;
         break;
-      case 4:
-        if (self.myRoomButtonCell == nil) {
-          self.myRoomButtonCell = [self.myRoomButtonCell initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomButtonCell"];
-        }
-        self.myRoomButtonCell.backgroundColor = [UIColor blackColor];
+      }
+      case 4: {
+        
+        
         return self.myRoomButtonCell;
         break;
         
+      }
       default:
         return [[UITableViewCell alloc]init];
         break;

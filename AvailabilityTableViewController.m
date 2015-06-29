@@ -90,8 +90,8 @@
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
   id<NSFetchedResultsSectionInfo> theSectionInfo = [[self.fetchResultsController sections] objectAtIndex: section];
   Room *theRoom = (Room *)theSectionInfo.objects[0];
-  Hotel *hotel = theRoom.hotel;
-  NSString *description = [[NSString alloc] initWithFormat:@"%@ located in %@", hotel.name, hotel.location];
+  Hotel *theHotel = theRoom.hotel;
+  NSString *description = [[NSString alloc] initWithFormat:@"%@ located in %@", theHotel.name, theHotel.location];
   
   return description;
 }
