@@ -53,6 +53,7 @@ NSInteger ROWS = 5;
 -(void)viewDidLoad {
   self.tableView.delegate = self;
   self.tableView.dataSource = self;
+  
   [self.tableView registerClass:[RoomImageTableViewCell class]forCellReuseIdentifier:@"RoomImageCell"];
   [self.tableView registerClass:[RoomInfoTableViewCell class]forCellReuseIdentifier:@"RoomInfoCell"];
   [self.tableView registerClass:[CredentialsTableViewCell class]forCellReuseIdentifier:@"RoomCredentialsCell"];
@@ -96,11 +97,6 @@ NSInteger ROWS = 5;
   // setup nibs for each of the different types of cells required for this table view controller.
   
   if (indexPath.section == 0) {
-    // we are seeing the section 0 appear.
-    //    AvailableRoomTableViewCell *theCell = [tableView dequeueReusableCellWithIdentifier:@"NoRooms" forIndexPath:indexPath];
-    //    theCell.roomNumberLabel.text = @"No room available";
-    //    theCell.backgroundColor = [UIColor blackColor];
-    //    return theCell;
     switch (indexPath.row) {
       case 0: {
         RoomImageTableViewCell *theCell = [tableView dequeueReusableCellWithIdentifier:@"RoomImageCell" forIndexPath:indexPath];
@@ -126,17 +122,21 @@ NSInteger ROWS = 5;
       case 2: {
         CheckIn_OutTableViewCell *theCell = [tableView dequeueReusableCellWithIdentifier:@"RoomDatesCell" forIndexPath:indexPath];
         theCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        theCell.fromDateLabel.text = [NSString stringWithFormat:@"Check in: %@",self.fromDate];
-        theCell.toDateLabel.text = [NSString stringWithFormat:@"Check out: %@",self.toDate];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+        dateFormatter.dateFormat = @"EEEE, MMMM dd";
+        theCell.fromDateLabel.text = [dateFormatter stringFromDate:self.fromDate]; 
+        theCell.toDateLabel.text = [dateFormatter stringFromDate:self.toDate];
         theCell.backgroundColor = [UIColor blackColor];
         return theCell;
         break;
       }
       case 3: {
-        CheckIn_OutTableViewCell *theCell2 = [tableView dequeueReusableCellWithIdentifier:@"RoomDatesCell" forIndexPath:indexPath];
-        theCell2.selectionStyle = UITableViewCellSelectionStyleNone;
-        theCell2.fromDateLabel.text = [NSString stringWithFormat:@"Beds %@",self.fromDate];
-        return theCell2;
+        CredentialsTableViewCell *theCell = [tableView dequeueReusableCellWithIdentifier:@"RoomCredentialsCell" forIndexPath:indexPath];
+        theCell.backgroundColor = [UIColor blackColor];
+        theCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        theCell.firstNameLabel.text = @"First Name:";
+        theCell.lastNameLabel.text = @"Last Name:";
+        return theCell;
         break;
       }
       case 4: {
@@ -173,6 +173,8 @@ NSInteger ROWS = 5;
   }
   return self.myImage;
 }
+
+
 
 
 @end

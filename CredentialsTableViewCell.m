@@ -10,14 +10,58 @@
 
 @implementation CredentialsTableViewCell
 
-- (void)awakeFromNib {
-    // Initialization code
+
+-(instancetype) initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+  self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
+  
+  if (self) {
+    self.firstNameLabel = [[UILabel alloc] init];
+    self.firstNameLabel.textColor = [UIColor whiteColor];
+    self.firstNameLabel.translatesAutoresizingMaskIntoConstraints = false;
+    [self.contentView addSubview:self.firstNameLabel];
+    
+    self.lastNameLabel = [[UILabel alloc] init];
+    self.lastNameLabel.textColor = [UIColor whiteColor];
+    self.lastNameLabel.translatesAutoresizingMaskIntoConstraints = false;
+    [self.contentView addSubview:self.lastNameLabel];
+    
+    self.firstNameField = [[UITextField alloc] init];
+    self.firstNameField.translatesAutoresizingMaskIntoConstraints = false;
+    self.firstNameField.placeholder = @"first name here";
+    self.firstNameField.borderStyle = UITextBorderStyleRoundedRect;
+    self.firstNameField.backgroundColor = [UIColor colorWithRed:83/255.0f green:78/255.0f blue:78/255.0f alpha:1.0f];
+    [self.firstNameField setClearButtonMode:UITextFieldViewModeWhileEditing];
+    [self.contentView addSubview:self.firstNameField];
+    
+    self.lastNameField = [[UITextField alloc] init];
+    self.lastNameField.translatesAutoresizingMaskIntoConstraints = false;
+    self.lastNameField.placeholder = @"last name here";
+    self.lastNameField.borderStyle = UITextBorderStyleRoundedRect;
+    self.lastNameField.backgroundColor = [UIColor colorWithRed:83/255.0f green:78/255.0f blue:78/255.0f alpha:1.0f];
+    [self.lastNameField setClearButtonMode:UITextFieldViewModeWhileEditing];
+    [self.contentView addSubview:self.lastNameField];
+    
+    //self.firstNameField.delegate = self;
+   // self.lastNameField.delegate = self;
+    
+    NSDictionary *cellViews = @{@"firstNameLabel": self.firstNameLabel, @"lastNameLabel": self.lastNameLabel, @"firstNameField": self.firstNameField, @"lastNameField": self.lastNameField};
+    [self setConstranitsForCellViewWithViews:cellViews];
+  }
+  return self;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+-(void) setConstranitsForCellViewWithViews: (NSDictionary *)views {
+  
+  NSArray *hFirstConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[firstNameLabel]-2.0-[firstNameField]-|" options:0 metrics:nil views:views];
+  [self.contentView addConstraints:hFirstConstraint];
+  NSArray *hLastConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[lastNameLabel]-2.0-[lastNameField]-|" options:0 metrics:nil views:views];
+  [self.contentView addConstraints:hLastConstraint];
+  NSArray *vLabelConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[firstNameLabel]-8.0-[lastNameLabel]-|" options:0 metrics:nil views:views];
+  [self.contentView addConstraints:vLabelConstraint];
+  NSArray *vFieldConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[firstNameField]-2.0-[lastNameField]" options:0 metrics:nil views:views];
+  [self.contentView addConstraints:vFieldConstraint];
+  
+  
 }
 
 @end

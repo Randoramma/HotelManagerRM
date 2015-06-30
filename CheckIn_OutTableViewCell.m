@@ -21,6 +21,11 @@
     self.fromDateLabel.translatesAutoresizingMaskIntoConstraints = false;
     [self.contentView addSubview:self.fromDateLabel];
     
+    self.fromDate = [[UILabel alloc] init];
+    self.fromDate.textColor = [UIColor whiteColor];
+    self.fromDate.translatesAutoresizingMaskIntoConstraints = false;
+    [self.contentView addSubview:self.fromDate];
+    
     self.toDateLabel = [[UILabel alloc] init];
     self.toDateLabel.textColor = [UIColor whiteColor];
     self.toDateLabel.translatesAutoresizingMaskIntoConstraints = false;

@@ -11,4 +11,6 @@
 @interface CheckIn_OutTableViewCell : UITableViewCell
 @property (strong, nonatomic) UILabel* fromDateLabel;
 @property (strong, nonatomic) UILabel* toDateLabel;
+@property (strong, nonatomic) UILabel* fromDate;
+@property (strong, nonatomic) UILabel* toDate;
 @end
