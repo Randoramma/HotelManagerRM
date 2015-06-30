@@ -10,14 +10,28 @@
 
 @implementation CheckoutButtonTableViewCell
 
-- (void)awakeFromNib {
-    // Initialization code
+-(instancetype) initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+  self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
+  
+  if (self) {
+
+  UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+  [button addTarget:self
+             action:@selector(aMethod:)
+   forControlEvents:UIControlEventTouchUpInside];
+  [button setTitle:@"Make Reservation" forState:UIControlStateNormal];
+  button.frame = CGRectMake(80.0, 210.0, 160.0, 40.0);
+  [self addSubview:button];
+  
+    NSDictionary *cellViews = @{@"reserveButton": self.myReserveButton};
+    [self setConstranitsForCellViewWithViews:cellViews];
+  }
+  return self;
 }
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+  
+  
+-(void) setConstranitsForCellViewWithViews: (NSDictionary *)views {
+  
+  
 }
-
 @end

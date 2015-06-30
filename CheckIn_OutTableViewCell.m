@@ -31,22 +31,27 @@
     self.toDateLabel.translatesAutoresizingMaskIntoConstraints = false;
     [self.contentView addSubview:self.toDateLabel];
     
-    NSDictionary *cellViews = @{@"fromDateLabel": self.fromDateLabel, @"toDateLabel": self.toDateLabel};
+    self.toDate = [[UILabel alloc] init];
+    self.toDate.textColor = [UIColor whiteColor];
+    self.toDate.translatesAutoresizingMaskIntoConstraints = false;
+    [self.contentView addSubview:self.toDate];
+    
+    NSDictionary *cellViews = @{@"fromDateLabel": self.fromDateLabel, @"toDateLabel": self.toDateLabel, @"fromDate": self.fromDate, @"toDate": self.toDate};
     [self setConstranitsForCellViewWithViews:cellViews];
   }
   return self;
 }
 
 -(void) setConstranitsForCellViewWithViews: (NSDictionary *)views {
-  NSArray *hFromLayoutConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-8-[fromDateLabel]" options:0 metrics:nil views:views];
+  NSArray *hFromLayoutConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-8-[fromDateLabel]-8-[fromDate]" options:0 metrics:nil views:views];
   [self.contentView addConstraints:hFromLayoutConstraint];
-  NSArray *vFromLayoutConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[fromDateLabel]" options:0 metrics:nil views:views];
-  [self.contentView addConstraints:vFromLayoutConstraint];
+  NSArray *vDateConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[fromDate]-8-[toDate]" options:0 metrics:nil views:views];
+  [self.contentView addConstraints:vDateConstraint];
   
-  NSArray *hToLayoutConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-8-[toDateLabel]" options:0 metrics:nil views:views];
+  NSArray *hToLayoutConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-8-[toDateLabel]-8-[toDate]" options:0 metrics:nil views:views];
   [self.contentView addConstraints:hToLayoutConstraint];
-  NSArray *vToLayoutConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[fromDateLabel]-8-[toDateLabel]" options:0 metrics:nil views:views];
-  [self.contentView addConstraints:vToLayoutConstraint];
+  NSArray *vLabelLayoutConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[fromDateLabel]-8-[toDateLabel]" options:0 metrics:nil views:views];
+  [self.contentView addConstraints:vLabelLayoutConstraint];
 }
 
 @end
