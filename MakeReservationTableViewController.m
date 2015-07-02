@@ -44,7 +44,7 @@ NSInteger ROWS = 5;
   titleLabel.text = self.theHotel.name;
   self.navigationItem.titleView = titleLabel;
   // setup view.
-//  self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+  //  self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
   self.tableView.backgroundColor = [UIColor blackColor];
   self.tableView.tableFooterView = [[UIView alloc] init];
   
@@ -53,6 +53,7 @@ NSInteger ROWS = 5;
 -(void)viewDidLoad {
   self.tableView.delegate = self;
   self.tableView.dataSource = self;
+  
   [self.tableView registerClass:[RoomImageTableViewCell class]forCellReuseIdentifier:@"RoomImageCell"];
   [self.tableView registerClass:[RoomInfoTableViewCell class]forCellReuseIdentifier:@"RoomInfoCell"];
   [self.tableView registerClass:[CredentialsTableViewCell class]forCellReuseIdentifier:@"RoomCredentialsCell"];
@@ -77,7 +78,7 @@ NSInteger ROWS = 5;
 }
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  if (indexPath.section) {
+  if (indexPath.section == 0) {
     switch (indexPath.row) {
       case 0:
         return 160.0;
@@ -96,61 +97,58 @@ NSInteger ROWS = 5;
   // setup nibs for each of the different types of cells required for this table view controller.
   
   if (indexPath.section == 0) {
-    // we are seeing the section 0 appear.
-//    AvailableRoomTableViewCell *theCell = [tableView dequeueReusableCellWithIdentifier:@"NoRooms" forIndexPath:indexPath];
-//    theCell.roomNumberLabel.text = @"No room available";
-//    theCell.backgroundColor = [UIColor blackColor];
-//    return theCell;
     switch (indexPath.row) {
       case 0: {
-        if (self.myRoomInfoCell == nil) {
-          self.myRoomInfoCell = [self.myRoomInfoCell initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomInfoCell"];
-        }
-        self.myRoomInfoCell.backgroundColor = [UIColor blueColor];
-        return self.myRoomInfoCell;
+        RoomImageTableViewCell *theCell = [tableView dequeueReusableCellWithIdentifier:@"RoomImageCell" forIndexPath:indexPath];
+        theCell.theImage = [self setImageForAppropriateHotelRoom:self.theRoom];
+        //must set the below again after the cell has init.
+        theCell.cellImageView.image = theCell.theImage;
+        theCell.backgroundColor = [UIColor blackColor];
+        theCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return theCell;
         break;
-
-        
-//        if (self.myRoomImageCell == nil) {
-//          self.myRoomImageCell = [self.myRoomImageCell initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomImageCell"];
-//        }
-//        
-//       // RoomImageTableViewCell *cell;
-////        RoomImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomImageCell" forIndexPath:indexPath];
-////        cell.theImage = [self setImageForAppropriateHotelRoom:self.theRoom];
-//        self.myRoomImageCell.backgroundColor = [UIColor redColor];
-//        return self.myRoomImageCell;
-//        break;
       }
-      case 1:
-        if (self.myRoomInfoCell == nil) {
-          self.myRoomInfoCell = [self.myRoomInfoCell initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomInfoCell"];
-        }
-        self.myRoomInfoCell.backgroundColor = [UIColor blueColor];
-        return self.myRoomInfoCell;
+      case 1: {
+        RoomInfoTableViewCell *theCell = [tableView dequeueReusableCellWithIdentifier:@"RoomInfoCell" forIndexPath:indexPath];
+        theCell.roomNumberLabel.text = [NSString stringWithFormat:@"Room #%@",self.theRoom.number];
+        theCell.roomRateLabel.text = [NSString stringWithFormat:@"Rate $%@",self.theRoom.rate];
+        theCell.roomRatingLabel.text = [NSString stringWithFormat:@"Rating %@",self.theRoom.rating];
+        theCell.numberOfBedsLabel.text = [NSString stringWithFormat:@"Beds %@",self.theRoom.beds];
+        theCell.backgroundColor = [UIColor blackColor];
+        theCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return theCell;
         break;
-      case 2:
-        if (self.myRoomDatesCell == nil) {
-          self.myRoomDatesCell = [self.myRoomDatesCell initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomDatesCell"];
-        }
-        self.myRoomDatesCell.backgroundColor = [UIColor whiteColor];
-        return self.myRoomDatesCell;
+      }
+      case 2: {
+        CheckIn_OutTableViewCell *theCell = [tableView dequeueReusableCellWithIdentifier:@"RoomDatesCell" forIndexPath:indexPath];
+        theCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+        dateFormatter.dateFormat = @"EEEE, MMMM dd";
+        theCell.fromDateLabel.text = @"From :";
+        theCell.toDateLabel.text = @"To :";
+        theCell.fromDate.text = [dateFormatter stringFromDate:self.fromDate];
+        theCell.toDate.text = [dateFormatter stringFromDate:self.toDate];
+        theCell.backgroundColor = [UIColor blackColor];
+        return theCell;
         break;
-      case 3:
-        if (self.myRoomCredentialsCell == nil) {
-          self.myRoomCredentialsCell = [self.myRoomCredentialsCell initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomCredentialsCell"];
-        }
-        self.myRoomCredentialsCell.backgroundColor = [UIColor blackColor];
-        return self.myRoomCredentialsCell;
+      }
+      case 3: {
+        CredentialsTableViewCell *theCell = [tableView dequeueReusableCellWithIdentifier:@"RoomCredentialsCell" forIndexPath:indexPath];
+        theCell.backgroundColor = [UIColor blackColor];
+        theCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        theCell.firstNameLabel.text = @"First Name:";
+        theCell.lastNameLabel.text = @"Last Name:";
+        return theCell;
         break;
-      case 4:
-        if (self.myRoomButtonCell == nil) {
-          self.myRoomButtonCell = [self.myRoomButtonCell initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomButtonCell"];
-        }
-        self.myRoomButtonCell.backgroundColor = [UIColor blackColor];
-        return self.myRoomButtonCell;
+      }
+      case 4: {
+        CheckoutButtonTableViewCell *theCell = [tableView dequeueReusableCellWithIdentifier:@"RoomCheckoutCell" forIndexPath:indexPath];
+        theCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        theCell.backgroundColor = [UIColor blackColor];
+        return theCell;
         break;
         
+      }
       default:
         return [[UITableViewCell alloc]init];
         break;
@@ -166,18 +164,20 @@ NSInteger ROWS = 5;
 -(UIImage *) setImageForAppropriateHotelRoom: (Room *)theRoom {
   
   if([self.theRoom.hotel.name isEqualToString:@"Fancy Estates"]) {
-    self.myImage = [[UIImage alloc] initWithContentsOfFile:@"FancyEstateRoomImage"];
+    self.myImage = [UIImage imageNamed:@"FancyEstateRoomImage"];
   } else if ([self.theRoom.hotel.name isEqualToString:@"Solid Stay"]) {
-    self.myImage = [[UIImage alloc] initWithContentsOfFile:@"SolidStayRoomImage"];
+    self.myImage = [UIImage imageNamed:@"SolidStayRoomImage"];
   } else if ([self.theRoom.hotel.name isEqualToString:@"Decent Inn"]) {
-    self.myImage = [[UIImage alloc] initWithContentsOfFile:@"DecentInnRoomImage"];
+    self.myImage = [UIImage imageNamed:@"DecentInnRoomImage"];
   } else if ([self.theRoom.hotel.name isEqualToString:@"Okay Motel"]) {
-    self.myImage = [[UIImage alloc] initWithContentsOfFile:@"OKRoomImage"];
+    self.myImage = [UIImage imageNamed:@"OKRoomImage"];
   } else {
-    self.myImage = [[UIImage alloc] initWithContentsOfFile:@"PlaceHolderImage"];
+    self.myImage = [UIImage imageNamed:@"PlaceHolderImage"];
   }
   return self.myImage;
 }
+
+
 
 
 @end

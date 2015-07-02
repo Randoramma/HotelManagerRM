@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface CredentialsTableViewCell : UITableViewCell
-
+@property (strong, nonatomic) UILabel* firstNameLabel;
+@property (strong, nonatomic) UITextField* firstNameField;
+@property (strong, nonatomic) UILabel* lastNameLabel;
+@property (strong, nonatomic) UITextField* lastNameField;
 @end

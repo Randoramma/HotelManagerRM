@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface CheckoutButtonTableViewCell : UITableViewCell
-
+@property (strong, nonatomic) UIButton* myReserveButton;
 @end
