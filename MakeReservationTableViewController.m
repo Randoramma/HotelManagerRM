@@ -142,9 +142,10 @@ NSInteger ROWS = 5;
         break;
       }
       case 4: {
-        
-        
-        return self.myRoomButtonCell;
+        CheckoutButtonTableViewCell *theCell = [tableView dequeueReusableCellWithIdentifier:@"RoomCheckoutCell" forIndexPath:indexPath];
+        theCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        theCell.backgroundColor = [UIColor blackColor];
+        return theCell;
         break;
         
       }

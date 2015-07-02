@@ -36,7 +36,7 @@
 
 -(void) setConstranitsForCellViewWithViews: (NSDictionary *)views {
   // map out what you want the cell to look like.
-  NSArray *hNumberLayoutConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-8-[roomNumberLabel]" options:0 metrics:nil views:views];
+  NSArray *hNumberLayoutConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[roomNumberLabel]" options:0 metrics:nil views:views];
   [self.contentView addConstraints:hNumberLayoutConstraint];
   NSArray *vNumberLayoutConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[roomNumberLabel]" options:0 metrics:nil views:views];
   [self.contentView addConstraints:vNumberLayoutConstraint];
