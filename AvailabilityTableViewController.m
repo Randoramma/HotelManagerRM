@@ -19,6 +19,7 @@
 @interface AvailabilityTableViewController () <NSFetchedResultsControllerDelegate>
 @property (strong, nonatomic) NSArray *myRooms;
 @property (strong, nonatomic) NSFetchedResultsController *fetchResultsController;
+@property (strong, nonatomic) AppDelegate *myAppDelegate;
 
 
 @end
@@ -46,8 +47,7 @@
 
 -(void)viewDidAppear:(BOOL)animated {
   // declare this VC as the delegate of the AppDelegate class.
-  AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-  self.fetchResultsController = [appDelegate.hotelService fetchAvailableRoomsForFromDate:self.fromDate toDate:self.toDate];
+  self.fetchResultsController = [_myAppDelegate.hotelService fetchAvailableRoomsForFromDate:self.fromDate toDate:self.toDate];
   self.fetchResultsController.delegate = self;
   NSError *theFetchError;
   [NSFetchedResultsController deleteCacheWithName:self.fetchResultsController.cacheName];

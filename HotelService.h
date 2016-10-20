@@ -15,7 +15,7 @@
 @interface HotelService : NSObject
 @property (strong,nonatomic) CoreDataStack *coreDataStack;
 
--(instancetype) initCoreDataStack: (CoreDataStack *)coreDataStack;
+-(instancetype) initWithCoreDataStack: (CoreDataStack *)coreDataStack;
 
 -(void) saveContext;
 

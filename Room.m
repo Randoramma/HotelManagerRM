@@ -13,11 +13,11 @@
 
 @implementation Room
 
-@dynamic beds;
-@dynamic number;
-@dynamic rate;
-@dynamic rating;
-@dynamic hotel;
-@dynamic reservation;
+@synthesize beds;
+@synthesize number;
+@synthesize rate;
+@synthesize rating;
+@synthesize hotel;
+@synthesize reservation;
 
 @end

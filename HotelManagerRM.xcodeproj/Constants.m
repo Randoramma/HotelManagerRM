@@ -19,5 +19,13 @@ NSString* const TITLE_FONT = @"Helvetica Neue";
 
 const CGFloat TABLE_ROW_HEIGHT = 60; 
 
+//Core Data constants.
+NSString * const URL_PATH_FOR_MOMD = @"HotelManagerRM";
+NSString * const URL_PATH_FOR_SQLITE_DB = @"HotelManagerRM.sqlite";
 
+//Core Data entities.  
+NSString * const GUEST_ENTITY = @"Guest";
+NSString * const HOTEL_ENTITY = @"Hotel";
+NSString * const ROOM_ENTITY = @"Room";
+NSString * const RESERVATION_ENTITY = @"Reservation"; 
 @end

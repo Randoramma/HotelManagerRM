@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "CoreDataStack.h"
 @class HotelService;
 @class Reservation;
 @class AppDelegate; 
@@ -19,7 +20,7 @@
 @property (nonatomic, retain) NSNumber * memberNumber;
 @property (nonatomic, retain) NSSet *reservations;
 
-+(Guest*)setupGuestWithFirstName: (NSString *)theFirstName LastName:(NSString*)theLastName Context: (NSManagedObjectContext*)theContext;
++(Guest *)setupGuestWithFirstName:(NSString *)theFirstName LastName:(NSString *)theLastName Context: (NSManagedObjectContext*)theContext;
 @end
 
 

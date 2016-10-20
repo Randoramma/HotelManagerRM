@@ -15,6 +15,7 @@
 @interface RoomTableViewController ()
 @property (strong, nonatomic) UITableView *myTableView;
 @property (strong, nonatomic) NSArray *theRooms;
+@property (strong, nonatomic) AppDelegate *myAppDelegate;
 @end
 
 @implementation RoomTableViewController
@@ -32,8 +33,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-  HotelService *hotelService = appDelegate.hotelService;
+  HotelService *hotelService = _myAppDelegate.hotelService;
   self.theRooms = [hotelService fetchAllRoomsForHotel:self.theHotel.name];
   [self.myTableView registerClass:[UITableViewCell class] forCellReuseIdentifier: @"RoomCell"];
   self.myTableView.dataSource = self;
@@ -47,7 +47,7 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated {
-  
+  [super viewDidAppear:animated];
 }
 
 #pragma mark - Table view data source

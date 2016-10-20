@@ -26,7 +26,7 @@
   [self.window makeKeyAndVisible];
   // initialize Core data Stack and HotelService.
   CoreDataStack *coreDataStack = [[CoreDataStack alloc] init];
-  self.hotelService = [[HotelService alloc] initCoreDataStack:coreDataStack]; 
+  self.hotelService = [[HotelService alloc] initWithCoreDataStack:coreDataStack];
 
   //FromDateViewController *fromDateVC = [[FromDateViewController alloc] init];
   LoadViewControllerTableViewController *loadVC = [[LoadViewControllerTableViewController alloc] init];

@@ -9,19 +9,29 @@
 #import "Guest.h"
 #import "Reservation.h"
 #import "HotelService.h"
-#import "CoreDataStack.h"
+#import "Constants.h"
 
 
 @implementation Guest
 
-@dynamic firstName;
-@dynamic lastName;
-@dynamic memberNumber;
-@dynamic reservations;
+@synthesize firstName;
+@synthesize lastName;
+@synthesize memberNumber;
+@synthesize reservations;
 
--(Guest *)setupGuestWithFirstName:(NSString *)theFirstName LastName:(NSString *)theLastName Context: (NSManagedObjectContext*)theContext {
+
+/**
+ Method setting up Entity and insert into MOC with relevent information. Subititution for Init.
+
+ @param theFirstName NSString: The guest's first name.
+ @param theLastName  NSString: The guest's last name.
+ @param theContext   MOC: The context the Guest is inserted into.
+
+ @return The Guest Entity.
+ */
++(Guest *)setupGuestWithFirstName:(NSString *)theFirstName LastName:(NSString *)theLastName Context: (NSManagedObjectContext*)theContext {
   
-  Guest *guest = [NSEntityDescription insertNewObjectForEntityForName:@"Guest" inManagedObjectContext:theContext];
+  Guest *guest = [NSEntityDescription insertNewObjectForEntityForName:GUEST_ENTITY inManagedObjectContext:theContext];
   
   NSNumber *theMemberNumber = [NSNumber numberWithInteger:16];
   guest.firstName = theFirstName;
@@ -30,7 +40,7 @@
   
   NSError *saveError;
   
-  [self.managedObjectContext save:&saveError];
+  [theContext save:&saveError];
   
   if (saveError) {
     NSLog(@"%@", saveError);

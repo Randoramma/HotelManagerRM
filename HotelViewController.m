@@ -19,6 +19,7 @@
 
 @property (strong, nonatomic) UITableView *myTableView;
 @property (strong, nonatomic) NSArray *myHotels;
+@property (strong, nonatomic) AppDelegate *myAppDelegate;
 
 
 @end
@@ -46,8 +47,7 @@
 -(void)viewDidLoad {
   [super viewDidLoad];
   // declare this VC as the delegate of the AppDelegate class.
-  AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-  HotelService *hotelService = appDelegate.hotelService; 
+  HotelService *hotelService = _myAppDelegate.hotelService;
   // fetch list of hotels from hotel service;
   self.myHotels = hotelService.fetchAllHotels;
 
