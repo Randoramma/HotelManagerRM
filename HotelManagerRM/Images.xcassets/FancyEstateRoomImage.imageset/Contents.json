@@ -2,15 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "fancy_room _1x.jpg",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "FancyEstateRoomImage@2x.png"
+      "filename" : "fancy_room copy_2x.jpg",
+      "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "fancy_room_3X.jpg",
       "scale" : "3x"
     }
   ],

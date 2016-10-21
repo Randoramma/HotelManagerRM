@@ -3,6 +3,7 @@
     {
                 "name" : "Fancy Estates",
                 "location" : "Downtown",
+                "imageName" : "FancyEstateRoomImage",
                 "stars" : 4,
                 "rooms" : [
                 {
@@ -36,6 +37,7 @@
     },
                 {
                 "name" : "Solid Stay",
+                "imageName" : "SolidStayRoomImage",
                 "location" : "Fremont",
                 "stars" : 3,
                 "rooms" : [
@@ -70,6 +72,7 @@
                 },
                 {
                 "name" : "Decent Inn",
+                "imageName" : "DecentInnRoomImage",
                 "location" : "Pioneer Square",
                 "stars" : 3,
                 "rooms" : [
@@ -104,6 +107,7 @@
                 },
                 {
                 "name" : "Okay Motel",
+                "imageName" : "OKRoomImage", 
                 "location" : "Sodo",
                 "stars" : 1,
                 "rooms" : [

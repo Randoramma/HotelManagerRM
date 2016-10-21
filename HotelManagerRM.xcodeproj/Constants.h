@@ -25,6 +25,9 @@ extern NSString * const URL_PATH_FOR_SQLITE_DB;
 extern NSString * const GUEST_ENTITY;
 extern NSString * const HOTEL_ENTITY;
 extern NSString * const ROOM_ENTITY;
-extern NSString * const RESERVATION_ENTITY; 
+extern NSString * const RESERVATION_ENTITY;
+// TVC cell id's.
+extern NSString * const OPTION_CELL_ID;
+extern NSString * const HOTEL_CELL_ID; 
 @interface Constants : NSObject
 @end

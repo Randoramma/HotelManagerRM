@@ -29,7 +29,8 @@
   self.hotelService = [[HotelService alloc] initWithCoreDataStack:coreDataStack];
 
   //FromDateViewController *fromDateVC = [[FromDateViewController alloc] init];
-  LoadViewControllerTableViewController *loadVC = [[LoadViewControllerTableViewController alloc] init];
+  LoadViewControllerTableViewController *loadVC = [[LoadViewControllerTableViewController alloc]
+                                                   initWithAppDelegate:self];
   UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:loadVC];
   self.window.rootViewController = navController;
   // must include to test for initial seeding of objects if applicable.

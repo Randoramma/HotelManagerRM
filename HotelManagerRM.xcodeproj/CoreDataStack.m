@@ -21,9 +21,9 @@
 
 @implementation CoreDataStack
 
-@synthesize managedObjectContext = _managedObjectContext;
-@synthesize managedObjectModel = _managedObjectModel;
-@synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+@synthesize managedObjectContext = managedObjectContext;
+@synthesize managedObjectModel = managedObjectModel;
+@synthesize persistentStoreCoordinator = persistentStoreCoordinator;
 
 
 - (instancetype)initForTesting {
@@ -35,6 +35,17 @@
 } // initForTesting
 #pragma mark - Core Data stack
 
+-(instancetype)init {
+  self = [super init];
+  
+  
+  
+  
+  
+  
+  return self;
+}
+
 
 /**
  Method applies json file data to populate MOC if no data exists currently.
@@ -44,12 +55,12 @@
   NSFetchRequest *jsonDataFetch = [[NSFetchRequest alloc] initWithEntityName:HOTEL_ENTITY];
   NSError *jsonDataFetchError;
   
-  NSInteger theResult = [self.managedObjectContext countForFetchRequest:jsonDataFetch error:&jsonDataFetchError];
+  NSInteger theResult = [managedObjectContext countForFetchRequest:jsonDataFetch error:&jsonDataFetchError];
   NSLog(@" %ld", (long)theResult);
   if (theResult == 0) {
-    [JSONParser hotelsFromJSONData: (self.managedObjectContext)];
+    [JSONParser hotelsFromJSONData: (managedObjectContext)];
     
-  }
+  } 
 }
 
 - (NSURL *)applicationDocumentsDirectory {
@@ -65,12 +76,12 @@
  */
 - (NSManagedObjectModel *)managedObjectModel {
   // The managed object model for the application. It is a fatal error for the application not to be able to find and load its model.
-  if (_managedObjectModel != nil) {
-    return _managedObjectModel;
+  if (managedObjectModel != nil) {
+    return managedObjectModel;
   }
   NSURL *modelURL = [[NSBundle mainBundle] URLForResource:URL_PATH_FOR_MOMD withExtension:@"momd"];
-  _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
-  return _managedObjectModel;
+  managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+  return managedObjectModel;
 }
 
 
@@ -81,13 +92,13 @@
  */
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
   // The persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it.
-  if (_persistentStoreCoordinator != nil) {
-    return _persistentStoreCoordinator;
+  if (persistentStoreCoordinator != nil) {
+    return persistentStoreCoordinator;
   }
   
   // Create the coordinator and store
   
-  _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
+  persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
   NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:URL_PATH_FOR_SQLITE_DB];
   NSError *error = nil;
   NSString *failureReason = @"There was an error creating or loading the application's saved data.";
@@ -99,7 +110,7 @@
     storeType = NSSQLiteStoreType;
   }
   
-  if (![_persistentStoreCoordinator addPersistentStoreWithType:storeType configuration:nil URL:storeURL options:nil error:&error]) {
+  if (![persistentStoreCoordinator addPersistentStoreWithType:storeType configuration:nil URL:storeURL options:nil error:&error]) {
     // Report any error we got.
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     dict[NSLocalizedDescriptionKey] = @"Failed to initialize the application's saved data";
@@ -111,7 +122,7 @@
     abort();
   }
   
-  return _persistentStoreCoordinator;
+  return persistentStoreCoordinator;
 }
 
 
@@ -122,8 +133,8 @@
  */
 - (NSManagedObjectContext *)managedObjectContext {
   // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.)
-  if (_managedObjectContext != nil) {
-    return _managedObjectContext;
+  if (managedObjectContext != nil) {
+    return managedObjectContext;
   }
   
   NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
@@ -131,9 +142,9 @@
     return nil;
   }
   // main MOC for the project.
-  _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-  [_managedObjectContext setPersistentStoreCoordinator:coordinator];
-  return _managedObjectContext;
+  managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+  [managedObjectContext setPersistentStoreCoordinator:coordinator];
+  return managedObjectContext;
 }
 
 #pragma mark - Core Data Saving support
@@ -143,9 +154,9 @@
  Method checks for a valid MOC and if changes have been made.  Then saves the MOC to the PSC.  
  */
 - (void)saveContext {
-  if (_managedObjectContext != nil) {
+  if (managedObjectContext != nil) {
     NSError *error = nil;
-    if ([_managedObjectContext hasChanges] && ![_managedObjectContext save:&error]) {
+    if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
 
       NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
       abort();

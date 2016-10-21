@@ -15,11 +15,24 @@
 
 
 @interface LoadViewControllerTableViewController ()
-@property (strong, nonatomic) NSArray* myOptions;
+@property (strong, nonatomic) NSArray * myOptions;
+@property (strong, nonatomic) NSString * myTitle;
+@property (strong, nonatomic) AppDelegate * myAppDelegate;
 
 @end
 
+/**
+ The initial VC that the app starts with.  Provides user with Options: "Hotel List", "Available Rooms", and "Customer Reservations"
+ */
 @implementation LoadViewControllerTableViewController
+
+-(instancetype)initWithAppDelegate:(AppDelegate *)theAppDelegate {
+  _myAppDelegate = theAppDelegate;
+  self = [super init]; 
+  
+  return self;
+}
+
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -28,9 +41,9 @@
   // self.clearsSelectionOnViewWillAppear = NO;
   
   // instantiate options menu
-  self.title = @"Hotel Manager";
-  self.myOptions = @[@"Hotel List", @"Available Rooms", @"Customer Reservations"];
-  [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"optionCell"];
+  _myTitle = @"Hotel Manager";
+  _myOptions = @[@"Hotel List", @"Available Rooms", @"Customer Reservations"];
+  [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:OPTION_CELL_ID];
   self.view.backgroundColor = [UIColor blackColor];
   self.tableView.tableFooterView = [[UIView alloc] init];
   
@@ -41,7 +54,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
   // Return the number of rows in the section.
-  return self.myOptions.count;
+  return _myOptions.count;
 }
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -49,9 +62,9 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  UITableViewCell *theCell = [tableView dequeueReusableCellWithIdentifier:@"optionCell" forIndexPath:indexPath];
+  UITableViewCell *theCell = [self.tableView dequeueReusableCellWithIdentifier:OPTION_CELL_ID forIndexPath:indexPath];
   
-  theCell.textLabel.text = self.myOptions[indexPath.row];
+  theCell.textLabel.text = _myOptions[indexPath.row];
   theCell.textLabel.textColor = [UIColor whiteColor];
   theCell.backgroundColor = [UIColor blackColor];
   
@@ -62,27 +75,26 @@
   // enable switch statement to call the varying VC's based on row selected..
   
   switch (indexPath.row) {
-    case 0: {
+    case 0: { //"Hotel List"
       // push on the Hotel's List VC.
-      HotelViewController *hotelVC = [[HotelViewController alloc] init];
+      HotelViewController *hotelVC = [[HotelViewController alloc] initWithAppDelegate:_myAppDelegate];
       [self.navigationController pushViewController:hotelVC animated:true];
       break;
     }
       
-    case 1: {
+    case 1: { //"Available Rooms"
       // push on the fromVC.
       FromDateViewController *fromVC = [[FromDateViewController alloc] init];
       [self.navigationController pushViewController:fromVC animated:true];
       break;
     }
       
-    case 2: {
+    case 2: { //"Customer Reservations"
       // push on the list of reservations.
       GuestServicesViewController *guestVC = [[GuestServicesViewController alloc] init];
       [self.navigationController pushViewController:guestVC animated:true];
       break;
     }
-      
       
     default:
       NSLog(@"Got to default");

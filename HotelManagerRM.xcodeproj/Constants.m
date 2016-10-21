@@ -17,7 +17,11 @@ const CGFloat TITLE_FONT_SIZE = 15;
 const CGFloat NAV_BAR_FONT_SIZE = 18;
 NSString* const TITLE_FONT = @"Helvetica Neue";
 
-const CGFloat TABLE_ROW_HEIGHT = 60; 
+const CGFloat TABLE_ROW_HEIGHT = 100;
+
+// cell Identifiers
+NSString * const OPTION_CELL_ID = @"optionCell";
+NSString * const HOTEL_CELL_ID = @"hotelCell";
 
 //Core Data constants.
 NSString * const URL_PATH_FOR_MOMD = @"HotelManagerRM";
