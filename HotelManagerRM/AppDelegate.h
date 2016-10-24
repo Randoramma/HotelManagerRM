@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
+#import "CDPersistenceController.h"
 #import "HotelService.h"
 
 
@@ -15,6 +16,8 @@
 @property (strong, nonatomic) UIWindow *window;
 // post SRP methods / properties 
 @property (readonly, strong, nonatomic) HotelService *hotelService;
+@property (strong, readwrite) CDPersistenceController *myPersistenceController;
 
+- (void)completeUserInterface;
 @end
 

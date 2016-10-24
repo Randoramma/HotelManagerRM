@@ -15,7 +15,12 @@
 
 
 
-//-initWithContents
+
+/**
+ Method retrieving the JSON from the seed file and parsing into Core Data entities and saving the context.  This method deals directly with a MOC.
+
+ @param context The context teh entities are populated within.  (Main?)  
+ */
 +(void) hotelsFromJSONData: (NSManagedObjectContext*)context {
 
   NSString *filePath = [[NSBundle mainBundle]pathForResource:@"seed" ofType:@"json"];
@@ -41,6 +46,7 @@
       Hotel *myHotel = [NSEntityDescription insertNewObjectForEntityForName:@"Hotel" inManagedObjectContext:context];
       // assing the properties.
       myHotel.name = hotelDictionary[@"name"];
+      myHotel.imageName = hotelDictionary[@"imageName"]; 
       myHotel.location = hotelDictionary[@"location"];
       myHotel.rating = hotelDictionary[@"stars"];
       // each room is an array of dictionaries.  This process is the same as the hotel above.

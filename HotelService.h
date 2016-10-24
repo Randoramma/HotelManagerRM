@@ -9,21 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "Reservation.h"
 @class Room;
-@class Hotel; 
-@class CoreDataStack;
+@class Hotel;
 
 @interface HotelService : NSObject
-@property (strong,nonatomic) CoreDataStack *coreDataStack;
 
--(instancetype) initCoreDataStack: (CoreDataStack *)coreDataStack;
-
--(void) saveContext;
-
--(NSArray*) fetchAllHotels;
-
--(NSArray *) fetchAllRoomsForHotel: (NSString *)theHotelName;
-
--(NSFetchedResultsController *)fetchAvailableRoomsForFromDate:(NSDate *)fromDate toDate:(NSDate *)toDate;
-
--(Reservation *)bookReservationForRoom:(Room *)room startDate:(NSDate *)startDate endDate:(NSDate *)endDate withGuest:(Guest*)guest;
+-(NSArray *)fetchAllHotelswithMOC: (NSManagedObjectContext *)theContext;
+-(NSArray *) fetchAllRoomsForHotel: (NSString *)theHotelName withMOC:(NSManagedObjectContext *)theContext;
+-(Reservation *)bookReservationForRoom:(Room *)room startDate:(NSDate *)startDate endDate:(NSDate *)endDate withGuest:(Guest *)guest usingMOC:(NSManagedObjectContext*) theContext;
+-(NSFetchedResultsController *) fetchAvailableRoomsForFromDate:(NSDate *)fromDate
+                                                        toDate:(NSDate *)toDate
+                                                   withContext: (NSManagedObjectContext *)theContext;
 @end

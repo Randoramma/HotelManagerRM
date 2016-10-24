@@ -13,10 +13,10 @@
 
 @implementation Reservation
 
-@dynamic cost;
-@dynamic endDate;
-@dynamic startDate;
-@dynamic guest;
-@dynamic rooms;
+@synthesize cost;
+@synthesize endDate;
+@synthesize startDate;
+@synthesize guest;
+@synthesize rooms;
 
 @end
