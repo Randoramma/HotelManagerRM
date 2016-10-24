@@ -89,9 +89,7 @@
  @param views The descriptions H and V for the items in the cell.
  */
 -(void) setConstranitsForCellViewWithViews: (NSDictionary *)views {
-  
-  NSMutableArray *layoutContstraints = [[NSMutableArray alloc] init];
-  
+
   NSArray *hImageLayoutConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-8-[cellImageView(150)]-8-[myHotelName]-8-|" options:0 metrics:nil views:views];
   [self.contentView addConstraints:hImageLayoutConstraint];
   NSArray *vImageLayoutConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[cellImageView]-8-|" options:0 metrics:nil views:views];

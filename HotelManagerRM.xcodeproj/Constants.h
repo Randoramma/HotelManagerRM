@@ -30,4 +30,7 @@ extern NSString * const RESERVATION_ENTITY;
 extern NSString * const OPTION_CELL_ID;
 extern NSString * const HOTEL_CELL_ID; 
 @interface Constants : NSObject
+
 @end
+
+static NSString * const kCDDataBaseManagerErrorDomain = @"CD_HOTEL_MANAGER_ErrorDomain";

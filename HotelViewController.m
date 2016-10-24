@@ -21,6 +21,7 @@
 @property (strong, nonatomic) UITableView *myTableView;
 @property (strong, nonatomic) NSArray *myHotels;
 @property (strong, nonatomic) AppDelegate *myAppDelegate;
+@property (strong, atomic) NSManagedObjectContext *myContext; 
 
 
 @end

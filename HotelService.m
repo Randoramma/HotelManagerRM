@@ -10,7 +10,6 @@
 #import "HotelService.h"
 #import "Hotel.h"
 #import "Guest.h"
-#import "CoreDataStack.h"
 #import "Reservation.h"
 #import "Room.h"
 
@@ -18,36 +17,20 @@
 @end
 
 @implementation HotelService
-// instantiate a new CoreStack (type NSObject) if none exist.
-
-/**
- Init for the HotelService object.  This class handles all requests from the app that would need to retrieve or manipulate information from persistent store.
-
- @param coreDataStack the Core Data Stack associated with the service.
-
- @return The object providing persistence function to the controller.
- */
--(instancetype)initWithCoreDataStack:(CoreDataStack *)coreDataStack {
-  self = [super init];
-  
-  if (self) {
-    self.coreDataStack = coreDataStack;
-  }
-  return self;
-} // initCoreDataStack
 
 /**
  Method retrieving all hotel objects from persistent store.
 
+ @param theContext = the NSManagedContext instance.
  @return NSArray with all hotel objects.
  */
--(NSArray *)fetchAllHotels {
+-(NSArray *)fetchAllHotelswithMOC: (NSManagedObjectContext *)theContext {
 
   NSFetchRequest *hotelListFetch = [NSFetchRequest fetchRequestWithEntityName:@"Hotel"];
   NSError *fetchError;
   
-  NSArray *hotelList = [self.coreDataStack.managedObjectContext executeFetchRequest:hotelListFetch
-                                                                              error:&fetchError];
+  NSArray *hotelList = [theContext executeFetchRequest:hotelListFetch
+                                                 error:&fetchError];
   if (fetchError) {
     NSLog(@"%@", fetchError.localizedDescription);
     return nil;
@@ -60,10 +43,11 @@
  Method returning all rooms for a particular hotel entity.
 
  @param theHotelName The name of the hotel entity.
+ @param theContext = the NSManagedContext instance.
 
  @return NSArray of all the Room objects for the hotel.
  */
--(NSArray *) fetchAllRoomsForHotel: (NSString *)theHotelName {
+-(NSArray *) fetchAllRoomsForHotel: (NSString *)theHotelName withMOC:(NSManagedObjectContext *)theContext {
   NSFetchRequest *roomFetchList = [NSFetchRequest fetchRequestWithEntityName:ROOM_ENTITY];
   /* Keep in mind, that the predicate is being called on the 'Room' entity and its relationships.  So we must 
    predicate on teh format of the room and thus hotel.name is lowercase as it is stated in the room relationship."
@@ -71,8 +55,8 @@
   NSPredicate *thePredicate = [NSPredicate predicateWithFormat:@"hotel.name == %@", theHotelName];
   roomFetchList.predicate = thePredicate;
   NSError  *theError;
-  NSArray *theRoomList = [self.coreDataStack.managedObjectContext executeFetchRequest:roomFetchList
-                                                                                error:&theError];
+  NSArray *theRoomList = [theContext executeFetchRequest:roomFetchList
+                                                   error:&theError];
   
   if (theError) {
     NSLog(@"%@",theError.localizedDescription);
@@ -90,13 +74,14 @@
  @param startDate The Start Date.  Format =
  @param endDate   The End Date. Format =
  @param guest     The Guest Entity associated.
+ @param theContext = the NSManagedContext instance.
 
  @return The Reservation Object.
  */
--(Reservation *)bookReservationForRoom:(Room *)room startDate:(NSDate *)startDate endDate:(NSDate *)endDate withGuest:(Guest *)guest {
+-(Reservation *)bookReservationForRoom:(Room *)room startDate:(NSDate *)startDate endDate:(NSDate *)endDate withGuest:(Guest *)guest usingMOC:(NSManagedObjectContext*) theContext{
   
   Reservation *reservation = [NSEntityDescription insertNewObjectForEntityForName:RESERVATION_ENTITY
-                                                           inManagedObjectContext:self.coreDataStack.managedObjectContext];
+                                                           inManagedObjectContext:theContext];
   reservation.rooms = room;
   reservation.startDate = startDate;
   reservation.endDate = endDate;
@@ -104,7 +89,7 @@
   
   NSError *saveError;
   
-  [self.coreDataStack.managedObjectContext save:&saveError];
+  [theContext save:&saveError];
   
   if (saveError) {
     NSLog(@"%@", saveError); 
@@ -124,7 +109,8 @@
  @return NSFetchedResultsController: the available rooms between the dates.
  */
 -(NSFetchedResultsController *) fetchAvailableRoomsForFromDate:(NSDate *)fromDate
-                                                        toDate:(NSDate *)toDate {
+                                                        toDate:(NSDate *)toDate
+                                                   withContext: (NSManagedObjectContext *)theContext {
   // delete previous cache
   [NSFetchedResultsController deleteCacheWithName:@"AvailableRoomCache"];
   
@@ -134,8 +120,7 @@
   NSPredicate *thePredicate = [NSPredicate predicateWithFormat:@"startDate <= %@ AND endDate >= %@", toDate, fromDate];
   theRequest.predicate = thePredicate;
   NSError *theFetchError;
-  NSArray *fetchResults = [self.coreDataStack.managedObjectContext executeFetchRequest:theRequest
-                                                                                 error:&theFetchError];
+  NSArray *fetchResults = [theContext executeFetchRequest:theRequest error:&theFetchError];
   
   // add any rooms with reservations to the badRooms array.
   NSMutableArray *bookedRooms = [[NSMutableArray alloc] init];
@@ -153,19 +138,11 @@
   
   NSFetchedResultsController *fetchResultsController = [[NSFetchedResultsController alloc]
                                                         initWithFetchRequest:finalRoomRequest
-                                                        managedObjectContext:self.coreDataStack.managedObjectContext
+                                                        managedObjectContext:theContext
                                                           sectionNameKeyPath:@"hotel.name"
                                                                    cacheName:@"AvailableRoomCache"];
   return fetchResultsController;
 
 } // fetchAvailableRoomsForFromDate
-
-
-/**
- Method requesting save to persistent Store.  
- */
-- (void)saveContext {
-  [self.coreDataStack saveContext];
-} // saveContext
 
 @end

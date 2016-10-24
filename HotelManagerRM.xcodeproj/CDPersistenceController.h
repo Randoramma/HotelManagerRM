@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-typedef void (^InitCallbackBlock)(void);
+typedef void (^CDPersistenceControllerCallbackBlock)(BOOL suceeded, NSError *error);
 @interface CDPersistenceController : NSObject
 
 /**
@@ -17,19 +17,9 @@ typedef void (^InitCallbackBlock)(void);
  */
 @property (strong, readonly) NSManagedObjectContext *theMainMOC;
 
-/**
- Nitification to the AppDelegate that the Persistence layer is ready.
 
- @param callback Callback state of Persistence Manager.
-
- @return self;
- */
--(id) initWithCallback: (InitCallbackBlock)callback;
-
-
-/**
- Method to save context to PSC.  
- */
--(void) save;
+- (instancetype)initWithModelName:(NSString *)modelName;
+- (void) initializeCoreDataWithCompletion: (CDPersistenceControllerCallbackBlock)returnblock;
+- (void)saveDataWithReturnBlock:(CDPersistenceControllerCallbackBlock)returnBlock;
 
 @end

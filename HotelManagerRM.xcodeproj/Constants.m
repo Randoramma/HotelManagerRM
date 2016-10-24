@@ -31,5 +31,7 @@ NSString * const URL_PATH_FOR_SQLITE_DB = @"HotelManagerRM.sqlite";
 NSString * const GUEST_ENTITY = @"Guest";
 NSString * const HOTEL_ENTITY = @"Hotel";
 NSString * const ROOM_ENTITY = @"Room";
-NSString * const RESERVATION_ENTITY = @"Reservation"; 
+NSString * const RESERVATION_ENTITY = @"Reservation";
+
+
 @end
