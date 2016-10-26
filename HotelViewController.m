@@ -30,22 +30,12 @@
  View Controller allowing user to view the available Hotels.  User can select a Cell from the list of hotels and observe the list of rooms for that hotel.
  */
 @implementation HotelViewController
-
 @synthesize myTableView;
-/**
- Custom init providing a reference to the AppDelegate.
- 
- @param theAppDelegate AppDelegate: reference to the classes app Delegate.
- 
- @return self
- */
--(instancetype) initWithAppDelegate:(AppDelegate *)theAppDelegate {
-    _myAppDelegate = theAppDelegate;
-    self = [super init];
-    
-    return self;
-}
 
+
+/**
+ *  View Controller lifecycle method called prior to viewDidLoad.  Programatic layout best to go here before any IB meddling.
+ */
 -(void)loadView {
     // build out the root view
     UIView *theRootView = [[UIView alloc] init];
@@ -66,16 +56,14 @@
 
 -(void)viewDidLoad {
     [super viewDidLoad];
-    
-    _myPersistenceController = [[CDPersistenceController alloc] init]; 
-    [_myPersistenceController initializeCoreDataWithCompletion:^(BOOL succeeded, NSError *error) {
+    // must initialize the controller prior to implementing it.  In future builds this needs to be in a seperate class handling all the fetches while
+    self.myPersistenceController = [[CDPersistenceController alloc] init];
+    [self.myPersistenceController initializeCoreDataWithCompletion:^(BOOL succeeded, NSError *error) {
         
         if (succeeded) {
-            NSFetchRequest *hotelListFetch = [NSFetchRequest fetchRequestWithEntityName:@"Hotel"];
+            NSFetchRequest *hotelListFetch = [NSFetchRequest fetchRequestWithEntityName:HOTEL_ENTITY];
             NSError *fetchError;
-            
             NSManagedObjectContext *theContext = [_myPersistenceController theMainMOC];
-            
             NSArray *hotelList = [theContext executeFetchRequest:hotelListFetch
                                                            error:&fetchError];
             if (fetchError) {
@@ -142,9 +130,7 @@
     NSArray *tableViewVertical = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[tableView]|" options:0 metrics:nil views:views];
     [theRootView addConstraints:tableViewVertical];
     NSArray *tableViewHorizontal = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[tableView]|" options:0 metrics:nil views:views];
-    
     [theRootView addConstraints:tableViewHorizontal];
-    
     
 }
 

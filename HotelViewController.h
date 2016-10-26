@@ -9,6 +9,5 @@
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
 @interface HotelViewController : UIViewController
--(instancetype) initWithAppDelegate:(AppDelegate *)theAppDelegate;
 
 @end

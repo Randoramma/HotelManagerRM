@@ -77,7 +77,7 @@
   switch (indexPath.row) {
     case 0: { //"Hotel List"
       // push on the Hotel's List VC.
-      HotelViewController *hotelVC = [[HotelViewController alloc] initWithAppDelegate:_myAppDelegate];
+      HotelViewController *hotelVC = [[HotelViewController alloc] init];
       [self.navigationController pushViewController:hotelVC animated:true];
       break;
     }
