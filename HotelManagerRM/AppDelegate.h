@@ -14,10 +14,7 @@
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 @property (strong, nonatomic) UIWindow *window;
-// post SRP methods / properties 
-@property (readonly, strong, nonatomic) HotelService *hotelService;
-@property (strong, readwrite) CDPersistenceController *myPersistenceController;
-
+// post SRP methods / properties
 - (void)completeUserInterface;
 @end
 

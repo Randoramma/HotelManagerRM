@@ -47,7 +47,7 @@
 
 -(void)viewDidAppear:(BOOL)animated {
   // declare this VC as the delegate of the AppDelegate class.
-  self.fetchResultsController = [_myAppDelegate.hotelService fetchAvailableRoomsForFromDate:self.fromDate toDate:self.toDate];
+//  self.fetchResultsController = [_myAppDelegate.hotelService fetchAvailableRoomsForFromDate:self.fromDate toDate:self.toDate];
   self.fetchResultsController.delegate = self;
   NSError *theFetchError;
   [NSFetchedResultsController deleteCacheWithName:self.fetchResultsController.cacheName];

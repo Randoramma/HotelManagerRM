@@ -33,8 +33,8 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  HotelService *hotelService = _myAppDelegate.hotelService;
-  self.theRooms = [hotelService fetchAllRoomsForHotel:self.theHotel.name];
+  //HotelService *hotelService = _myAppDelegate.hotelService;
+  //self.theRooms = [hotelService fetchAllRoomsForHotel:self.theHotel.name];
   [self.myTableView registerClass:[UITableViewCell class] forCellReuseIdentifier: @"RoomCell"];
   self.myTableView.dataSource = self;
   self.myTableView.delegate = self;

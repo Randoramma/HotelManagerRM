@@ -7,16 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CDPersistenceController.h"
 #import "Reservation.h"
 @class Room;
 @class Hotel;
 
 @interface HotelService : NSObject
-
--(NSArray *)fetchAllHotelswithMOC: (NSManagedObjectContext *)theContext;
--(NSArray *) fetchAllRoomsForHotel: (NSString *)theHotelName withMOC:(NSManagedObjectContext *)theContext;
--(Reservation *)bookReservationForRoom:(Room *)room startDate:(NSDate *)startDate endDate:(NSDate *)endDate withGuest:(Guest *)guest usingMOC:(NSManagedObjectContext*) theContext;
+@property (strong) CDPersistenceController *myPersistenceController;
+-(instancetype) init; 
+-(NSArray *)fetchAllHotels;
+-(NSArray *) fetchAllRoomsForHotel: (NSString *)theHotelName;
+-(Reservation *)bookReservationForRoom:(Room *)room startDate:(NSDate *)startDate endDate:(NSDate *)endDate withGuest:(Guest *)guest;
 -(NSFetchedResultsController *) fetchAvailableRoomsForFromDate:(NSDate *)fromDate
-                                                        toDate:(NSDate *)toDate
-                                                   withContext: (NSManagedObjectContext *)theContext;
+                                                        toDate:(NSDate *)toDate;
 @end

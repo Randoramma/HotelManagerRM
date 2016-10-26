@@ -7,8 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "CoreDataStack.h"
-
+#import "CDPersistenceController.h"
 
 @interface JSONParser : NSObject
 @property (strong, nonatomic) NSArray *Hotels;
