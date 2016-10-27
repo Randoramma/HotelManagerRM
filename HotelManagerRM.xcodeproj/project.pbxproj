@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		D007EE5F1B169502000FE400 /* HotelManagerGraphicsKit.m in Sources */ = {isa = PBXBuildFile; fileRef = D007EE5E1B169502000FE400 /* HotelManagerGraphicsKit.m */; };
 		D008B6C21AFBB9D900EAC22B /* DateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D008B6C11AFBB9D900EAC22B /* DateViewController.m */; };
-		D008B6C51AFBDAD800EAC22B /* FromDateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D008B6C41AFBDAD800EAC22B /* FromDateViewController.m */; };
-		D008B6C81AFBE2AB00EAC22B /* ToDateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D008B6C71AFBE2AB00EAC22B /* ToDateViewController.m */; };
 		D008B6D11AFBEA3200EAC22B /* AvailabilityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D008B6D01AFBEA3200EAC22B /* AvailabilityTableViewController.m */; };
 		D008B6DB1AFD314300EAC22B /* RoomTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D008B6DA1AFD314300EAC22B /* RoomTableViewController.m */; };
 		D008B6DF1AFD339600EAC22B /* HotelService.m in Sources */ = {isa = PBXBuildFile; fileRef = D008B6DE1AFD339600EAC22B /* HotelService.m */; };
@@ -61,10 +59,6 @@
 		D007EE5E1B169502000FE400 /* HotelManagerGraphicsKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotelManagerGraphicsKit.m; sourceTree = "<group>"; };
 		D008B6C01AFBB9D900EAC22B /* DateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DateViewController.h; path = ../DateViewController.h; sourceTree = "<group>"; };
 		D008B6C11AFBB9D900EAC22B /* DateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DateViewController.m; path = ../DateViewController.m; sourceTree = "<group>"; };
-		D008B6C31AFBDAD800EAC22B /* FromDateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FromDateViewController.h; path = ../FromDateViewController.h; sourceTree = "<group>"; };
-		D008B6C41AFBDAD800EAC22B /* FromDateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FromDateViewController.m; path = ../FromDateViewController.m; sourceTree = "<group>"; };
-		D008B6C61AFBE2AB00EAC22B /* ToDateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ToDateViewController.h; path = ../ToDateViewController.h; sourceTree = "<group>"; };
-		D008B6C71AFBE2AB00EAC22B /* ToDateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ToDateViewController.m; path = ../ToDateViewController.m; sourceTree = "<group>"; };
 		D008B6CF1AFBEA3200EAC22B /* AvailabilityTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AvailabilityTableViewController.h; path = ../AvailabilityTableViewController.h; sourceTree = "<group>"; };
 		D008B6D01AFBEA3200EAC22B /* AvailabilityTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AvailabilityTableViewController.m; path = ../AvailabilityTableViewController.m; sourceTree = "<group>"; };
 		D008B6D91AFD314300EAC22B /* RoomTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RoomTableViewController.h; path = ../RoomTableViewController.h; sourceTree = "<group>"; };
@@ -248,10 +242,6 @@
 				D008B6D01AFBEA3200EAC22B /* AvailabilityTableViewController.m */,
 				D007EE5D1B169502000FE400 /* HotelManagerGraphicsKit.h */,
 				D007EE5E1B169502000FE400 /* HotelManagerGraphicsKit.m */,
-				D008B6C61AFBE2AB00EAC22B /* ToDateViewController.h */,
-				D008B6C71AFBE2AB00EAC22B /* ToDateViewController.m */,
-				D008B6C31AFBDAD800EAC22B /* FromDateViewController.h */,
-				D008B6C41AFBDAD800EAC22B /* FromDateViewController.m */,
 				D008B6C01AFBB9D900EAC22B /* DateViewController.h */,
 				D008B6C11AFBB9D900EAC22B /* DateViewController.m */,
 				D0F0AD721AF879FB009F1AA3 /* HotelViewController.h */,
@@ -405,7 +395,6 @@
 				D010A02D1B163DEC003D773F /* AvailableRoomTableViewCell.m in Sources */,
 				D0F0AD741AF879FB009F1AA3 /* HotelViewController.m in Sources */,
 				D0EEF5901AF809DA0061905D /* AppDelegate.m in Sources */,
-				D008B6C51AFBDAD800EAC22B /* FromDateViewController.m in Sources */,
 				D061BCE21DBAC86600EC7B0A /* CDPersistenceController.m in Sources */,
 				D0F0EB6C1B1E76340042BCFC /* RoomInfoTableViewCell.m in Sources */,
 				D0A929121B2A178D00CC7715 /* CheckoutButtonTableViewCell.m in Sources */,
@@ -420,7 +409,6 @@
 				D008B6DF1AFD339600EAC22B /* HotelService.m in Sources */,
 				D008B6DB1AFD314300EAC22B /* RoomTableViewController.m in Sources */,
 				D0EEF5931AF809DA0061905D /* HotelManagerRM.xcdatamodeld in Sources */,
-				D008B6C81AFBE2AB00EAC22B /* ToDateViewController.m in Sources */,
 				D008B6C21AFBB9D900EAC22B /* DateViewController.m in Sources */,
 				D064CCB51B01150E00771D60 /* GuestCheckInViewController.m in Sources */,
 				D0F0EB691B1E6ED30042BCFC /* RoomImageTableViewCell.m in Sources */,

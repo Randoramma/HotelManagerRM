@@ -7,13 +7,13 @@
 //
 
 #import "AppDelegate.h"
-#import "CoreDataStack.h"
-#import "FromDateViewController.h"
+#import "DateViewController.h"
 #import "LoadViewControllerTableViewController.h"
 #import "Constants.h"
 
 @interface AppDelegate ()
-@property (strong, atomic) CDPersistenceController *myPersistenceController; 
+@property (strong, atomic) CDPersistenceController *myPersistenceController;
+-(void) completeUserInterface;
 @end
 
 @implementation AppDelegate
@@ -56,13 +56,9 @@
 
 -(void) completeUserInterface {
     
-    LoadViewControllerTableViewController *loadVC = [[LoadViewControllerTableViewController alloc]
-                                                     initWithAppDelegate:self];
+    LoadViewControllerTableViewController *loadVC = [[LoadViewControllerTableViewController alloc] init];
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:loadVC];
     self.window.rootViewController = navController;
-    // must include to test for initial seeding of objects if applicable.
-    // [_hotelService seedWithJSON];
-    
     [[UILabel appearanceWhenContainedIn:[UITableViewHeaderFooterView class], nil] setTextColor:[UIColor whiteColor]];
     
     //navigation bar setup

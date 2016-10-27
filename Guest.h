@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import "CoreDataStack.h"
 @class HotelService;
 @class Reservation;
 @class AppDelegate; 

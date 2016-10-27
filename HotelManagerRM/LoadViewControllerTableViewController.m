@@ -8,7 +8,7 @@
 
 #import "LoadViewControllerTableViewController.h"
 #import "HotelViewController.h"
-#import "FromDateViewController.h"
+#import "DateViewController.h"
 #import "GuestServicesViewController.h"
 #import "AppDelegate.h"
 #import "Constants.h"
@@ -17,7 +17,6 @@
 @interface LoadViewControllerTableViewController ()
 @property (strong, nonatomic) NSArray * myOptions;
 @property (strong, nonatomic) NSString * myTitle;
-@property (strong, nonatomic) AppDelegate * myAppDelegate;
 
 @end
 
@@ -26,12 +25,6 @@
  */
 @implementation LoadViewControllerTableViewController
 
--(instancetype)initWithAppDelegate:(AppDelegate *)theAppDelegate {
-  _myAppDelegate = theAppDelegate;
-  self = [super init]; 
-  
-  return self;
-}
 
 
 - (void)viewDidLoad {
@@ -84,7 +77,7 @@
       
     case 1: { //"Available Rooms"
       // push on the fromVC.
-      FromDateViewController *fromVC = [[FromDateViewController alloc] init];
+      DateViewController *fromVC = [[DateViewController alloc] init];
       [self.navigationController pushViewController:fromVC animated:true];
       break;
     }

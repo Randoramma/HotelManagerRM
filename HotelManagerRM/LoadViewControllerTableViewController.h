@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AppDelegate.h"
 
 @interface LoadViewControllerTableViewController : UITableViewController
--(instancetype)initWithAppDelegate:(AppDelegate *)theAppDelegate; 
+
 @end

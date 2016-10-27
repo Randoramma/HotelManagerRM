@@ -54,11 +54,10 @@ typedef NS_ENUM(NSUInteger, CDPError) {
 -(void) seedWithJSONWithCompletion: (void (^) (void))completionHandler {
     
     NSFetchRequest *jsonDataFetch = [[NSFetchRequest alloc] initWithEntityName:HOTEL_ENTITY];
-    
+    __block NSError *jsonDataFetchError;
     NSManagedObjectContext *theWriteContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
     [theWriteContext setParentContext:_theMainMOC];
     [theWriteContext performBlockAndWait:^{
-        NSError *jsonDataFetchError;
         NSInteger theResult = [theWriteContext countForFetchRequest:jsonDataFetch error:&jsonDataFetchError];
         NSLog(@" %ld", (long)theResult);
         if (theResult == 0) {

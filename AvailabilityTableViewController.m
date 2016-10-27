@@ -9,7 +9,7 @@
 #import "AvailabilityTableViewController.h"
 #import "AvailableRoomTableViewCell.h"
 #import "HotelService.h"
-#import "CoreDataStack.h"
+//#import "CoreDataStack.h"
 #import "AppDelegate.h"
 #import "MakeReservationTableViewController.h"
 #import "Room.h"
