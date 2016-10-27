@@ -20,7 +20,7 @@
 
 
 @interface MakeReservationTableViewController () <NSFetchedResultsControllerDelegate, UITextFieldDelegate>
-@property (strong, nonatomic) NSFetchedResultsController *fetchResultsController;
+//@property (strong, nonatomic) NSFetchedResultsController *fetchResultsController;
 //instantiate the tableview cells
 @property (strong, nonatomic) RoomImageTableViewCell *myRoomImageCell;
 @property (strong, nonatomic) RoomInfoTableViewCell *myRoomInfoCell;
@@ -47,8 +47,6 @@ NSInteger ROWS = 5;
   titleLabel.font = [UIFont fontWithName:TITLE_FONT size:TITLE_FONT_SIZE];
   titleLabel.text = self.theHotel.name;
   self.navigationItem.titleView = titleLabel;
-  // setup view.
-  //  self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
   self.tableView.backgroundColor = [UIColor blackColor];
   self.tableView.tableFooterView = [[UIView alloc] init];
   
@@ -189,14 +187,7 @@ NSInteger ROWS = 5;
 //    
 //    
   }
-  
-  
-  
-  
-  
-  
-  
-  
+ 
 }
 
 -(UIImage *) setImageForAppropriateHotelRoom: (Room *)theRoom {
