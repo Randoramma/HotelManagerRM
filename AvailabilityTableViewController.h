@@ -12,7 +12,7 @@
 
 
 @interface AvailabilityTableViewController : UITableViewController
-@property (strong, nonatomic) NSDate *fromDate;
-@property (strong, nonatomic) NSDate *toDate;
+@property (strong, nonatomic) NSDate *myFromDate;
+@property (strong, nonatomic) NSDate *myToDate;
 //@property (strong, nonatomic) NSString *theHotelName;
 @end

@@ -14,6 +14,7 @@
 @property (strong, nonatomic) UIDatePicker *myToDatePicker;
 @property (strong, nonatomic) UILabel *myPickerToLabel;
 @property (strong, nonatomic) UILabel *myPickerFromLabel;
+@property (strong, nonatomic) NSDateFormatter *myDateFormatter;
 
 @end
 
@@ -27,9 +28,11 @@
   
   // instantiate date Pickers. Add the objects.  Remove autoconstraints.
   self.myFromDatePicker = [[UIDatePicker alloc] init];
+  self.myFromDatePicker.datePickerMode = UIDatePickerModeDate;
   self.myFromDatePicker.backgroundColor = [UIColor blackColor];
   
   self.myToDatePicker = [[UIDatePicker alloc] init];
+  self.myToDatePicker.datePickerMode = UIDatePickerModeDate; 
   self.myToDatePicker.backgroundColor = [UIColor blackColor];
   
   [myRootView addSubview:self.myFromDatePicker];
@@ -95,7 +98,7 @@
  UI button pressed inticating that the user has selected their to - from dates and wishes to view available dates.
  */
 -(void) endPressed {
-  
+
   NSDate *endDate = self.myToDatePicker.date;
   NSDate *startDate = self.myFromDatePicker.date;
 
@@ -104,8 +107,8 @@
    */
   if ([endDate compare:startDate] > 0) {
   AvailabilityTableViewController *availablityVC = [[AvailabilityTableViewController alloc] init];
-  availablityVC.fromDate = startDate;
-  availablityVC.toDate = endDate;
+  availablityVC.myFromDate = startDate;
+  availablityVC.myToDate = endDate;
   // push on new VC.
   [self.navigationController pushViewController:availablityVC animated:true];
   } else {

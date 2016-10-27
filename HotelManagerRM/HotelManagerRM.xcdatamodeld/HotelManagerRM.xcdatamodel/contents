@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11232" systemVersion="15G1004" minimumToolsVersion="Xcode 7.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11232" systemVersion="15G1108" minimumToolsVersion="Xcode 7.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="Guest" representedClassName="Guest" syncable="YES">
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
@@ -27,11 +27,14 @@
         <attribute name="rating" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="hotel" maxCount="1" deletionRule="Nullify" destinationEntity="Hotel" inverseName="rooms" inverseEntity="Hotel" syncable="YES"/>
         <relationship name="reservation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Reservation" inverseName="rooms" inverseEntity="Reservation" syncable="YES"/>
+        <fetchedProperty name="fetchAvailableRooms" optional="YES" syncable="YES">
+            <fetchRequest name="fetchedPropertyFetchRequest" entity="Room"/>
+        </fetchedProperty>
     </entity>
     <elements>
         <element name="Guest" positionX="-36" positionY="362" width="128" height="103"/>
         <element name="Hotel" positionX="-513" positionY="108" width="128" height="118"/>
         <element name="Reservation" positionX="-207" positionY="252" width="128" height="118"/>
-        <element name="Room" positionX="-360" positionY="162" width="128" height="133"/>
+        <element name="Room" positionX="-360" positionY="162" width="128" height="164"/>
     </elements>
 </model>
