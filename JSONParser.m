@@ -60,7 +60,6 @@
         
         
       } // roomDictionary
-      
     } // hotelDictionary
     // must make space in memory if an error occurs.
     NSError *saveError;

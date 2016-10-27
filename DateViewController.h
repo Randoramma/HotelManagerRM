@@ -9,9 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface DateViewController : UIViewController
-@property (strong, nonatomic) UIDatePicker *myFromDatePicker;
-@property (strong, nonatomic) UIDatePicker *myToDatePicker;
-@property (strong, nonatomic) UILabel *myPickerLabel;
 @property (strong, nonatomic) UIButton *myDateSelectionButton;
 
 @end
