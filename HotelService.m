@@ -8,10 +8,10 @@
 
 #import "Constants.h"
 #import "HotelService.h"
-#import "Hotel.h"
-#import "Guest.h"
-#import "Reservation.h"
-#import "Room.h"
+#import "Hotel+CoreDataProperties.h"
+#import "Guest+CoreDataProperties.h"
+#import "Reservation+CoreDataProperties.h"
+#import "Room+CoreDataProperties.h"
 
 @interface HotelService()
 

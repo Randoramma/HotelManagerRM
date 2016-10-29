@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "CDPersistenceController.h"
-#import "Reservation.h"
+#import "Reservation+CoreDataProperties.h"
 @class Room;
 @class Hotel;
 

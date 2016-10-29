@@ -12,7 +12,7 @@
 #import "HotelViewController.h"
 #import "HotelService.h"
 #import "RoomTableViewController.h"
-#import "Hotel.h"
+#import "Hotel+CoreDataProperties.h"
 #import "HotelTableViewCell.h"
 #import "Constants.h"
 
@@ -20,7 +20,6 @@
 
 @property (strong, nonatomic) UITableView *myTableView;
 @property (strong, nonatomic) NSArray *myHotels;
-@property (strong, nonatomic) AppDelegate *myAppDelegate;
 @property (strong, atomic) CDPersistenceController *myPersistenceController;
 
 @end

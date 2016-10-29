@@ -41,10 +41,12 @@
     [self.lastNameField setClearButtonMode:UITextFieldViewModeWhileEditing];
     [self.contentView addSubview:self.lastNameField];
     
-    //self.firstNameField.delegate = self;
-   // self.lastNameField.delegate = self;
     
-    NSDictionary *cellViews = @{@"firstNameLabel": self.firstNameLabel, @"lastNameLabel": self.lastNameLabel, @"firstNameField": self.firstNameField, @"lastNameField": self.lastNameField};
+    NSDictionary *cellViews = @{@"firstNameLabel": self.firstNameLabel,
+                                @"lastNameLabel": self.lastNameLabel,
+                                @"firstNameField": self.firstNameField,
+                                @"lastNameField": self.lastNameField};
+    
     [self setConstranitsForCellViewWithViews:cellViews];
   }
   return self;

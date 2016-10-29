@@ -13,8 +13,9 @@
 #import "CDPersistenceController.h"
 #import "AppDelegate.h"
 #import "MakeReservationTableViewController.h"
-#import "Room.h"
-#import "Reservation.h"
+#import "Room+CoreDataProperties.h"
+#import "Hotel+CoreDataProperties.h"
+#import "Reservation+CoreDataProperties.h"
 
 
 @interface AvailabilityTableViewController () <UITableViewDelegate, UITableViewDataSource>
@@ -59,6 +60,9 @@
       [_myDateFormatter setDateFormat:@"MM-dd-yyyy"];
       self.myRoomsList = [self fetchAvailbleRoomsFor:self.myFromDate
                                                   to:self.myToDate];
+      [self.myPersistenceController saveDataWithReturnBlock:^(BOOL succeeded, NSError *error) {
+        
+      }];
       [self.tableView reloadData];
     } else {
       NSLog(@"There was an error loading the Core Data Stack %@", error.description);
@@ -70,6 +74,10 @@
 -(void)viewDidAppear:(BOOL)animated {
 }
 
+-(void) viewDidDisappear:(BOOL)animated {
+
+}
+
 
 #pragma mark - Table view data source
 
@@ -78,11 +86,6 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  //  if ([[self.fetchResultsController sections] count] > 0) {
-  //    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchResultsController sections] objectAtIndex:section];
-  //    return [sectionInfo numberOfObjects];
-  //  } else
-  //    return 0;
   
   return self.myRoomsList.count;
 }
@@ -99,40 +102,32 @@
   } else {
     return nil;
   }
-  //    AvailableRoomTableViewCell *theCell = [tableView dequeueReusableCellWithIdentifier:@"NoRooms" forIndexPath:indexPath];
-  //    theCell.roomNumberLabel.text = @"No room available";
-  //    theCell.backgroundColor = [UIColor blackColor];
-  //    return theCell;
-  //  }
   
- // return nil;
-}
-
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-  //  id<NSFetchedResultsSectionInfo> theSectionInfo = [[self.fetchResultsController sections] objectAtIndex: section];
-  //  Room *theRoom = (Room *)theSectionInfo.objects[0];
-  //  Hotel *theHotel = theRoom.hotel;
-  //  NSString *description = [[NSString alloc] initWithFormat:@"%@ located in %@", theHotel.name, theHotel.location];
-  //
-  //  return description;
-  return @"";
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   // make a reservationVC.
   
   if (self.myFromDate != nil && self.myToDate != nil) {
-  MakeReservationTableViewController *theReservationVC = [[MakeReservationTableViewController alloc] init];
-  // pass the start date
-  theReservationVC.fromDate = self.myFromDate;
-  // pass the end date
-  theReservationVC.toDate = self.myToDate;
-  // pass the room
-    theReservationVC.theRoom = self.myRoomsList[indexPath.row];
-  // pass the hotel
-  theReservationVC.theHotel = theReservationVC.theRoom.hotel;
+    MakeReservationTableViewController *theReservationVC = [[MakeReservationTableViewController alloc] init];
+    // pass the start date
+    theReservationVC.myFromDate = self.myFromDate;
+    // pass the end date
+    theReservationVC.myToDate = self.myToDate;
+    // pass the room ID
+//    Room *tempRoom = (Room *)self.myRoomsList[indexPath.row];
+//    NSLog(@"the rooms's object ID is %@", tempRoom.objectID);
+    //theReservationVC.myRoomID = tempRoom.objectID;
+    theReservationVC.myRoom = self.myRoomsList[indexPath.row];
 
-  [self.navigationController pushViewController:theReservationVC animated:true];
+    // pass the hotel ID
+//    Hotel *tempHotel = tempRoom.hotel;
+//    NSLog(@"the hotel's object ID is %@", tempHotel.objectID);
+//    theReservationVC.myHotelID = tempHotel.objectID;
+    
+    theReservationVC.myHotel = theReservationVC.myRoom.hotel;
+    // attempting to release the hotel rooms from memory so they can be picket up by the next MOC.
+    [self.navigationController pushViewController:theReservationVC animated:true];
   }
 }
 
@@ -149,7 +144,7 @@
   NSError *fetchError;
   NSManagedObjectContext *theContext = [_myPersistenceController theMainMOC];
   NSMutableArray *reservationList = [theContext executeFetchRequest:bookedReservationFetchRequest
-                                                       error:&fetchError];
+                                                              error:&fetchError];
   
   // pull the rooms associated with those reservations.
   NSMutableArray *rooms = [[NSMutableArray alloc] init];

@@ -9,7 +9,7 @@
 #import "RoomTableViewController.h"
 #import "AppDelegate.h"
 #import "HotelService.h"
-#import "Room.h"
+#import "Room+CoreDataProperties.h"
 #import "Constants.h"
 
 @interface RoomTableViewController ()

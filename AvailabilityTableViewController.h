@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
-#import "Hotel.h"
+
 
 
 @interface AvailabilityTableViewController : UITableViewController

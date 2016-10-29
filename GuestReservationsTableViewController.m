@@ -7,7 +7,7 @@
 //
 
 #import "GuestReservationsTableViewController.h"
-#import "Reservation.h"
+#import "Reservation+CoreDataProperties.h"
 
 @interface GuestReservationsTableViewController ()
 

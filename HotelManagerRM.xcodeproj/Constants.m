@@ -8,7 +8,7 @@
 
 #import "Constants.h"
 
-@implementation Constants
+@implementation Constants : NSObject 
 
 const CGFloat TITLE_LABEL_HEIGHT = 20;
 const CGFloat TITLE_LABEL_WIDTH = 100;
@@ -33,5 +33,18 @@ NSString * const HOTEL_ENTITY = @"Hotel";
 NSString * const ROOM_ENTITY = @"Room";
 NSString * const RESERVATION_ENTITY = @"Reservation";
 
+//HotelImages.
+NSString * const OK_HOTEL_IMAGE_TVC = @"OKRoomImage";
+NSString * const DECENT_HOTEL_IMAGE_TVC = @"DecentInnRoomImage";
+NSString * const SOLID_HOTEL_IMAGE_TVC = @"SolidStayRoomImage";
+NSString * const FANCY_HOTEL_IMAGE_TVC = @"FancyEstateRoomImage";
+
+//Hotel Names.
+NSString * const FANCY_HOTEL_NAME = @"Fancy Estates";
+NSString * const SOLID_HOTEL_NAME = @"Solid Stay";
+NSString * const DECENT_HOTEL_NAME = @"Decent Inn";
+NSString * const OK_HOTEL_NAME = @"Okay Motel";
+
+NSString * const CURRENT_MEMBER_COUNT = @"Member Count"; 
 
 @end

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "Room+CoreDataProperties.h"
 
 typedef void (^CDPersistenceControllerCallbackBlock)(BOOL succeeded, NSError *error);
 @interface CDPersistenceController : NSObject
@@ -21,5 +22,11 @@ typedef void (^CDPersistenceControllerCallbackBlock)(BOOL succeeded, NSError *er
 - (instancetype) initWithModelName:(NSString *)modelName;
 - (void) initializeCoreDataWithCompletion: (CDPersistenceControllerCallbackBlock)returnblock;
 - (void) saveDataWithReturnBlock:(CDPersistenceControllerCallbackBlock)returnBlock;
+- (void) bookReservationForRoom:(Room *)theRoom
+                     startDate:(NSDate *)theStartDate
+                       endDate:(NSDate *)theEndDate
+            withGuestFirstName:(NSString *)theFirstName
+              andGuestLastName:(NSString *)theLastName
+                 andReturnBlock: (CDPersistenceControllerCallbackBlock)returnblock;
 
 @end

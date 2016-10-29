@@ -8,14 +8,14 @@
 
 #import "MakeReservationTableViewController.h"
 #import "Constants.h"
-#import "Guest.h"
+#import "Guest+CoreDataProperties.h"
+#import "CDPersistenceController.h"
 #import "RoomImageTableViewCell.h"
 #import "RoomInfoTableViewCell.h"
 #import "CredentialsTableViewCell.h"
 #import "CheckIn_OutTableViewCell.h"
 #import "CheckoutButtonTableViewCell.h"
 #import "AvailableRoomTableViewCell.h"
-#import "AppDelegate.h"
 
 
 
@@ -27,41 +27,64 @@
 @property (strong, nonatomic) CredentialsTableViewCell *myRoomCredentialsCell;
 @property (strong, nonatomic) CheckIn_OutTableViewCell *myRoomDatesCell;
 @property (strong, nonatomic) CheckoutButtonTableViewCell *myRoomButtonCell;
-@property (strong, nonatomic) AppDelegate *myAppDelegate;
 @property (strong, nonatomic) NSString *myFirstName;
 @property (strong, nonatomic) NSString *myLastName;
 @property (strong, nonatomic) UIImage *myImage;
-
+//@property (strong, nonatomic) Room *myRoom;
+//@property (strong, nonatomic) Hotel *myHotel;
+@property (strong, nonatomic) CDPersistenceController *myPersistenceController;
 
 @end
 
-
+// Static number of rows for this TVC.
 NSInteger ROWS = 5;
 
+typedef NS_ENUM(NSInteger, CellType){
+  CellType_RoomImage = 0,
+  CellType_RoomInfo = 1,
+  CellType_RoomDates = 2,
+  CellType_RoomCredentials = 3,
+  CellType_RoomButton = 4,
+};
+
+
+/**
+ Role if this VC is to allow a user with the dates and room chosen in the AvailableRoomTVC to save a reservation.
+ */
 @implementation MakeReservationTableViewController
+
+
+
 -(void)loadView {
   [super loadView];
+  self.tableView.backgroundColor = [UIColor blackColor];
+  self.tableView.tableFooterView = [[UIView alloc] init];
+
+  
   // setup title.
   UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, TITLE_LABEL_WIDTH, TITLE_LABEL_HEIGHT)];
   titleLabel.textColor = [UIColor whiteColor];
   titleLabel.font = [UIFont fontWithName:TITLE_FONT size:TITLE_FONT_SIZE];
-  titleLabel.text = self.theHotel.name;
   self.navigationItem.titleView = titleLabel;
   self.tableView.backgroundColor = [UIColor blackColor];
   self.tableView.tableFooterView = [[UIView alloc] init];
   
 }
 
+
 -(void)viewDidLoad {
   self.tableView.delegate = self;
   self.tableView.dataSource = self;
   
+  self.title = @"Our Hotels";
+
+  
+  // registration of custom TVC's
   [self.tableView registerClass:[RoomImageTableViewCell class]forCellReuseIdentifier:@"RoomImageCell"];
   [self.tableView registerClass:[RoomInfoTableViewCell class]forCellReuseIdentifier:@"RoomInfoCell"];
   [self.tableView registerClass:[CredentialsTableViewCell class]forCellReuseIdentifier:@"RoomCredentialsCell"];
   [self.tableView registerClass:[CheckIn_OutTableViewCell class]forCellReuseIdentifier:@"RoomDatesCell"];
   [self.tableView registerClass:[CheckoutButtonTableViewCell class]forCellReuseIdentifier:@"RoomCheckoutCell"];
-  
   [self.tableView registerClass:[AvailableRoomTableViewCell class]forCellReuseIdentifier:@"NoRooms"];
   // initialize the cells
   self.myRoomImageCell = [[RoomImageTableViewCell alloc] init];
@@ -70,9 +93,46 @@ NSInteger ROWS = 5;
   self.myRoomCredentialsCell = [[CredentialsTableViewCell alloc] init];
   self.myRoomButtonCell = [[CheckoutButtonTableViewCell alloc] init];
   
+  // set delegates
+  self.myRoomCredentialsCell.firstNameField.delegate = self;
+  self.myRoomCredentialsCell.lastNameField.delegate = self;
+  
+  
+  
 }
 
-#pragma mark - Table view data source
+-(void) viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  self.myPersistenceController = [[CDPersistenceController alloc] init];
+  [self.myPersistenceController initializeCoreDataWithCompletion:^(BOOL succeeded, NSError *error) {
+    
+    if (succeeded) {
+//      NSError *roomFetchError = nil;
+//      self.myRoom = [self.myPersistenceController.theMainMOC existingObjectWithID:self.myRoomID error:&roomFetchError];
+//      //self.myRoom = [self.myPersistenceController.theMainMOC objectWithID:_myRoomID];
+//      if (self.myRoom == nil) {
+//        NSAssert(self.myRoom, @"Was not able to fetch Room from MOC.  Error = %@ ", roomFetchError);
+//      }
+//      
+//      NSError *hotelFetchError = nil;
+//     // self.myHotel = [self.myPersistenceController.theMainMOC existingObjectWithID:self.myHotelID error:&hotelFetchError];
+//      [self.myPersistenceController.theMainMOC objectWithID:self.myHotelID];
+//      if (self.myHotel == nil) {
+//        NSAssert(self.myHotel, @"Was not able to fetch Room from MOC.  Error = %@ ", hotelFetchError);
+//      }
+//      
+//      [self.tableView reloadData];
+    } else {
+      NSLog(@"There was an error loading the Core Data Stack %@", error.description);
+    }
+    
+  }];
+  
+  
+  NSLog(@"View Will Appear completed");
+}
+
+#pragma mark - Table View Delegate Methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
   // Return the number of rows in the section.
@@ -100,69 +160,77 @@ NSInteger ROWS = 5;
   
   if (indexPath.section == 0) {
     switch (indexPath.row) {
-      case 0: {
-        RoomImageTableViewCell *theCell0 = [tableView dequeueReusableCellWithIdentifier:@"RoomImageCell" forIndexPath:indexPath];
-        theCell0.theImage = [self setImageForAppropriateHotelRoom:self.theRoom];
-        //must set the below again after the cell has init.
-        theCell0.cellImageView.image = theCell0.theImage;
-        theCell0.backgroundColor = [UIColor blackColor];
-        theCell0.selectionStyle = UITableViewCellSelectionStyleNone;
-        return theCell0;
+      case CellType_RoomImage: {
+        if (self.myRoomImageCell == nil) {
+          self.myRoomImageCell = [self.myRoomImageCell initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomImageCell"];
+        }
+        self.myRoomImageCell.theImage = [self setImageForAppropriateHotelRoom:self.myRoom];
+        self.myRoomImageCell.cellImageView.image = self.myRoomImageCell.theImage;
+        self.myRoomImageCell.backgroundColor = [UIColor blackColor];
+        self.myRoomImageCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return self.myRoomImageCell;
         break;
       }
-      case 1: {
-        RoomInfoTableViewCell *theCell1 = [tableView dequeueReusableCellWithIdentifier:@"RoomInfoCell" forIndexPath:indexPath];
-        theCell1.roomNumberLabel.text = [NSString stringWithFormat:@"Room #%@",self.theRoom.number];
-        theCell1.roomRateLabel.text = [NSString stringWithFormat:@"Rate $%@",self.theRoom.rate];
-        theCell1.roomRatingLabel.text = [NSString stringWithFormat:@"Rating %@",self.theRoom.rating];
-        theCell1.numberOfBedsLabel.text = [NSString stringWithFormat:@"Beds %@",self.theRoom.beds];
-        theCell1.backgroundColor = [UIColor blackColor];
-        theCell1.selectionStyle = UITableViewCellSelectionStyleNone;
-        return theCell1;
+      case CellType_RoomInfo: {
+        if (self.myRoomInfoCell == nil) {
+          self.myRoomInfoCell = [_myRoomInfoCell initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomInfoCell"];
+        }
+        self.myRoomInfoCell.roomNumberLabel.text = [NSString stringWithFormat:@"Room #%@",self.myRoom.number];
+        self.myRoomInfoCell.roomRateLabel.text = [NSString stringWithFormat:@"Rate $%@",self.myRoom.rate];
+        self.myRoomInfoCell.roomRatingLabel.text = [NSString stringWithFormat:@"Rating %@",self.myRoom.rating];
+        self.myRoomInfoCell.numberOfBedsLabel.text = [NSString stringWithFormat:@"Beds %@",self.myRoom.beds];
+        self.myRoomInfoCell.backgroundColor = [UIColor blackColor];
+        self.myRoomInfoCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return self.myRoomInfoCell;
         break;
       }
-      case 2: {
-        CheckIn_OutTableViewCell *theCell2 = [tableView dequeueReusableCellWithIdentifier:@"RoomDatesCell" forIndexPath:indexPath];
-        theCell2.selectionStyle = UITableViewCellSelectionStyleNone;
+      case CellType_RoomDates: {
+        
+        if (self.myRoomDatesCell == nil) {
+          self.myRoomDatesCell = [self.myRoomDatesCell initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomDatesCell"];
+        }
+        self.myRoomDatesCell.selectionStyle = UITableViewCellSelectionStyleNone;
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
         dateFormatter.dateFormat = @"EEEE, MMMM dd";
-        theCell2.fromDateLabel.text = @"From :";
-        theCell2.toDateLabel.text = @"To :";
-        theCell2.fromDate.text = [dateFormatter stringFromDate:self.fromDate];
-        theCell2.toDate.text = [dateFormatter stringFromDate:self.toDate];
-        theCell2.backgroundColor = [UIColor blackColor];
-        return theCell2;
+        self.myRoomDatesCell.fromDateLabel.text = @"From :";
+        self.myRoomDatesCell.toDateLabel.text = @"To :";
+        self.myRoomDatesCell.fromDate.text = [dateFormatter stringFromDate:self.myFromDate];
+        self.myRoomDatesCell.toDate.text = [dateFormatter stringFromDate:self.myToDate];
+        self.myRoomDatesCell.backgroundColor = [UIColor blackColor];
+        return self.myRoomDatesCell;
         break;
       }
-      case 3: {
-        CredentialsTableViewCell *theCell3 = [tableView dequeueReusableCellWithIdentifier:@"RoomCredentialsCell" forIndexPath:indexPath];
-        theCell3.backgroundColor = [UIColor blackColor];
-        theCell3.selectionStyle = UITableViewCellSelectionStyleNone;
+      case CellType_RoomCredentials: {
+        if (self.myRoomCredentialsCell == nil) {
+          self.myRoomCredentialsCell = [self.myRoomCredentialsCell initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomCredentialsCell"];
+          
+        }
+        self.myRoomCredentialsCell.backgroundColor = [UIColor blackColor];
+        self.myRoomCredentialsCell.selectionStyle = UITableViewCellSelectionStyleNone;
         // set the fields to the label names
-        theCell3.firstNameLabel.text = @"First Name:";
-        self.myFirstName = theCell3.firstNameField.text;
-        self.myLastName = theCell3.lastNameField.text;
-        theCell3.lastNameLabel.text = @"Last Name:";
-        
-        Guest *newGuest = [[Guest alloc] init];
-        newGuest.firstName = self.myFirstName;
-        newGuest.lastName = self.myLastName;
-        return theCell3;
+        self.myRoomCredentialsCell.firstNameLabel.text = @"First Name:";
+        self.myRoomCredentialsCell.lastNameLabel.text = @"Last Name:";
+        // set the delegate for the CredentialsTVC text fields to capture the names
+
+        return self.myRoomCredentialsCell;
         break;
+
       }
-      case 4: {
-        CheckoutButtonTableViewCell *theCell4 = [tableView dequeueReusableCellWithIdentifier:@"RoomCheckoutCell" forIndexPath:indexPath];
-        theCell4.selectionStyle = UITableViewCellSelectionStyleNone;
-        theCell4.backgroundColor = [UIColor blackColor];
-        [theCell4.myReserveButton addTarget:self
+      case CellType_RoomButton: {
+        if (self.myRoomButtonCell == nil) {
+          self.myRoomButtonCell = [self.myRoomButtonCell initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomCheckoutCell"];
+        }
+        self.myRoomButtonCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        self.myRoomButtonCell.backgroundColor = [UIColor blackColor];
+        [self.myRoomButtonCell.myReserveButton addTarget:self
                                      action:@selector(makeReservation)
                            forControlEvents:UIControlEventTouchUpInside];
-        [theCell4.myReserveButton setTitle:@"Make Reservation" forState:UIControlStateNormal];
+        [self.myRoomButtonCell.myReserveButton setTitle:@"Make Reservation" forState:UIControlStateNormal];
         
 //        [_myAppDelegate bookReservationForRoom:self.theRoom startDate:self.fromDate endDate:self.toDate withGuest:self.theCell4.newGuest];
-        return theCell4;
+        return self.myRoomButtonCell;
         break;
-        
+
       }
       default:
         return [[UITableViewCell alloc]init];
@@ -181,30 +249,60 @@ NSInteger ROWS = 5;
   [self.tableView deselectRowAtIndexPath:indexPath animated:true];
   
   if (indexPath.row == 3) {
-//    
-//    [self.theCell3.text]
-//    
-//    
-//    
+   
   }
  
 }
 
+#pragma mark - Text Field Delegate Methods
+- (BOOL)textFieldShouldBeginEditing:(UITextView *)textView {
+
+  return YES;
+}
+
+-(BOOL) textFieldShouldEndEditing:(UITextField *)textField {
+  
+  if ([textField isEqual:self.myRoomCredentialsCell.firstNameField]) {
+    if (self.myRoomCredentialsCell.firstNameField.text.length != 0) {
+      self.myFirstName = self.myRoomCredentialsCell.firstNameField.text;
+    }
+  } else if ([textField isEqual:self.myRoomCredentialsCell.lastNameField]) {
+    if (self.myRoomCredentialsCell.lastNameField.text.length != 0) {
+      self.myLastName = self.myRoomCredentialsCell.lastNameField.text;
+    }
+  } else {
+    
+  }
+  return YES;
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField {
+  [textField resignFirstResponder];
+  if (textField == self.myRoomCredentialsCell.firstNameField) {
+    [self.myRoomCredentialsCell.lastNameField becomeFirstResponder];
+  }
+  return true;
+}
+
+
+#pragma mark - Private Helper Methods
 -(UIImage *) setImageForAppropriateHotelRoom: (Room *)theRoom {
   
-  if([self.theRoom.hotel.name isEqualToString:@"Fancy Estates"]) {
-    self.myImage = [UIImage imageNamed:@"FancyEstateRoomImage"];
-  } else if ([self.theRoom.hotel.name isEqualToString:@"Solid Stay"]) {
-    self.myImage = [UIImage imageNamed:@"SolidStayRoomImage"];
-  } else if ([self.theRoom.hotel.name isEqualToString:@"Decent Inn"]) {
-    self.myImage = [UIImage imageNamed:@"DecentInnRoomImage"];
-  } else if ([self.theRoom.hotel.name isEqualToString:@"Okay Motel"]) {
-    self.myImage = [UIImage imageNamed:@"OKRoomImage"];
+  if([self.myRoom.hotel.name isEqualToString:FANCY_HOTEL_NAME]) {
+    self.myImage = [UIImage imageNamed:FANCY_HOTEL_IMAGE_TVC];
+  } else if ([self.myRoom.hotel.name isEqualToString:SOLID_HOTEL_NAME]) {
+    self.myImage = [UIImage imageNamed:FANCY_HOTEL_IMAGE_TVC];
+  } else if ([self.myRoom.hotel.name isEqualToString:DECENT_HOTEL_NAME]) {
+    self.myImage = [UIImage imageNamed:DECENT_HOTEL_IMAGE_TVC];
+  } else if ([self.myRoom.hotel.name isEqualToString:OK_HOTEL_NAME]) {
+    self.myImage = [UIImage imageNamed:OK_HOTEL_IMAGE_TVC];
   } else {
     self.myImage = [UIImage imageNamed:@"PlaceHolderImage"];
   }
   return self.myImage;
 }
+
+#pragma mark - Private Persistence Methods 
 
 
 
@@ -213,14 +311,51 @@ NSInteger ROWS = 5;
   
   if([self.myFirstName length] < 1) {
     self.myFirstName = @"You must enter a first name";
-  }
-  
-  if([self.myLastName length] < 1) {
+  } else if ([self.myLastName length] < 1) {
     self.myLastName = @"You must enter a last name";
-  }
-  else {
-//    [_myAppDelegate bookReservationForRoom:<#(Room *)#> startDate:<#(NSDate *)#> endDate:<#(NSDate *)#> withGuest:<#(Guest *)#>]
-//    [[UIApplication sharedApplication] sendAction:@selector(resignFirstResponder) to:nil from:nil forEvent:nil];
+  } else {
+    [self.myPersistenceController bookReservationForRoom:self.myRoom startDate:self.myFromDate endDate:self.myToDate withGuestFirstName:self.myFirstName andGuestLastName:self.myLastName andReturnBlock:^(BOOL succeeded, NSError *error) {
+      if (succeeded) {
+        NSString *successMessage = [NSString stringWithFormat:@"You have reserved room %@ from %@ to %@. See you then!", self.myRoom, self.myFromDate, self.myToDate];
+        UIAlertController *successAlert = [UIAlertController alertControllerWithTitle:@"Success!"
+                                                                              message: successMessage
+                                                                       preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *okAction = [UIAlertAction
+                                   actionWithTitle:NSLocalizedString(@"OK", @"OK action")
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction *action)
+                                   {
+                                     NSLog(@"OK action");
+                                   }];
+        
+        [successAlert addAction:okAction];
+        [self presentViewController:successAlert animated:YES completion:^{
+            // pop back to root view.  
+        }];
+      } else {
+        NSString *failMessage = [NSString stringWithFormat:@" Please reenter information and try again."];
+        UIAlertController *failAlert = [UIAlertController alertControllerWithTitle:@"Reservation was not saved."
+                                                                              message: failMessage
+                                                                       preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *okAction = [UIAlertAction
+                                   actionWithTitle:NSLocalizedString(@"OK", @"OK action")
+                                   style:UIAlertActionStyleCancel
+                                   handler:^(UIAlertAction *action)
+                                   {
+                                     NSLog(@"OK action");
+                                   }];
+        
+        [failAlert addAction:okAction];
+        [self presentViewController:failAlert animated:YES completion:^{
+          self.myLastName = nil;
+          self.myFirstName = nil;
+          self.myRoomCredentialsCell.firstNameField.text = nil;
+          self.myRoomCredentialsCell.lastNameField.text = nil;
+          [self.tableView reloadData];
+        }];
+      }
+    }];
+    
   }
 }
 
