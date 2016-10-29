@@ -75,7 +75,7 @@
 }
 
 -(void) viewDidDisappear:(BOOL)animated {
-
+  [self.myPersistenceController.theMainMOC reset]; 
 }
 
 
