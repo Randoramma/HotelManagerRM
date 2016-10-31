@@ -10,7 +10,7 @@
 
 @implementation Guest (CoreDataProperties)
 
-+ (NSFetchRequest<Guest *> *)fetchRequest {
++ (NSFetchRequest *)fetchRequest {
 	return [[NSFetchRequest alloc] initWithEntityName:@"Guest"];
 }
 

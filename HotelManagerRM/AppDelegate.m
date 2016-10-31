@@ -12,7 +12,7 @@
 #import "Constants.h"
 
 @interface AppDelegate ()
-@property (strong, atomic) CDPersistenceController *myPersistenceController;
+
 -(void) completeUserInterface;
 @end
 
@@ -24,6 +24,11 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     [self.window makeKeyAndVisible];
+    [self setMyPersistenceController:[[CDPersistenceController alloc] initWithCompletion:^(BOOL succeeded, NSError *error) {
+        NSLog(@"setup of the stack was %d, with error %@", succeeded, error.description);
+
+    }]];
+    
     [self completeUserInterface];
     return YES;
 }

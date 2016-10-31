@@ -10,7 +10,7 @@
 
 @implementation Room (CoreDataProperties)
 
-+ (NSFetchRequest<Room *> *)fetchRequest {
++ (NSFetchRequest *)fetchRequest {
 	return [[NSFetchRequest alloc] initWithEntityName:@"Room"];
 }
 

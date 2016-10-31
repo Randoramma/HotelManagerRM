@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Room (CoreDataProperties)
 
-+ (NSFetchRequest<Room *> *)fetchRequest;
++ (NSFetchRequest *)fetchRequest;
 
 @property (nullable, nonatomic, copy) NSNumber *beds;
 @property (nullable, nonatomic, copy) NSNumber *number;

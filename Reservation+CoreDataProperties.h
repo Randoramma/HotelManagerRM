@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Reservation (CoreDataProperties)
 
-+ (NSFetchRequest<Reservation *> *)fetchRequest;
++ (NSFetchRequest *)fetchRequest;
 
 @property (nullable, nonatomic, copy) NSDecimalNumber *cost;
 @property (nullable, nonatomic, copy) NSDate *endDate;

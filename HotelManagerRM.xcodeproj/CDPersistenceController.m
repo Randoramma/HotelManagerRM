@@ -38,20 +38,28 @@ typedef NS_ENUM(NSUInteger, CDPError) {
  
  @return CDPersistenceController
  */
-- (instancetype)initWithModelName:(NSString *)modelName
+- (instancetype)initWithCompletion:(CDPersistenceControllerCallbackBlock)returnBlock
 {
+    
+  if (!(self = [super init])) return nil;
   self = [super init];
   
-  if (self) {
-    _modelName = modelName;
-  }
+  [self initializeCoreDataWithCompletion:^(BOOL succeeded, NSError *error) {
+      if (succeeded) {
+          returnBlock(YES, nil);
+      } else {
+          returnBlock(NO, error); 
+      }
+          
+}];
   
   return self;
 }
 
 - (instancetype)init
 {
-  return [self initWithModelName:URL_PATH_FOR_MOMD];
+    if (!(self = [super init])) return nil;
+    return self = [super init];;
 }
 
 -(void) seedWithJSONWithCompletion: (void (^) (void))completionHandler {

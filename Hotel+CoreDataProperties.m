@@ -10,7 +10,7 @@
 
 @implementation Hotel (CoreDataProperties)
 
-+ (NSFetchRequest<Hotel *> *)fetchRequest {
++ (NSFetchRequest *)fetchRequest {
 	return [[NSFetchRequest alloc] initWithEntityName:@"Hotel"];
 }
 
