@@ -13,8 +13,8 @@
 @interface MakeReservationTableViewController : UITableViewController
 @property (strong, nonatomic) NSDate *myFromDate;
 @property (strong, nonatomic) NSDate *myToDate;
-//@property (strong, nonatomic) NSManagedObjectID *myRoomID;
-//@property (strong, nonatomic) NSManagedObjectID *myHotelID;
-@property (strong, nonatomic) Room *myRoom;
-@property (strong, nonatomic) Hotel *myHotel; 
+@property (strong, nonatomic) NSManagedObjectID *myRoomID;
+@property (strong, nonatomic) NSManagedObjectID *myHotelID;
+//@property (strong, nonatomic) Room *myRoom;
+//@property (strong, nonatomic) Hotel *myHotel; 
 @end

@@ -22,6 +22,7 @@ const CGFloat TABLE_ROW_HEIGHT = 100;
 // cell Identifiers
 NSString * const OPTION_CELL_ID = @"optionCell";
 NSString * const HOTEL_CELL_ID = @"hotelCell";
+NSString * const ROOM_CELL_ID = @"AvailableRoomCell";
 
 //Core Data constants.
 NSString * const URL_PATH_FOR_MOMD = @"HotelManagerRM";
@@ -45,6 +46,16 @@ NSString * const SOLID_HOTEL_NAME = @"Solid Stay";
 NSString * const DECENT_HOTEL_NAME = @"Decent Inn";
 NSString * const OK_HOTEL_NAME = @"Okay Motel";
 
-NSString * const CURRENT_MEMBER_COUNT = @"Member Count"; 
+NSString * const CURRENT_MEMBER_COUNT = @"Member Count";
+
+NSString * const FRC__HOTEL_CACHE_NAME = @"HotelViewCache";
+NSString * const FRC__HOTEL_SORT_DESCRIPTOR_KEY = @"name";
+
+NSString * const FRC_ROOM_SORT_DESCRIPTOR_KEY = @"number";
+NSString * const FRC_AVAILABILITY_CACHE_NAME = @"AvailabilityViewCache";
+
+
+
+
 
 @end

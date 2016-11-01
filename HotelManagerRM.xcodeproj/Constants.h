@@ -29,6 +29,7 @@ extern NSString * const RESERVATION_ENTITY;
 // TVC cell id's.
 extern NSString * const OPTION_CELL_ID;
 extern NSString * const HOTEL_CELL_ID;
+extern NSString * const ROOM_CELL_ID;
 
 //Hotel TVC images.
 extern NSString * const OK_HOTEL_IMAGE_TVC;
@@ -44,8 +45,13 @@ extern NSString * const OK_HOTEL_NAME;
 
 extern NSString * const CURRENT_MEMBER_COUNT; 
 
-static NSString * const kCDDataBaseManagerErrorDomain = @"CD_HOTEL_MANAGER_ErrorDomain";
+static NSString * const kCDDataBaseManagerErrorDomain;
 
+extern NSString * const FRC__HOTEL_CACHE_NAME;
+extern NSString * const FRC__HOTEL_SORT_DESCRIPTOR_KEY;
+
+extern NSString * const FRC_ROOM_SORT_DESCRIPTOR_KEY;
+extern NSString * const FRC_AVAILABILITY_CACHE_NAME;
 
 @interface Constants : NSObject
 

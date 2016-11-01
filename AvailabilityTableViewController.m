@@ -24,16 +24,16 @@
 @property (strong, nonatomic) CDPersistenceController *myPersistenceController;
 
 -(void)cellLayout:(AvailableRoomTableViewCell *)cell forRoom:(Room *)theRoom atIndexPath:(NSIndexPath *)indexPath;
+
 @end
-NSString * const ROOM_CELL_ID = @"AvailableRoomCell";
-NSString * const FRC_SORT_DESCRIPTOR_KEY = @"number";
-NSString * const FRC_CACHE_NAME = @"AvailabilityViewCache";
+
 
 
 /**
  Class responsible for displaying the rooms available between the "to" and "from" dates selected in the DateVC.
  */
 @implementation AvailabilityTableViewController
+
 
 -(void) loadView {
     [super loadView];
@@ -43,11 +43,9 @@ NSString * const FRC_CACHE_NAME = @"AvailabilityViewCache";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // setup up view here.
-    self.title = @"Our available rooms";
     
+    self.title = @"Our available rooms";
     [self.tableView registerClass:[AvailableRoomTableViewCell class]forCellReuseIdentifier:ROOM_CELL_ID];
-    [self.tableView registerClass:[AvailableRoomTableViewCell class]forCellReuseIdentifier:@"NoRooms"];
     [self setPersistenceControllerFromDelegate:nil];
     
 }
@@ -55,14 +53,18 @@ NSString * const FRC_CACHE_NAME = @"AvailabilityViewCache";
 #pragma mark - Table View Data Source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [[[self myFetchedResultsController] sections] count];
+    return [[_myFetchedResultsController  sections] count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+
     
-    id <NSFetchedResultsSectionInfo> sectionInfo = [[[self myFetchedResultsController] sections] objectAtIndex:section];
-    
-    return [sectionInfo numberOfObjects];
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[_myFetchedResultsController  sections] objectAtIndex:section];
+#if DEBUG
+    NSLog(@"The number of rows produced is %lul",(unsigned long)[sectionInfo numberOfObjects]);
+#endif
+    //return [sectionInfo numberOfObjects];
+    return [sectionInfo numberOfObjects]; 
 }
 
 
@@ -70,7 +72,7 @@ NSString * const FRC_CACHE_NAME = @"AvailabilityViewCache";
     AvailableRoomTableViewCell * theCell = nil;
     Room *theRoom = nil;
     
-    theRoom = [[self myFetchedResultsController] objectAtIndexPath:indexPath];
+    theRoom = [_myFetchedResultsController objectAtIndexPath:indexPath];
     if (theCell == nil) {
         theCell = [[AvailableRoomTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                     reuseIdentifier:ROOM_CELL_ID];
@@ -91,18 +93,17 @@ NSString * const FRC_CACHE_NAME = @"AvailabilityViewCache";
         theReservationVC.myFromDate = self.myFromDate;
         // pass the end date
         theReservationVC.myToDate = self.myToDate;
-        // pass the room ID
-        //    Room *tempRoom = (Room *)self.myRoomsList[indexPath.row];
-        //    NSLog(@"the rooms's object ID is %@", tempRoom.objectID);
-        //theReservationVC.myRoomID = tempRoom.objectID;
         
+        Room * theRoom = [_myFetchedResultsController  objectAtIndexPath:indexPath];
         
-        // pass the hotel ID
-        //    Hotel *tempHotel = tempRoom.hotel;
-        //    NSLog(@"the hotel's object ID is %@", tempHotel.objectID);
-        //    theReservationVC.myHotelID = tempHotel.objectID;
+        // pass the NSManagedEntity Object IDs
+        theReservationVC.myRoomID = theRoom.objectID;
+        theReservationVC.myHotelID = theRoom.hotel.objectID;
         
-        theReservationVC.myHotel = theReservationVC.myRoom.hotel;
+#if DEBUG 
+        NSLog(@"Availability VC did select row at index room ID = %@",theReservationVC.myRoomID);
+        NSLog(@"Availability VC did select row at index hotel ID = %@",theReservationVC.myHotelID);
+#endif
         // attempting to release the hotel rooms from memory so they can be picket up by the next MOC.
         [self.navigationController pushViewController:theReservationVC animated:true];
     }
@@ -123,21 +124,21 @@ NSString * const FRC_CACHE_NAME = @"AvailabilityViewCache";
     
     // fetch all reservations occuring during the requested period.
     NSFetchRequest *bookedReservationFetchRequest = [NSFetchRequest fetchRequestWithEntityName:RESERVATION_ENTITY];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"startDate <= %@ AND endDate >= %@", theStart, theEnd];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(startDate <= %@) AND (endDate >= %@)", theStart, theEnd];
     bookedReservationFetchRequest.predicate = predicate;
     
     NSError *fetchError;
     // as the FRC calls the setup fetch upon init the controller may not be initiailized yet.
     // Check to see if it is and if not, initialize it prior to any fetching to ensure use of theMainMOC.
-    if ([self myPersistenceController].theMainMOC == nil) {
+    if (_myPersistenceController.theMainMOC == nil) {
         [self setPersistenceControllerFromDelegate:nil];
     }
     
-    NSManagedObjectContext *theContext = [[self myPersistenceController]  theMainMOC];
-    NSArray *reservationList = [theContext executeFetchRequest:bookedReservationFetchRequest
-                                                         error:&fetchError];
+    NSArray *reservationList = [_myPersistenceController.theMainMOC executeFetchRequest:bookedReservationFetchRequest
+                                                                                  error:&fetchError];
 #if DEBUG
     NSLog(@"Fetch for reservations has been executed.");
+    NSLog(@" The count of current reservations in this time period is: %lu", (unsigned long)reservationList.count);
 #endif
     
     if (fetchError) {
@@ -149,22 +150,27 @@ NSString * const FRC_CACHE_NAME = @"AvailabilityViewCache";
 #pragma mark - NSFetchResultsController.
 - (NSFetchedResultsController *)myFetchedResultsController
 {
+    [NSFetchedResultsController deleteCacheWithName:FRC_AVAILABILITY_CACHE_NAME];
     if (_myFetchedResultsController) return _myFetchedResultsController;
     
     NSArray *reservationsForDates = [self fetchReservationsBetween:self.myFromDate to:self.myToDate];
+    NSMutableArray *bookedRooms = [[NSMutableArray alloc] init];
+    for (Reservation *reservation in reservationsForDates) {
+        [bookedRooms addObject:reservation.rooms];
+    }
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:ROOM_ENTITY];
     [fetchRequest setFetchBatchSize:20];
     
     //TODO: How to set sort descriptor based on relationship between the hotels and rooms, not just on room number.
     [fetchRequest setSortDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc]
-                                                               initWithKey:FRC_SORT_DESCRIPTOR_KEY
+                                                               initWithKey:FRC_ROOM_SORT_DESCRIPTOR_KEY
                                                                ascending:YES]]];
     
     //  Any room that has a reservation between the dates will not be returned.
-    NSPredicate *mainPredicate = [NSPredicate predicateWithFormat:@"NOT SELF IN %@",  reservationsForDates];
+    NSPredicate *mainPredicate = [NSPredicate predicateWithFormat:@"NONE reservation in %@",  bookedRooms];
     fetchRequest.predicate = mainPredicate;
     
-    NSManagedObjectContext *moc = [[self myPersistenceController] theMainMOC];
+    NSManagedObjectContext *moc = _myPersistenceController.theMainMOC;
     
 #if DEBUG
     NSLog(@"Availability View  NS-FRC moc = %@", moc.description);
@@ -173,11 +179,16 @@ NSString * const FRC_CACHE_NAME = @"AvailabilityViewCache";
     _myFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                       managedObjectContext:moc
                                                                         sectionNameKeyPath:nil
-                                                                                 cacheName:FRC_CACHE_NAME];
+                                                                                 cacheName:FRC_AVAILABILITY_CACHE_NAME];
     [_myFetchedResultsController setDelegate:self];
     
     NSError *error = nil;
     NSAssert([_myFetchedResultsController performFetch:&error], @"Unresolved error %@\n%@", [error localizedDescription], [error userInfo]);
+    
+#if DEBUG 
+    NSUInteger itemsCount=[moc countForFetchRequest:fetchRequest  error:&error];
+    NSLog(@"The number of rooms fetched is %lu", itemsCount);
+#endif
     
     return _myFetchedResultsController;
 }
@@ -209,14 +220,21 @@ NSString * const FRC_CACHE_NAME = @"AvailabilityViewCache";
  */
 -(void) setPersistenceControllerFromDelegate: (AppDelegate *)theAppDelegate {
     
-    if (self.myPersistenceController == nil) {
-        self.myPersistenceController = [self setAppDelegate:theAppDelegate].myPersistenceController;
+    if (_myPersistenceController == nil) {
+        _myPersistenceController = [self setAppDelegate:theAppDelegate].myPersistenceController;
     }
     
 }
 
 
 #pragma mark - Cell Layout
+/**
+ *  Custom layout method setting up the Availability TVC with properties based on user input.
+ *
+ *  @param cell      the relevent cell to setup.
+ *  @param theRoom   the Room based on the array of objects within the FRC.
+ *  @param indexPath The index within the TV.  
+ */
 -(void)cellLayout:(AvailableRoomTableViewCell *)cell forRoom:(Room *)theRoom atIndexPath:(NSIndexPath *)indexPath {
     
     cell.roomNumberLabel.text = [NSString stringWithFormat:@"Room #%@",theRoom.number];

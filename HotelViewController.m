@@ -22,13 +22,12 @@
 
 @end
 
-NSString * const FRC_CACHE_NAME = @"HotelViewCache";
-NSString * const FRC_SORT_DESCRIPTOR_KEY = @"name";
-
 /**
  View Controller allowing user to view the available Hotels.  User can select a Cell from the list of hotels and observe the list of rooms for that hotel.
  */
 @implementation HotelViewController
+
+
 @synthesize myTableView;
 
 #pragma mark - View Controller Life Cycle Methods.
@@ -161,14 +160,14 @@ NSString * const FRC_SORT_DESCRIPTOR_KEY = @"name";
     [fetchRequest setFetchBatchSize:4];
     
     [fetchRequest setSortDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc]
-                                                               initWithKey:FRC_SORT_DESCRIPTOR_KEY
+                                                               initWithKey:FRC__HOTEL_SORT_DESCRIPTOR_KEY
                                                                ascending:YES]]];
 
     NSManagedObjectContext *moc = [[self myPersistenceController] theMainMOC];
     _myFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                       managedObjectContext:moc
                                                                         sectionNameKeyPath:nil
-                                                                                 cacheName:FRC_CACHE_NAME];
+                                                                                 cacheName:FRC__HOTEL_CACHE_NAME];
     [_myFetchedResultsController setDelegate:self];
     
 #if DEBUG
