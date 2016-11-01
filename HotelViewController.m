@@ -6,11 +6,9 @@
 //  Copyright (c) 2015 Randy McLain. All rights reserved.
 //
 
-#import "AppDelegate.h"
 #import <CoreData/CoreData.h>
 #import "CDPersistenceController.h"
 #import "HotelViewController.h"
-#import "HotelService.h"
 #import "RoomTableViewController.h"
 #import "Hotel+CoreDataProperties.h"
 #import "HotelTableViewCell.h"
@@ -19,7 +17,6 @@
 @interface HotelViewController () <UITableViewDataSource,UITableViewDelegate, NSFetchedResultsControllerDelegate>
 
 @property (strong, nonatomic) UITableView * myTableView;
-@property (strong, nonatomic) NSArray * myHotels;
 @property (strong, nonatomic) CDPersistenceController * myPersistenceController;
 @property (strong, nonatomic) NSFetchedResultsController *myFetchedResultsController;
 
@@ -79,7 +76,7 @@
  *  @return The number of sections : Integer.
  */
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [[[self fetchedResultsController] sections] count];
+    return [[[self myFetchedResultsController] sections] count];
 }
 
 
@@ -197,11 +194,5 @@
     }
   
 }
-
-
-
-
-
-
 
 @end

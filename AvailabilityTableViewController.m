@@ -18,15 +18,14 @@
 #import "Reservation+CoreDataProperties.h"
 
 
-@interface AvailabilityTableViewController () <UITableViewDelegate, UITableViewDataSource>
-@property (strong, nonatomic) NSFetchedResultsController *fetchResultsController;
-@property (strong, nonatomic) NSArray * myRoomsList;
+@interface AvailabilityTableViewController () <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
+@property (strong, nonatomic) NSFetchedResultsController *myFetchedResultsController;
 @property (strong, nonatomic) NSDateFormatter *myDateFormatter;
 @property (strong, nonatomic) CDPersistenceController *myPersistenceController;
 
 
 @end
-
+NSString * const ROOM_CELL_ID = @"AvailableRoomCell";
 
 
 /**
@@ -45,7 +44,7 @@
   // setup up view here.
   self.title = @"Our available rooms";
   
-  [self.tableView registerClass:[AvailableRoomTableViewCell class]forCellReuseIdentifier:@"AvailableRoomCell"];
+  [self.tableView registerClass:[AvailableRoomTableViewCell class]forCellReuseIdentifier:ROOM_CELL_ID];
   [self.tableView registerClass:[AvailableRoomTableViewCell class]forCellReuseIdentifier:@"NoRooms"];
   self.myPersistenceController = [[CDPersistenceController alloc] init];
   
@@ -53,22 +52,9 @@
 
 -(void) viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  [self.myPersistenceController initializeCoreDataWithCompletion:^(BOOL succeeded, NSError *error) {
-    
-    if (succeeded) {
-      self.myDateFormatter = [[NSDateFormatter alloc] init];
-      [_myDateFormatter setDateFormat:@"MM-dd-yyyy"];
-      self.myRoomsList = [self fetchAvailbleRoomsFor:self.myFromDate
-                                                  to:self.myToDate];
-      [self.myPersistenceController saveDataWithReturnBlock:^(BOOL succeeded, NSError *error) {
-        
-      }];
-      [self.tableView reloadData];
-    } else {
-      NSLog(@"There was an error loading the Core Data Stack %@", error.description);
-    }
-    
-  }];
+  
+  [self setPersistenceControllerFromDelegate:nil];
+
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -82,26 +68,30 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-  return 1;
+  return [[[self myFetchedResultsController] sections] count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
   
-  return self.myRoomsList.count;
+  id <NSFetchedResultsSectionInfo> sectionInfo = [[[self myFetchedResultsController] sections] objectAtIndex:section];
+  
+  return [sectionInfo numberOfObjects];
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  if (self.myRoomsList != 0 ) {
-    
-    AvailableRoomTableViewCell *theCell = [tableView dequeueReusableCellWithIdentifier:@"AvailableRoomCell" forIndexPath:indexPath];
-    [self cellLayout:theCell atIndexPath:indexPath];
-    theCell.backgroundColor = [UIColor blackColor];
-    
-    return theCell;
-  } else {
-    return nil;
+  AvailableRoomTableViewCell * theCell = nil;
+  Room *theRoom = nil;
+  
+  theRoom = [[self myFetchedResultsController] objectAtIndexPath:indexPath];
+  if (theCell == nil) {
+    theCell = [[AvailableRoomTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                reuseIdentifier:ROOM_CELL_ID];
   }
+  
+  [theCell setImage:theCellImage AndLabelName:theHotel.name];
+  theCell.backgroundColor = [UIColor blackColor];
+  return theCell;
   
 }
 
@@ -154,8 +144,7 @@
   
   // fetch all other rooms which will be available.
   NSFetchRequest *availableRoomsRequest = [NSFetchRequest fetchRequestWithEntityName:ROOM_ENTITY];
-  NSPredicate *mainPredicate = [NSPredicate predicateWithFormat:@"NOT SELF IN %@",  rooms];
-  availableRoomsRequest.predicate = mainPredicate;
+
   
   NSArray *theAvailableRooms = [theContext executeFetchRequest:availableRoomsRequest
                                                          error:&fetchError];
@@ -164,6 +153,67 @@
     NSLog(@"%@", fetchError.localizedDescription);
   }
   return theAvailableRooms;
+}
+
+#pragma mark - NSFetchResultsController.
+- (NSFetchedResultsController *)fetchedResultsController
+{
+  if (self.myFetchedResultsController) return self.myFetchedResultsController;
+  
+  NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:ROOM_ENTITY];
+  [fetchRequest setFetchBatchSize:4];
+  
+  [fetchRequest setSortDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc]
+                                                             initWithKey:@"name"
+                                                             ascending:YES]]];
+  
+  NSPredicate *mainPredicate = [NSPredicate predicateWithFormat:@"NOT SELF IN %@",  rooms];
+  fetchRequest.predicate = mainPredicate;
+  
+  NSManagedObjectContext *moc = [[self myPersistenceController] theMainMOC];
+  self.myFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+                                                                        managedObjectContext:moc
+                                                                          sectionNameKeyPath:nil
+                                                                                   cacheName:@"HotelViewCache"];
+  [self.myFetchedResultsController setDelegate:self];
+  
+  NSError *error = nil;
+  NSAssert([self.myFetchedResultsController performFetch:&error], @"Unresolved error %@\n%@", [error localizedDescription], [error userInfo]);
+  
+  return self.myFetchedResultsController;
+}
+
+
+
+#pragma mark - Custom Method Injection Setter.
+/**
+ *  Setter providing access for custom App Delegate.
+ *
+ *  @param theAppDelegate either UIApplication app delegate or custom mock.
+ *
+ *  @return the app delegate containing the myPersistenceController property.
+ */
+-(AppDelegate *) setAppDelegate: (AppDelegate *)theAppDelegate {
+  
+  if (theAppDelegate == nil) {
+    UIApplication *app = [UIApplication sharedApplication];
+    return (AppDelegate *)[app delegate];
+  } else {
+    return theAppDelegate;
+  }
+}
+
+/**
+ *  Setter for the persistent controller property.
+ *
+ *  @param theAppDelegate either the application app delegate or a stub.
+ */
+-(void) setPersistenceControllerFromDelegate: (AppDelegate *)theAppDelegate {
+  
+  if (self.myPersistenceController == nil) {
+    self.myPersistenceController = [self setAppDelegate:theAppDelegate].myPersistenceController;
+  }
+  
 }
 
 
