@@ -70,10 +70,26 @@ typedef NS_ENUM(NSUInteger, CDPError) {
   [theWriteContext setParentContext:_theMainMOC];
   [theWriteContext performBlockAndWait:^{
     NSInteger theResult = [theWriteContext countForFetchRequest:jsonDataFetch error:&jsonDataFetchError];
-    NSLog(@" %ld", (long)theResult);
+#if DEBUG
+    NSLog(@" %ld, if 0 then will parse FILE", (long)theResult);
+#endif
     if (theResult == 0) {
       [JSONParser hotelsFromJSONData: (theWriteContext)];
+#if DEBUG
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSFetchRequest *jsonDataFetch = [[NSFetchRequest alloc] initWithEntityName:HOTEL_ENTITY];
+            __block NSError *jsonDataFetchError;
+            NSInteger theResult = [_theMainMOC countForFetchRequest:jsonDataFetch error:&jsonDataFetchError];
+            NSLog(@"Hotels in Main MOC = %ld", (long)theResult);
+        });
+
+#endif
+        
       completionHandler();
+    } else {
+#if DEBUG
+        NSLog(@" Persistent Store already has Hotel Entities. Count is %ld", (long)theResult);
+#endif
     }
   }];
 }
@@ -120,9 +136,10 @@ typedef NS_ENUM(NSUInteger, CDPError) {
       [[NSUserDefaults standardUserDefaults] setObject:guest.memberNumber forKey:CURRENT_MEMBER_COUNT];
       [[NSUserDefaults standardUserDefaults] synchronize];
     }
-//
-    
+
+#if DEBUG
     NSLog(@"The Hotel is %@", theRoom.hotel);
+#endif
     
     Reservation *reservation = [[Reservation alloc] initWithEntity:[NSEntityDescription entityForName:RESERVATION_ENTITY inManagedObjectContext:_theMainMOC] insertIntoManagedObjectContext:_theMainMOC];
     
@@ -264,6 +281,9 @@ typedef NS_ENUM(NSUInteger, CDPError) {
         returnblock(NO, customError);
       });
     } else {
+#if DEBUG
+        NSLog(@"Reached the seedWithJSONWithCompletion message call.");
+#endif
       [self seedWithJSONWithCompletion:^{
         dispatch_async(dispatch_get_main_queue(), ^{
           returnblock(YES, nil);

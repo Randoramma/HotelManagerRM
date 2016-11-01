@@ -22,6 +22,8 @@
 
 @end
 
+NSString * const FRC_CACHE_NAME = @"HotelViewCache";
+NSString * const FRC_SORT_DESCRIPTOR_KEY = @"name";
 
 /**
  View Controller allowing user to view the available Hotels.  User can select a Cell from the list of hotels and observe the list of rooms for that hotel.
@@ -76,6 +78,9 @@
  *  @return The number of sections : Integer.
  */
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+#if DEBUG
+    NSLog(@"The number of sections retrieved is %lul",(unsigned long)[[[self myFetchedResultsController] sections] count]);
+#endif
     return [[[self myFetchedResultsController] sections] count];
 }
 
@@ -90,7 +95,9 @@
  */
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     id <NSFetchedResultsSectionInfo> sectionInfo = [[[self myFetchedResultsController] sections] objectAtIndex:section];
-    
+#if DEBUG
+    NSLog(@"The number of hotels retrieved is %lul",(unsigned long)[sectionInfo numberOfObjects]);
+#endif
     return [sectionInfo numberOfObjects];
 }
 
@@ -104,7 +111,10 @@
     theCell = (HotelTableViewCell *) [tableView dequeueReusableCellWithIdentifier:HOTEL_CELL_ID forIndexPath:indexPath];
     
     if (theCell == nil) {
-        theCell = [[HotelTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:HOTEL_CELL_ID Image:theCellImage AndName:theHotel.name];
+        theCell = [[HotelTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                            reuseIdentifier:HOTEL_CELL_ID
+                                                      Image:theCellImage
+                                                    AndName:theHotel.name];
     }
     
     if (theCell.cellImageView.image != nil) {
@@ -143,23 +153,33 @@
 
 
 #pragma mark - NSFetchResultsController.
-- (NSFetchedResultsController *)fetchedResultsController
+- (NSFetchedResultsController *)myFetchedResultsController
 {
     if (_myFetchedResultsController) return _myFetchedResultsController;
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:HOTEL_ENTITY];
     [fetchRequest setFetchBatchSize:4];
     
-    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES]]];
-    
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc]
+                                                               initWithKey:FRC_SORT_DESCRIPTOR_KEY
+                                                               ascending:YES]]];
+
     NSManagedObjectContext *moc = [[self myPersistenceController] theMainMOC];
-    self.myFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:moc sectionNameKeyPath:nil cacheName:@"HotelViewCache"];
-    [self.myFetchedResultsController setDelegate:self];
+    _myFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+                                                                      managedObjectContext:moc
+                                                                        sectionNameKeyPath:nil
+                                                                                 cacheName:FRC_CACHE_NAME];
+    [_myFetchedResultsController setDelegate:self];
     
+#if DEBUG
+    
+    NSLog(@"Fetched objects = %@", _myFetchedResultsController.fetchedObjects);
+    
+#endif
     NSError *error = nil;
-    NSAssert([self.myFetchedResultsController performFetch:&error], @"Unresolved error %@\n%@", [error localizedDescription], [error userInfo]);
+    NSAssert([_myFetchedResultsController performFetch:&error], @"Unresolved error %@\n%@", [error localizedDescription], [error userInfo]);
     
-    return self.myFetchedResultsController;
+    return _myFetchedResultsController;
 }
 
 
@@ -188,6 +208,8 @@
  *  @param theAppDelegate either the application app delegate or a stub.
  */
 -(void) setPersistenceControllerFromDelegate: (AppDelegate *)theAppDelegate {
+    
+
     
     if (self.myPersistenceController == nil) {
         self.myPersistenceController = [self setAppDelegate:theAppDelegate].myPersistenceController;

@@ -25,8 +25,13 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     [self.window makeKeyAndVisible];
     [self setMyPersistenceController:[[CDPersistenceController alloc] initWithCompletion:^(BOOL succeeded, NSError *error) {
-        NSLog(@"setup of the stack was %d, with error %@", succeeded, error.description);
-
+#if DEBUG
+        if (succeeded) {
+        NSLog(@"setup of the stack was successful, with error %@", error.description);
+        } else {
+        NSLog(@"setup of the stack failed, with error %@", error.description);    
+        }
+#endif
     }]];
     
     [self completeUserInterface];
