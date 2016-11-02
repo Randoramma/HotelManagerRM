@@ -308,7 +308,7 @@ typedef NS_ENUM(NSInteger, CellType){
     } else if ([self.myLastName length] < 1) {
         self.myLastName = @"You must enter a last name";
     } else {
-        [self.myPersistenceController bookReservationForRoom:self.myRoom.objectID startDate:self.myFromDate endDate:self.myToDate withGuestFirstName:self.myFirstName andGuestLastName:self.myLastName andReturnBlock:^(BOOL succeeded, NSError *error) {
+        [_myPersistenceController bookReservationForRoom:self.myRoom.objectID startDate:self.myFromDate endDate:self.myToDate withGuestFirstName:self.myFirstName andGuestLastName:self.myLastName andReturnBlock:^(BOOL succeeded, NSError *error) {
             if (succeeded) {
                 NSString *successMessage = [NSString stringWithFormat:@"You have reserved room %@ from %@ to %@. See you then!", self.myRoom.number, self.myFromDate.description, self.myToDate.description];
                 UIAlertController *successAlert = [UIAlertController alertControllerWithTitle:@"Success!"

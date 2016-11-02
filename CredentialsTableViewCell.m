@@ -54,13 +54,13 @@
 
 -(void) setConstranitsForCellViewWithViews: (NSDictionary *)views {
   
-  NSArray *hFirstConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[firstNameLabel]-2.0-[firstNameField]" options:0 metrics:nil views:views];
+  NSArray *hFirstConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[firstNameLabel(100)]-4.0-[firstNameField]-|" options:0 metrics:nil views:views];
   [self.contentView addConstraints:hFirstConstraint];
-  NSArray *hLastConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[lastNameLabel]-2.0-[lastNameField]" options:0 metrics:nil views:views];
+  NSArray *hLastConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[lastNameLabel(100)]-4.0-[lastNameField]-|" options:0 metrics:nil views:views];
   [self.contentView addConstraints:hLastConstraint];
-  NSArray *vLabelConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10.0-[firstNameLabel]-12.0-[lastNameLabel]" options:0 metrics:nil views:views];
+  NSArray *vLabelConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-4.0-[firstNameLabel]-2.0-[lastNameLabel]-4.0-|" options:0 metrics:nil views:views];
   [self.contentView addConstraints:vLabelConstraint];
-  NSArray *vFieldConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[firstNameField]-2.0-[lastNameField]" options:0 metrics:nil views:views];
+  NSArray *vFieldConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[firstNameField]-2.0-[lastNameField]-4.0-|" options:0 metrics:nil views:views];
   [self.contentView addConstraints:vFieldConstraint];
   
   

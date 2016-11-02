@@ -21,26 +21,26 @@
 
 -(void)loadView {
   UIView *myRootView = [[UIView alloc] init];
-  myRootView.backgroundColor = [UIColor whiteColor];
+  myRootView.backgroundColor = [UIColor blackColor];
   
   
   self.myGuestIntro = [[UILabel alloc] init];
-  [self.myGuestIntro setTextColor:[UIColor blackColor]];
+  [self.myGuestIntro setTextColor:[UIColor whiteColor]];
   [myRootView addSubview:self.myGuestIntro];
   [self.myGuestIntro setTranslatesAutoresizingMaskIntoConstraints:false];
   
   self.myFirstNameLabel = [[UILabel alloc] init];
-  [self.myFirstNameLabel setTextColor:[UIColor blackColor]];
+  [self.myFirstNameLabel setTextColor:[UIColor whiteColor]];
   [myRootView addSubview:self.myFirstNameLabel];
   [self.myFirstNameLabel setTranslatesAutoresizingMaskIntoConstraints:false];
   
   self.myLastNameLabel = [[UILabel alloc] init];
-  [self.myLastNameLabel setTextColor:[UIColor blackColor]];
+  [self.myLastNameLabel setTextColor:[UIColor whiteColor]];
   [myRootView addSubview:self.myLastNameLabel];
   [self.myLastNameLabel setTranslatesAutoresizingMaskIntoConstraints:false];
   
   self.myFirstNameField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 100, 18)];
-  [self.myFirstNameField setTextColor: [UIColor blackColor]];
+  [self.myFirstNameField setTextColor: [UIColor whiteColor]];
   self.myFirstNameField.borderStyle = UITextBorderStyleRoundedRect;
   self.myFirstNameField.font = [UIFont systemFontOfSize:15];
   self.myFirstNameField.placeholder = @"enter text";
@@ -54,7 +54,7 @@
   [self.myFirstNameField setTranslatesAutoresizingMaskIntoConstraints:false];
   
   self.myLastNameField = [[UITextField alloc] init];
-  [self.myLastNameField setTextColor:[UIColor blackColor]];
+  [self.myLastNameField setTextColor:[UIColor whiteColor]];
   self.myLastNameField.borderStyle = UITextBorderStyleRoundedRect;
   self.myLastNameField.font = [UIFont systemFontOfSize:15];
   self.myLastNameField.placeholder = @"enter text";
@@ -69,7 +69,7 @@
   
   self.myButton = [[UIButton alloc] init];
   [self.myButton setTitle:@"Next" forState:UIControlStateNormal];
-  [self.myButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+  [self.myButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [myRootView addSubview:self.myButton];
   [self.myButton setTranslatesAutoresizingMaskIntoConstraints:false];
   

@@ -22,7 +22,7 @@ typedef void (^CDPersistenceControllerCallbackBlock)(BOOL succeeded, NSError *er
 - (instancetype)initWithCompletion:(CDPersistenceControllerCallbackBlock)returnBlock;
 - (void) initializeCoreDataWithCompletion: (CDPersistenceControllerCallbackBlock)returnblock;
 - (void) saveDataWithReturnBlock:(CDPersistenceControllerCallbackBlock)returnBlock;
--(void) bookReservationForRoom:(NSManagedObjectID *)theRoomID
+- (void) bookReservationForRoom:(NSManagedObjectID *)theRoomID
                      startDate:(NSDate *)theStartDate
                        endDate:(NSDate *)theEndDate
             withGuestFirstName:(NSString *)theFirstName
