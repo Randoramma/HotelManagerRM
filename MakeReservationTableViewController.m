@@ -94,7 +94,7 @@ typedef NS_ENUM(NSInteger, CellType){
     self.myRoomCredentialsCell = [[CredentialsTableViewCell alloc] init];
     self.myRoomButtonCell = [[CheckoutButtonTableViewCell alloc] init];
     
-    // set delegates
+    // set textfield delegates
     self.myRoomCredentialsCell.firstNameField.delegate = self;
     self.myRoomCredentialsCell.lastNameField.delegate = self;
     
