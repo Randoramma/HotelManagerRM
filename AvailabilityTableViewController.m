@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Randy McLain. All rights reserved.
 //
 
+#import "Basic3LabelCell.h"
 #import "AvailabilityTableViewController.h"
-#import "AvailableRoomTableViewCell.h"
 #import "HotelService.h"
 #import "Constants.h"
 #import "CDPersistenceController.h"
@@ -24,7 +24,7 @@
 @property (strong, nonatomic) CDPersistenceController *myPersistenceController;
 
 
--(void)cellLayout:(AvailableRoomTableViewCell *)cell forRoom:(Room *)theRoom atIndexPath:(NSIndexPath *)indexPath;
+-(void)cellLayout:(Basic3LabelCell *)cell forRoom:(Room *)theRoom atIndexPath:(NSIndexPath *)indexPath;
 
 @end
 
@@ -34,6 +34,8 @@
  Class responsible for displaying the rooms available between the "to" and "from" dates selected in the DateVC.
  */
 @implementation AvailabilityTableViewController
+
+CGFloat CELL_HEIGHT = 60.0;
 
 -(void) loadView {
     [super loadView];
@@ -45,7 +47,7 @@
     [super viewDidLoad];
     
     self.title = @"Our available rooms";
-    [self.tableView registerClass:[AvailableRoomTableViewCell class]forCellReuseIdentifier:ROOM_CELL_ID];
+    [self.tableView registerClass:[Basic3LabelCell class]forCellReuseIdentifier:ROOM_CELL_ID];
     [self setPersistenceControllerFromDelegate:nil];
     
 }
@@ -56,9 +58,14 @@
   
   NSInteger theSections = [[[self myFetchedResultsController] sections] count];
 #if DEBUG
-  NSLog(@"AvailabilityTVC: The number of rows is %lu",theSections);
+  NSLog(@"AvailabilityTVC: The number of sections is %lu",theSections);
 #endif
     return theSections;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return CELL_HEIGHT;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -76,12 +83,12 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    AvailableRoomTableViewCell * theCell = nil;
+    Basic3LabelCell * theCell = nil;
     Room *theRoom = nil;
     
     theRoom = [[self myFetchedResultsController] objectAtIndexPath:indexPath];
     if (theCell == nil) {
-        theCell = [[AvailableRoomTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+        theCell = [[Basic3LabelCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                     reuseIdentifier:ROOM_CELL_ID];
     }
     
@@ -246,11 +253,11 @@
  *  @param theRoom   the Room based on the array of objects within the FRC.
  *  @param indexPath The index within the TV.  
  */
--(void)cellLayout:(AvailableRoomTableViewCell *)cell forRoom:(Room *)theRoom atIndexPath:(NSIndexPath *)indexPath {
+-(void)cellLayout:(Basic3LabelCell *)cell forRoom:(Room *)theRoom atIndexPath:(NSIndexPath *)indexPath {
     
-    cell.roomNumberLabel.text = [NSString stringWithFormat:@"Room #%@",theRoom.number];
-    cell.roomRateLabel.text = [NSString stringWithFormat:@"$%@ / night",theRoom.rate];
-    cell.numberOfBedsLabel.text = [NSString stringWithFormat:@"# of Beds is %@", theRoom.beds];
+    cell.leftLabel.text = [NSString stringWithFormat:@"Room #%@",theRoom.number];
+    cell.topRightLabel.text = [NSString stringWithFormat:@"$%@ / night",theRoom.rate];
+    cell.bottomRightLabel.text = [NSString stringWithFormat:@"# of Beds is %@", theRoom.beds];
     
 }
 
