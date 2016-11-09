@@ -9,6 +9,7 @@
 #import "GuestServicesViewController.h"
 #import "GuestReservationsTableViewController.h"
 #import "Guest+CoreDataProperties.h"
+#import "GuestListTableViewController.h"
 
 @interface GuestServicesViewController () <UITextFieldDelegate, UIScrollViewDelegate>
 @property (strong, nonatomic) UILabel *myGuestIntro;
@@ -37,7 +38,7 @@ long OFFSET_FOR_KEYBOARD = 80.0;
 /**
  *  Aspect prior to the view being loaded from Interface Builder. A ScrollView was required as the root view to support the choice of using
  *  UITextFields to input the guest credentials. In order for the keyboard to not superimpose over a textfield that may be located on the bottom of the screen
- *  a scroll view was required so the view could raise above the view.  When using a scroll view it is important to rememver the that the all the space in a 
+ *  a scroll view was required so the view could raise above the view.  When using a scroll view it is important to rememver the that the all the space in a
  *  height and width must be accounted for using constraints.
  */
 -(void)loadView {
@@ -49,7 +50,7 @@ long OFFSET_FOR_KEYBOARD = 80.0;
     NSNumber * topWelcomeSpace = [NSNumber numberWithInt:(_viewWidth *(.33))];
     NSNumber * bottomWelcomeSpace = [NSNumber numberWithInt:20];
     NSNumber * sideSpace = [NSNumber numberWithInt: (_viewWidth *.5) - (TEXT_FIELD_WIDTH *.5)];
-
+    
     _myMetrics = @{@"TWS": topWelcomeSpace, @"BWS": bottomWelcomeSpace, @"SS": sideSpace};
     
     UIView *myRootView = [[UIView alloc] initWithFrame:frame];
@@ -88,7 +89,7 @@ long OFFSET_FOR_KEYBOARD = 80.0;
     
     CGRect TEXT_FIELD_RECT = CGRectMake(0, 0, TEXT_FIELD_WIDTH, TEXT_FIELD_HEIGHT);
     self.myFirstNameField = [[UITextField alloc] initWithFrame:TEXT_FIELD_RECT];
-
+    
     [self textFieldInitializer:self.myFirstNameField];
     [myRootView addSubview:self.myFirstNameField];
     
@@ -163,7 +164,7 @@ long OFFSET_FOR_KEYBOARD = 80.0;
 
 -(void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    NSLog(@"View Appeared."); 
+    NSLog(@"View Appeared.");
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -268,11 +269,11 @@ long OFFSET_FOR_KEYBOARD = 80.0;
 }
 
 /**
- *  Initializer for textfields populating all properties required for this UITextView.  
+ *  Initializer for textfields populating all properties required for this UITextView.
  *  BoarderStyle
  *  Font
  *  BackgroundColor
- *  Keyboard type, and formatting. 
+ *  Keyboard type, and formatting.
  *  Content alignment
  *  Turn off autoLayout resizing masks.
  *
@@ -291,7 +292,7 @@ long OFFSET_FOR_KEYBOARD = 80.0;
     theTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
     theTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     [theTextField setTranslatesAutoresizingMaskIntoConstraints:false];
-
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -304,18 +305,38 @@ long OFFSET_FOR_KEYBOARD = 80.0;
 /**
  *  Method aggregating the data from information entered within the fields, fetching the data, and passing to the next VC.
  */
--(void) nextPressed {
+-(void) nextPress {
     
-// pass the first and last names to the GuestListTVC.
+    // pass the first and last names to the GuestListTVC.
     
-    
-    
-    
+    if (self.myFirstName.length > 0 || self.myFirstName.length >0) {
+        GuestListTableViewController * GuestLTVC = [[GuestListTableViewController alloc] init];
+        GuestLTVC.myGuestLastName = self.myLastName;
+        GuestLTVC.myGuestFirstName = self.myFirstName;
+        
+        [self.navigationController pushViewController:GuestLTVC animated:TRUE];
+    } else {
+        UIAlertController *alertController = [UIAlertController
+                                              alertControllerWithTitle:@"Error"
+                                              message:@"Please enter a guest name in the fields."
+                                              preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *okAction = [UIAlertAction
+                                   actionWithTitle:NSLocalizedString(@"OK", @"OK action")
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction *action)
+                                   {
+                                       NSLog(@"OK action");
+                                   }];
+        
+        [alertController addAction:okAction];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
 }
 
 
 
-#pragma mark - Core Data Fetches 
+#pragma mark - Core Data Fetches
 
 
 

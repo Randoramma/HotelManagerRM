@@ -26,7 +26,7 @@
 @end
 @implementation GuestListTableViewController
 
-
+CGFloat GUEST_CELL_HEIGHT = 60.0;
 NSString * MY_TABLE_VIEW_CELL = @"GuestListTableCellReuseIdentifier";
 
 #pragma mark - TVC lifecycle methods.
@@ -56,6 +56,10 @@ NSString * MY_TABLE_VIEW_CELL = @"GuestListTableCellReuseIdentifier";
 #endif
     
     return theSections;
+}
+
+-(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return GUEST_CELL_HEIGHT; 
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -106,31 +110,35 @@ NSString * MY_TABLE_VIEW_CELL = @"GuestListTableCellReuseIdentifier";
 
 
 #pragma mark - NSFetchResultsController.
-- (NSFetchedResultsController *)myFetchedResultsController
+- (NSFetchedResultsController *)myFetchController
 {
     [NSFetchedResultsController deleteCacheWithName: FRC_GUEST_LIST_CACHE_NAME];
     if (_myFetchController) return _myFetchController;
-    [self.myFetchController setDelegate:self];
     
     
-    NSFetchRequest *guestListFetch = [NSFetchRequest fetchRequestWithEntityName:GUEST_ENTITY];
+//    NSFetchRequest *guestListFetch = [[NSFetchRequest alloc]fetchRequestWithEntityName:GUEST_ENTITY];
+    NSFetchRequest *guestListFetch = [[NSFetchRequest alloc] initWithEntityName:GUEST_ENTITY];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(firstName == %@) OR (lastName == %@)", self.myGuestFirstName, self.myGuestLastName];
     [guestListFetch setPredicate:predicate];
+    
+    [guestListFetch setSortDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc]
+                                                               initWithKey:FRC_GUEST_SORT_DESCRIPTOR_KEY
+                                                               ascending:YES]]];
     
     NSManagedObjectContext *moc = [self myPersistenceController].theMainMOC;
 #if DEBUG
     NSLog(@"GuestListTVC:  NS-FRC moc = %@", moc.description);
     NSLog(@"GuestListTVC:  NS-FRC fetchRequest = %@", guestListFetch.description);
 #endif
-
-    
-    NSError *error = nil;
-    NSAssert([self.myFetchController performFetch:&error], @"Unresolved error %@\n%@", [error localizedDescription], [error userInfo]);
-
-    self.myFetchController = [[NSFetchedResultsController alloc] initWithFetchRequest:guestListFetch
+    _myFetchController = [[NSFetchedResultsController alloc] initWithFetchRequest:guestListFetch
                                                                  managedObjectContext:moc
                                                                    sectionNameKeyPath:nil
                                                                             cacheName:FRC_AVAILABILITY_CACHE_NAME];
+    
+
+    [_myFetchController setDelegate:self];
+    NSError *error = nil;
+    NSAssert([self.myFetchController performFetch:&error], @"Unresolved error %@\n%@", [error localizedDescription], [error userInfo]);
     
     
 #if DEBUG

@@ -51,6 +51,7 @@ extern NSString * const FRC__HOTEL_CACHE_NAME;
 extern NSString * const FRC__HOTEL_SORT_DESCRIPTOR_KEY;
 
 extern NSString * const FRC_ROOM_SORT_DESCRIPTOR_KEY;
+extern NSString * const FRC_GUEST_SORT_DESCRIPTOR_KEY;
 extern NSString * const FRC_AVAILABILITY_CACHE_NAME;
 extern NSString * const FRC_GUEST_LIST_CACHE_NAME;
 
