@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Room.h"
-#import "Hotel.h"
+#import "Room+CoreDataProperties.h"
+#import "Hotel+CoreDataProperties.h"
 
 @interface MakeReservationTableViewController : UITableViewController
-@property (strong, nonatomic) NSDate *fromDate;
-@property (strong, nonatomic) NSDate *toDate;
-@property (strong, nonatomic) Room *theRoom;
-@property (strong, nonatomic) Hotel *theHotel;
+@property (strong, nonatomic) NSDate *myFromDate;
+@property (strong, nonatomic) NSDate *myToDate;
+@property (strong, nonatomic) NSManagedObjectID *myRoomID;
+@property (strong, nonatomic) NSManagedObjectID *myHotelID;
+//@property (strong, nonatomic) Room *myRoom;
+//@property (strong, nonatomic) Hotel *myHotel; 
 @end

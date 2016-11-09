@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Guest.h"
+#import "Guest+CoreDataProperties.h"
 
 @interface GuestReservationsTableViewController : UITableViewController
 @property (strong, nonatomic)Guest *fromGuest;

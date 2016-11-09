@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "HotelViewController.h"
-#import "Hotel.h"
+#import "Hotel+CoreDataProperties.h"
 
 @interface RoomTableViewController : UITableViewController
 // create an array of rooms to list.

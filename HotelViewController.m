@@ -6,33 +6,31 @@
 //  Copyright (c) 2015 Randy McLain. All rights reserved.
 //
 
-#import "AppDelegate.h"
 #import <CoreData/CoreData.h>
 #import "CDPersistenceController.h"
 #import "HotelViewController.h"
-#import "HotelService.h"
 #import "RoomTableViewController.h"
-#import "Hotel.h"
+#import "Hotel+CoreDataProperties.h"
 #import "HotelTableViewCell.h"
 #import "Constants.h"
 
-@interface HotelViewController () <UITableViewDataSource,UITableViewDelegate>
+@interface HotelViewController () <UITableViewDataSource,UITableViewDelegate, NSFetchedResultsControllerDelegate>
 
-@property (strong, nonatomic) UITableView *myTableView;
-@property (strong, nonatomic) NSArray *myHotels;
-@property (strong, nonatomic) AppDelegate *myAppDelegate;
-@property (strong, atomic) CDPersistenceController *myPersistenceController;
+@property (strong, nonatomic) UITableView * myTableView;
+@property (strong, nonatomic) CDPersistenceController * myPersistenceController;
+@property (strong, nonatomic) NSFetchedResultsController *myFetchedResultsController;
 
 @end
-
 
 /**
  View Controller allowing user to view the available Hotels.  User can select a Cell from the list of hotels and observe the list of rooms for that hotel.
  */
 @implementation HotelViewController
+
+
 @synthesize myTableView;
 
-
+#pragma mark - View Controller Life Cycle Methods.
 /**
  *  View Controller lifecycle method called prior to viewDidLoad.  Programatic layout best to go here before any IB meddling.
  */
@@ -56,29 +54,8 @@
 
 -(void)viewDidLoad {
     [super viewDidLoad];
-    // must initialize the controller prior to implementing it.  In future builds this needs to be in a seperate class handling all the fetches while
-    self.myPersistenceController = [[CDPersistenceController alloc] init];
-    [self.myPersistenceController initializeCoreDataWithCompletion:^(BOOL succeeded, NSError *error) {
-        
-        if (succeeded) {
-            NSFetchRequest *hotelListFetch = [NSFetchRequest fetchRequestWithEntityName:HOTEL_ENTITY];
-            NSError *fetchError;
-            NSManagedObjectContext *theContext = [_myPersistenceController theMainMOC];
-            NSArray *hotelList = [theContext executeFetchRequest:hotelListFetch
-                                                           error:&fetchError];
-            if (fetchError) {
-                NSLog(@"%@", fetchError.localizedDescription);
-            } else {
-                _myHotels = hotelList;
-            }
-            
-            [self.myTableView reloadData];
-        } else {
-            NSLog(@"There was an error loading the Core Data Stack %@", error.description);
-        }
-        
-    }];
     
+    [self setPersistenceControllerFromDelegate:nil]; 
     // setup table view.
     [myTableView registerClass:[HotelTableViewCell class] forCellReuseIdentifier:HOTEL_CELL_ID];
     myTableView.dataSource = self;
@@ -86,23 +63,57 @@
     
 }
 
+
+#pragma mark - UITableView Delegate Methods.
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return TABLE_ROW_HEIGHT;
 }
 
+/**
+ *  Delegate method returning number of sections for the TVC.  Sections based on the NSFetchRequest sectionNameKeyPath
+ *
+ *  @param tableView the TableView...
+ *
+ *  @return The number of sections : Integer.
+ */
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+#if DEBUG
+    NSLog(@"The number of sections retrieved is %lul",(unsigned long)[[[self myFetchedResultsController] sections] count]);
+#endif
+    return [[[self myFetchedResultsController] sections] count];
+}
 
+
+/**
+ *  Delegate method determining the number of rows for the table section.  Rows based on table view section array within the FetchResults Controller setup NSFetchRequest.
+ *
+ *  @param tableView the table View.
+ *  @param section   The Section within the table view.
+ *
+ *  @return The number of rows for the Section : Integer.
+ */
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.myHotels.count;
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[[self myFetchedResultsController] sections] objectAtIndex:section];
+#if DEBUG
+    NSLog(@"The number of hotels retrieved is %lul",(unsigned long)[sectionInfo numberOfObjects]);
+#endif
+    return [sectionInfo numberOfObjects];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    Hotel *theHotel = self.myHotels[indexPath.row];
+    HotelTableViewCell * theCell = nil;
+    Hotel *theHotel = nil;
+    
+    theHotel = [[self myFetchedResultsController] objectAtIndexPath:indexPath];
     UIImage *theCellImage = [UIImage imageNamed:theHotel.imageName];
-    HotelTableViewCell * theCell = (HotelTableViewCell *) [tableView dequeueReusableCellWithIdentifier:HOTEL_CELL_ID forIndexPath:indexPath];
+    theCell = (HotelTableViewCell *) [tableView dequeueReusableCellWithIdentifier:HOTEL_CELL_ID forIndexPath:indexPath];
     
     if (theCell == nil) {
-        theCell = [[HotelTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:HOTEL_CELL_ID Image:theCellImage AndName:theHotel.name];
+        theCell = [[HotelTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                            reuseIdentifier:HOTEL_CELL_ID
+                                                      Image:theCellImage
+                                                    AndName:theHotel.name];
     }
     
     if (theCell.cellImageView.image != nil) {
@@ -118,13 +129,18 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     // push on the new VC. Segue to rooms VC.
+    Hotel *theHotel = nil;
+    
+    theHotel = [[self myFetchedResultsController] objectAtIndexPath:indexPath];
     RoomTableViewController *roomVC = [[RoomTableViewController alloc] init];
     [self.navigationController pushViewController:roomVC animated:true];
-    roomVC.theHotel = self.myHotels[indexPath.row];
+    roomVC.theHotel = theHotel; 
     [myTableView deselectRowAtIndexPath:indexPath animated:false];
     
 }
 
+
+#pragma mark - VFL UI Setup for the Hotel View Controller.
 -(void) addConstraintsToRootView:(UIView *)theRootView withViews:(NSDictionary *)views {
     
     NSArray *tableViewVertical = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[tableView]|" options:0 metrics:nil views:views];
@@ -134,5 +150,70 @@
     
 }
 
+
+#pragma mark - NSFetchResultsController.
+- (NSFetchedResultsController *)myFetchedResultsController
+{
+    if (_myFetchedResultsController) return _myFetchedResultsController;
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:HOTEL_ENTITY];
+    [fetchRequest setFetchBatchSize:4];
+    
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc]
+                                                               initWithKey:FRC__HOTEL_SORT_DESCRIPTOR_KEY
+                                                               ascending:YES]]];
+
+    NSManagedObjectContext *moc = [[self myPersistenceController] theMainMOC];
+    _myFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+                                                                      managedObjectContext:moc
+                                                                        sectionNameKeyPath:nil
+                                                                                 cacheName:FRC__HOTEL_CACHE_NAME];
+    [_myFetchedResultsController setDelegate:self];
+    
+#if DEBUG
+    
+    NSLog(@"Fetched objects = %@", _myFetchedResultsController.fetchedObjects);
+    
+#endif
+    NSError *error = nil;
+    NSAssert([_myFetchedResultsController performFetch:&error], @"Unresolved error %@\n%@", [error localizedDescription], [error userInfo]);
+    
+    return _myFetchedResultsController;
+}
+
+
+
+#pragma mark - Custom Method Injection Setter.
+/**
+ *  Setter providing access for custom App Delegate.
+ *
+ *  @param theAppDelegate either UIApplication app delegate or custom mock.
+ *
+ *  @return the app delegate containing the myPersistenceController property.
+ */
+-(AppDelegate *) setAppDelegate: (AppDelegate *)theAppDelegate {
+    
+    if (theAppDelegate == nil) {
+        UIApplication *app = [UIApplication sharedApplication];
+        return (AppDelegate *)[app delegate];
+    } else {
+        return theAppDelegate;
+    }
+}
+
+/**
+ *  Setter for the persistent controller property.
+ *
+ *  @param theAppDelegate either the application app delegate or a stub.
+ */
+-(void) setPersistenceControllerFromDelegate: (AppDelegate *)theAppDelegate {
+    
+
+    
+    if (self.myPersistenceController == nil) {
+        self.myPersistenceController = [self setAppDelegate:theAppDelegate].myPersistenceController;
+    }
+  
+}
 
 @end

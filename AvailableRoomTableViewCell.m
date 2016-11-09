@@ -16,6 +16,7 @@
   self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
   
   if (self) {
+      
     self.numberOfBedsLabel = [[UILabel alloc] init];
     self.numberOfBedsLabel.translatesAutoresizingMaskIntoConstraints = false;
     self.numberOfBedsLabel.textColor = [UIColor whiteColor];
@@ -47,7 +48,7 @@
   [self.contentView addConstraints:vRateLayoutConstraint];
   NSArray *hLocationLayoutConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:[numberOfBedsLabel]-8-|" options:0 metrics:nil views:views];
   [self.contentView addConstraints:hLocationLayoutConstraint];
-  NSArray *vLocationLayoutConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[roomRateLabel]-2-[numberOfBedsLabel]" options:0 metrics:nil views:views];
+  NSArray *vLocationLayoutConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[roomRateLabel]-2-[numberOfBedsLabel]-|" options:0 metrics:nil views:views];
   [self.contentView addConstraints:vLocationLayoutConstraint];
 }
 @end

@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "F3843E82F0D9735834718F86A01ADFC412F2F62A",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "24030F9DCD347170E4D0C779DF11007E061AE5F5" : 9223372036854775807,
+    "F3843E82F0D9735834718F86A01ADFC412F2F62A" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "400F8918-D36E-418A-AB27-311405E31C45",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "24030F9DCD347170E4D0C779DF11007E061AE5F5" : "",
+    "F3843E82F0D9735834718F86A01ADFC412F2F62A" : "HotelManagerRM\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "HotelManagerRM",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "HotelManagerRM.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/codefellows\/sea-d34-iOS.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "24030F9DCD347170E4D0C779DF11007E061AE5F5"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Randoramma\/HotelManagerRM.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "F3843E82F0D9735834718F86A01ADFC412F2F62A"
+    }
+  ]
+}

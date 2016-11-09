@@ -8,7 +8,7 @@
 
 #import "GuestCheckInViewController.h"
 #import "GuestReservationsTableViewController.h"
-#import "Guest.h"
+#import "Guest+CoreDataProperties.h"
 
 @interface GuestCheckInViewController ()
 

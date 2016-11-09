@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Room.h"
+#import "Room+CoreDataProperties.h"
 
 @interface RoomImageTableViewCell : UITableViewCell
 @property (strong, nonatomic) UIImageView* cellImageView;

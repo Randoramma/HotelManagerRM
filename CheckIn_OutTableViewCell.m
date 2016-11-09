@@ -10,8 +10,6 @@
 
 @implementation CheckIn_OutTableViewCell
 
-/* This seems like a duplicate cell of AvailableRoomTableViewCell */
-
 -(instancetype) initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
   
@@ -36,7 +34,10 @@
     self.toDate.translatesAutoresizingMaskIntoConstraints = false;
     [self.contentView addSubview:self.toDate];
     
-    NSDictionary *cellViews = @{@"fromDateLabel": self.fromDateLabel, @"toDateLabel": self.toDateLabel, @"fromDate": self.fromDate, @"toDate": self.toDate};
+    NSDictionary *cellViews = @{@"fromDateLabel": self.fromDateLabel,
+                                @"toDateLabel": self.toDateLabel,
+                                @"fromDate": self.fromDate,
+                                @"toDate": self.toDate};
     [self setConstranitsForCellViewWithViews:cellViews];
   }
   return self;

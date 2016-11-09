@@ -8,8 +8,8 @@
 
 #import "JSONParser.h"
 #import "AppDelegate.h"
-#import "Hotel.h"
-#import "Room.h"
+#import "Hotel+CoreDataProperties.h"
+#import "Room+CoreDataProperties.h"
 
 @implementation JSONParser
 
