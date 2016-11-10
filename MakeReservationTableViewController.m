@@ -32,7 +32,6 @@
 @property (strong, nonatomic) NSString *myLastName;
 @property (strong, nonatomic) UIImage *myImage;
 @property (strong, nonatomic) Room *myRoom;
-@property (strong, nonatomic) Hotel *myHotel;
 @property (strong, nonatomic) CDPersistenceController *myPersistenceController;
 
 @end
@@ -106,19 +105,12 @@ typedef NS_ENUM(NSInteger, CellType){
     [super viewWillAppear:animated];
     [self setPersistenceControllerFromDelegate:nil];
     NSError *objectIDError = nil;
-    self.myHotel = [_myPersistenceController.theMainMOC existingObjectWithID:self.myHotelID error:&objectIDError];
-   // NSAssert((objectIDError != nil), @"Unresolved hotel object assignment error %@", objectIDError);
-    
     self.myRoom = [_myPersistenceController.theMainMOC existingObjectWithID:self.myRoomID error:&objectIDError];
-   // NSAssert((objectIDError != nil), @"Unresolved room object assignment error %@", objectIDError);
-    
-#if DEBUG 
+  
+  
+#if DEBUG
     NSLog(@"The Room is %@", self.myRoom.debugDescription);
     NSLog(@"The Room is a fault = %d", self.myRoom.isFault);
-    
-    NSLog(@"The Hotel is %@", self.myHotel.debugDescription);
-    NSLog(@"The Hotel is a fault = %d", self.myHotel.isFault);
-
     NSLog(@"View Will Appear completed");
 #endif
 }

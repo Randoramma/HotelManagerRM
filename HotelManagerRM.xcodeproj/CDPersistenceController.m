@@ -117,9 +117,14 @@ typedef NS_ENUM(NSUInteger, CDPError) {
     [theWriteContext setParentContext:_theMainMOC];
     
     __block NSError *saveError;
-    
-    [theWriteContext performBlock:^{
-        Room *reservedRoom = [theWriteContext existingObjectWithID:theRoomID error: &saveError];
+#if DEBUG
+ long theCount = [theWriteContext registeredObjects].count;
+  NSLog(@"The number of objects within the writeContext is %ld", theCount);
+  
+#endif
+
+        [theWriteContext performBlock:^{
+        Room *reservedRoom = [theWriteContext objectWithID:theRoomID];
         Guest * guest = [[Guest alloc] initWithEntity:[NSEntityDescription entityForName:GUEST_ENTITY
                                                                   inManagedObjectContext:theWriteContext] insertIntoManagedObjectContext:theWriteContext];
         guest.firstName = theFirstName;
@@ -134,7 +139,7 @@ typedef NS_ENUM(NSUInteger, CDPError) {
         NSLog(@"The guest object is a fault %d", guest.isFault);
         
 #endif
-        
+        // provide the guest with an id number.
         if ([[NSUserDefaults standardUserDefaults] integerForKey:CURRENT_MEMBER_COUNT] == 0) {
             NSNumber *theGuestsID = [[NSNumber alloc] initWithInt:01];
             [[NSUserDefaults standardUserDefaults] setObject:theGuestsID forKey:CURRENT_MEMBER_COUNT];
@@ -169,21 +174,25 @@ typedef NS_ENUM(NSUInteger, CDPError) {
                 if (succeeded) {
                     dispatch_async(dispatch_get_main_queue(), ^{
 #if DEBUG
+                      // make a test fetch to the main MOC to observe the newly saved reservation...
                         NSFetchRequest *theReservationTestRequest = [[NSFetchRequest alloc] initWithEntityName:RESERVATION_ENTITY];
                         NSError *fetchError;
                         NSArray *theReservations = [_theMainMOC executeFetchRequest:theReservationTestRequest error:&fetchError];
                         NSLog(@"The number of reservations just saved within the main moc is %lu", (unsigned long)theReservations.count);
                         NSLog(@"The description the the reservations is %@", theReservations.debugDescription);
-                        
+#endif
                         [_saveToPSCContext performBlock:^{
                             NSFetchRequest *theReservationTestRequest = [[NSFetchRequest alloc] initWithEntityName:RESERVATION_ENTITY];
                             NSError *fetchError;
-                            NSArray *theOtherReservations = [_saveToPSCContext executeFetchRequest:theReservationTestRequest error:&fetchError];
+                          __weak NSArray *theOtherReservations = [_saveToPSCContext executeFetchRequest:theReservationTestRequest error:&fetchError];
+#if DEBUG
+                          // print the number of reservations within the context.
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 NSLog(@" The number of reservations in the saveContext is %lu", (unsigned long)theOtherReservations.count);
                             });
-                        }];
 #endif
+                        }];
+
                         
                         returnblock(YES, nil);
                     });

@@ -163,21 +163,21 @@
                                                                initWithKey:FRC__HOTEL_SORT_DESCRIPTOR_KEY
                                                                ascending:YES]]];
 
-    NSManagedObjectContext *moc = [[self myPersistenceController] theMainMOC];
+    NSManagedObjectContext *moc = [_myPersistenceController theMainMOC];
     _myFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                       managedObjectContext:moc
                                                                         sectionNameKeyPath:nil
                                                                                  cacheName:FRC__HOTEL_CACHE_NAME];
     [_myFetchedResultsController setDelegate:self];
-    
-#if DEBUG
-    
-    NSLog(@"Fetched objects = %@", _myFetchedResultsController.fetchedObjects);
-    
-#endif
+  
     NSError *error = nil;
     NSAssert([_myFetchedResultsController performFetch:&error], @"Unresolved error %@\n%@", [error localizedDescription], [error userInfo]);
-    
+#if DEBUG
+  
+  NSLog(@"Fetched objects = %@", _myFetchedResultsController.fetchedObjects);
+  
+#endif
+  
     return _myFetchedResultsController;
 }
 
