@@ -9,8 +9,8 @@
 #import "CheckoutButtonTableViewCell.h"
 @interface CheckoutButtonTableViewCell()
 @property (strong, nonatomic) UIView* theFrame;
--(void)centerHorizontallyInSuperview: (UIButton *)theButton;
--(void)centerVerticallyInSuperview: (UIButton *)theButton;
+//-(void)centerHorizontallyInSuperview: (UIButton *)theButton;
+//-(void)centerVerticallyInSuperview: (UIButton *)theButton;
 
 
 

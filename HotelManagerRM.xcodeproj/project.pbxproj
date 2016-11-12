@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		4EBAD5BA1DD283CD00748ABD /* GuestListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EBAD5B91DD283CD00748ABD /* GuestListTableViewController.m */; };
 		4EBAD5BD1DD28B2F00748ABD /* Basic3LabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EBAD5BC1DD28B2F00748ABD /* Basic3LabelCell.m */; };
-		D007EE5F1B169502000FE400 /* HotelManagerGraphicsKit.m in Sources */ = {isa = PBXBuildFile; fileRef = D007EE5E1B169502000FE400 /* HotelManagerGraphicsKit.m */; };
 		D008B6C21AFBB9D900EAC22B /* DateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D008B6C11AFBB9D900EAC22B /* DateViewController.m */; };
 		D008B6D11AFBEA3200EAC22B /* AvailabilityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D008B6D01AFBEA3200EAC22B /* AvailabilityTableViewController.m */; };
 		D008B6DB1AFD314300EAC22B /* RoomTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D008B6DA1AFD314300EAC22B /* RoomTableViewController.m */; };
@@ -65,8 +64,6 @@
 		4EBAD5B91DD283CD00748ABD /* GuestListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuestListTableViewController.m; sourceTree = SOURCE_ROOT; };
 		4EBAD5BB1DD28B2F00748ABD /* Basic3LabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Basic3LabelCell.h; sourceTree = SOURCE_ROOT; };
 		4EBAD5BC1DD28B2F00748ABD /* Basic3LabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Basic3LabelCell.m; sourceTree = SOURCE_ROOT; };
-		D007EE5D1B169502000FE400 /* HotelManagerGraphicsKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotelManagerGraphicsKit.h; sourceTree = "<group>"; };
-		D007EE5E1B169502000FE400 /* HotelManagerGraphicsKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotelManagerGraphicsKit.m; sourceTree = "<group>"; };
 		D008B6C01AFBB9D900EAC22B /* DateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DateViewController.h; path = ../DateViewController.h; sourceTree = "<group>"; };
 		D008B6C11AFBB9D900EAC22B /* DateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DateViewController.m; path = ../DateViewController.m; sourceTree = "<group>"; };
 		D008B6CF1AFBEA3200EAC22B /* AvailabilityTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AvailabilityTableViewController.h; path = ../AvailabilityTableViewController.h; sourceTree = "<group>"; };
@@ -167,20 +164,20 @@
 			children = (
 				D010A02B1B163DEC003D773F /* AvailableRoomTableViewCell.h */,
 				D010A02C1B163DEC003D773F /* AvailableRoomTableViewCell.m */,
+				4EBAD5BB1DD28B2F00748ABD /* Basic3LabelCell.h */,
+				4EBAD5BC1DD28B2F00748ABD /* Basic3LabelCell.m */,
 				D0F0EB6D1B1E76940042BCFC /* CheckIn_OutTableViewCell.h */,
 				D0F0EB6E1B1E76940042BCFC /* CheckIn_OutTableViewCell.m */,
 				D0A929101B2A178D00CC7715 /* CheckoutButtonTableViewCell.h */,
 				D0A929111B2A178D00CC7715 /* CheckoutButtonTableViewCell.m */,
 				D0F0EB701B1E76CA0042BCFC /* CredentialsTableViewCell.h */,
 				D0F0EB711B1E76CA0042BCFC /* CredentialsTableViewCell.m */,
+				D061BCDD1DB96CB000EC7B0A /* HotelTableViewCell.h */,
+				D061BCDE1DB96CB000EC7B0A /* HotelTableViewCell.m */,
 				D0F0EB6A1B1E76340042BCFC /* RoomInfoTableViewCell.h */,
 				D0F0EB6B1B1E76340042BCFC /* RoomInfoTableViewCell.m */,
 				D0F0EB671B1E6ED30042BCFC /* RoomImageTableViewCell.h */,
 				D0F0EB681B1E6ED30042BCFC /* RoomImageTableViewCell.m */,
-				D061BCDD1DB96CB000EC7B0A /* HotelTableViewCell.h */,
-				D061BCDE1DB96CB000EC7B0A /* HotelTableViewCell.m */,
-				4EBAD5BB1DD28B2F00748ABD /* Basic3LabelCell.h */,
-				4EBAD5BC1DD28B2F00748ABD /* Basic3LabelCell.m */,
 			);
 			name = "Table View Cells";
 			sourceTree = "<group>";
@@ -248,28 +245,26 @@
 		D0F0AD751AF87A17009F1AA3 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				D0F0EB761B1EB7110042BCFC /* MakeReservationTableViewController.h */,
-				D0F0EB771B1EB7110042BCFC /* MakeReservationTableViewController.m */,
-				D064CCB31B01150E00771D60 /* GuestCheckInViewController.h */,
-				D064CCB41B01150E00771D60 /* GuestCheckInViewController.m */,
-				D064CCB01B01121D00771D60 /* GuestReservationsTableViewController.h */,
-				D064CCB11B01121D00771D60 /* GuestReservationsTableViewController.m */,
-				D064CCAD1AFFF15400771D60 /* GuestServicesViewController.h */,
-				D064CCAE1AFFF15400771D60 /* GuestServicesViewController.m */,
-				D008B6D91AFD314300EAC22B /* RoomTableViewController.h */,
-				D008B6DA1AFD314300EAC22B /* RoomTableViewController.m */,
-				D008B6E31AFD728D00EAC22B /* LoadViewControllerTableViewController.h */,
-				D008B6E41AFD728D00EAC22B /* LoadViewControllerTableViewController.m */,
 				D008B6CF1AFBEA3200EAC22B /* AvailabilityTableViewController.h */,
 				D008B6D01AFBEA3200EAC22B /* AvailabilityTableViewController.m */,
-				D007EE5D1B169502000FE400 /* HotelManagerGraphicsKit.h */,
-				D007EE5E1B169502000FE400 /* HotelManagerGraphicsKit.m */,
 				D008B6C01AFBB9D900EAC22B /* DateViewController.h */,
 				D008B6C11AFBB9D900EAC22B /* DateViewController.m */,
-				D0F0AD721AF879FB009F1AA3 /* HotelViewController.h */,
-				D0F0AD731AF879FB009F1AA3 /* HotelViewController.m */,
+				D064CCB31B01150E00771D60 /* GuestCheckInViewController.h */,
+				D064CCB41B01150E00771D60 /* GuestCheckInViewController.m */,
 				4EBAD5B81DD283CD00748ABD /* GuestListTableViewController.h */,
 				4EBAD5B91DD283CD00748ABD /* GuestListTableViewController.m */,
+				D064CCAD1AFFF15400771D60 /* GuestServicesViewController.h */,
+				D064CCAE1AFFF15400771D60 /* GuestServicesViewController.m */,
+				D064CCB01B01121D00771D60 /* GuestReservationsTableViewController.h */,
+				D064CCB11B01121D00771D60 /* GuestReservationsTableViewController.m */,
+				D0F0AD721AF879FB009F1AA3 /* HotelViewController.h */,
+				D0F0AD731AF879FB009F1AA3 /* HotelViewController.m */,
+				D008B6E31AFD728D00EAC22B /* LoadViewControllerTableViewController.h */,
+				D008B6E41AFD728D00EAC22B /* LoadViewControllerTableViewController.m */,
+				D0F0EB761B1EB7110042BCFC /* MakeReservationTableViewController.h */,
+				D0F0EB771B1EB7110042BCFC /* MakeReservationTableViewController.m */,
+				D008B6D91AFD314300EAC22B /* RoomTableViewController.h */,
+				D008B6DA1AFD314300EAC22B /* RoomTableViewController.m */,
 			);
 			name = Controller;
 			path = HotelManagerRM.xcodeproj;
@@ -440,7 +435,6 @@
 				D0F0EB6C1B1E76340042BCFC /* RoomInfoTableViewCell.m in Sources */,
 				4EBAD5BA1DD283CD00748ABD /* GuestListTableViewController.m in Sources */,
 				D0A929121B2A178D00CC7715 /* CheckoutButtonTableViewCell.m in Sources */,
-				D007EE5F1B169502000FE400 /* HotelManagerGraphicsKit.m in Sources */,
 				D0F0AD711AF879EA009F1AA3 /* JSONParser.m in Sources */,
 				D0F0EB6F1B1E76940042BCFC /* CheckIn_OutTableViewCell.m in Sources */,
 				D064CCAF1AFFF15400771D60 /* GuestServicesViewController.m in Sources */,
