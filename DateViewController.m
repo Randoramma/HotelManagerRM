@@ -7,14 +7,15 @@
 //
 
 #import "DateViewController.h"
+#import "AppDelegate.h"
 #import "AvailabilityTableViewController.h"
 
 @interface DateViewController ()
 @property (strong, nonatomic) UIDatePicker *myFromDatePicker;
 @property (strong, nonatomic) UIDatePicker *myToDatePicker;
+@property (strong, nonatomic) AppDelegate *myAppDelegate;
 @property (strong, nonatomic) UILabel *myPickerToLabel;
 @property (strong, nonatomic) UILabel *myPickerFromLabel;
-@property (strong, nonatomic) NSDateFormatter *myDateFormatter;
 
 @end
 
@@ -32,7 +33,7 @@
   self.myFromDatePicker.backgroundColor = [UIColor blackColor];
   
   self.myToDatePicker = [[UIDatePicker alloc] init];
-  self.myToDatePicker.datePickerMode = UIDatePickerModeDate; 
+  self.myToDatePicker.datePickerMode = UIDatePickerModeDate;
   self.myToDatePicker.backgroundColor = [UIColor blackColor];
   
   [myRootView addSubview:self.myFromDatePicker];
@@ -101,6 +102,11 @@
 
   NSDate *endDate = self.myToDatePicker.date;
   NSDate *startDate = self.myFromDatePicker.date;
+  
+#if DEBUG 
+  NSLog(@"DVC: The Start date is %@", startDate);
+  NSLog(@"DVC: The End date is %@", endDate);
+#endif
 
   /*
    Set comparator where if the startDate is equal to or greater than the end date, the alert window is shown.  Else the user is allowed to proceed to the Availability VC.

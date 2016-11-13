@@ -20,7 +20,7 @@
 
 @interface AvailabilityTableViewController () <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
 @property (strong, nonatomic) NSFetchedResultsController *myFetchedResultsController;
-@property (strong, nonatomic) NSDateFormatter *myDateFormatter;
+@property (strong, nonatomic) AppDelegate *myAppDelegate; 
 @property (strong, nonatomic) CDPersistenceController *myPersistenceController;
 
 -(void)cellLayout:(Basic3LabelCell *)cell forRoom:(Room *)theRoom atIndexPath:(NSIndexPath *)indexPath;
@@ -137,10 +137,17 @@ CGFloat CELL_HEIGHT = 60.0;
 -(NSArray *) fetchReservationsBetween: (NSDate *)theStart to: (NSDate *)theEnd {
   
   
+//  let date = NSDate()
+//  let calendar = NSCalendar.currentCalendar(calendarIdentifier: NSGregorianCalendar)
+//  let dateAtStartOfDay = calendar.startOfDayForDate(date)
+//  endOfDay = NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: startOfDay, options: NSCalendarOptions())
+
+  NSCalendar *theCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+  NSDate *startDate = [theCalendar startOfDayForDate:theStart];
   
   // fetch all reservations occuring during the requested period.
   NSFetchRequest *bookedReservationFetchRequest = [NSFetchRequest fetchRequestWithEntityName:RESERVATION_ENTITY];
-  NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(startDate >= %@) AND (endDate <= %@)", theStart, theEnd];
+  NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(startDate >= %@) AND (endDate <= %@)", startDate, theEnd];
  // NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(date >= %@) AND (date <= %@)", startDate, endDate];
   bookedReservationFetchRequest.predicate = predicate;
   
