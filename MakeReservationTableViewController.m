@@ -75,8 +75,9 @@ typedef NS_ENUM(NSInteger, CellType){
 -(void)viewDidLoad {
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    
     self.title = @"Our Hotels";
+  
+  _myAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
     
     // registration of custom TVC's
@@ -179,8 +180,9 @@ typedef NS_ENUM(NSInteger, CellType){
                     self.myRoomDatesCell = [self.myRoomDatesCell initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomDatesCell"];
                 }
                 self.myRoomDatesCell.selectionStyle = UITableViewCellSelectionStyleNone;
-                self.myRoomDatesCell.fromDateLabel.text = @"From :";
-                self.myRoomDatesCell.toDateLabel.text = @"To :";
+              
+              self.myRoomDatesCell.fromDateLabel.text = [NSString stringWithFormat:@"From : "];
+                self.myRoomDatesCell.toDateLabel.text = [NSString stringWithFormat:@"To : "];
                 self.myRoomDatesCell.fromDate.text = [_myAppDelegate.myDateFormatter stringFromDate:self.myFromDate];
                 self.myRoomDatesCell.toDate.text = [_myAppDelegate.myDateFormatter stringFromDate:self.myToDate];
                 self.myRoomDatesCell.backgroundColor = [UIColor blackColor];

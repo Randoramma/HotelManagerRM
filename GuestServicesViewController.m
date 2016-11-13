@@ -32,7 +32,7 @@
 
 int TEXT_FIELD_HEIGHT = 18;
 int TEXT_FIELD_WIDTH = 225;
-long OFFSET_FOR_KEYBOARD = 80.0;
+long OFFSET_FOR_KEYBOARD = 00.0;
 
 
 /**
@@ -54,7 +54,7 @@ long OFFSET_FOR_KEYBOARD = 80.0;
   _myMetrics = @{@"TWS": topWelcomeSpace, @"BWS": bottomWelcomeSpace, @"SS": sideSpace};
   
   UIView *myRootView = [[UIView alloc] initWithFrame:frame];
-  myRootView.backgroundColor = [UIColor grayColor];
+  myRootView.backgroundColor = [UIColor blackColor];
   [myRootView setTranslatesAutoresizingMaskIntoConstraints:FALSE];
   self.view = myRootView;
   
