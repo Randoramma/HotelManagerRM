@@ -15,6 +15,7 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, atomic) CDPersistenceController *myPersistenceController;
+@property (strong, nonatomic) NSDateFormatter *myDateFormatter;
 // post SRP methods / properties
 @end
 
