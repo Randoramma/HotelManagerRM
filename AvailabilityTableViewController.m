@@ -20,9 +20,8 @@
 
 @interface AvailabilityTableViewController () <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
 @property (strong, nonatomic) NSFetchedResultsController *myFetchedResultsController;
-@property (strong, nonatomic) NSDateFormatter *myDateFormatter;
+@property (strong, nonatomic) AppDelegate *myAppDelegate; 
 @property (strong, nonatomic) CDPersistenceController *myPersistenceController;
-
 
 -(void)cellLayout:(Basic3LabelCell *)cell forRoom:(Room *)theRoom atIndexPath:(NSIndexPath *)indexPath;
 
@@ -38,18 +37,18 @@
 CGFloat CELL_HEIGHT = 60.0;
 
 -(void) loadView {
-    [super loadView];
-    self.tableView.backgroundColor = [UIColor blackColor];
-    self.tableView.tableFooterView = [[UIView alloc] init];
+  [super loadView];
+  self.tableView.backgroundColor = [UIColor blackColor];
+  self.tableView.tableFooterView = [[UIView alloc] init];
 }
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    self.title = @"Our available rooms";
-    [self.tableView registerClass:[Basic3LabelCell class]forCellReuseIdentifier:ROOM_CELL_ID];
-    [self setPersistenceControllerFromDelegate:nil];
-    
+  [super viewDidLoad];
+  
+  self.title = @"Our available rooms";
+  [self.tableView registerClass:[Basic3LabelCell class]forCellReuseIdentifier:ROOM_CELL_ID];
+  [self setPersistenceControllerFromDelegate:nil];
+  
 }
 
 #pragma mark - Table View Data Source
@@ -60,16 +59,16 @@ CGFloat CELL_HEIGHT = 60.0;
 #if DEBUG
   NSLog(@"AvailabilityTVC: The number of sections is %lu",theSections);
 #endif
-    return theSections;
+  return theSections;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    return CELL_HEIGHT;
+  
+  return CELL_HEIGHT;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
+  
   if ([[_myFetchedResultsController sections] count] > 0) {
     id <NSFetchedResultsSectionInfo> sectionInfo = [[_myFetchedResultsController sections] objectAtIndex:section];
 #if DEBUG
@@ -78,50 +77,50 @@ CGFloat CELL_HEIGHT = 60.0;
     return [sectionInfo numberOfObjects];
   } else
     return 0;
-
+  
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Basic3LabelCell * theCell = nil;
-    Room *theRoom = nil;
-    
-    theRoom = [[self myFetchedResultsController] objectAtIndexPath:indexPath];
-    if (theCell == nil) {
-        theCell = [[Basic3LabelCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                    reuseIdentifier:ROOM_CELL_ID];
-    }
-    
-    [self cellLayout:theCell forRoom:theRoom atIndexPath:indexPath];
-    theCell.backgroundColor = [UIColor blackColor];
-    return theCell;
-    
+  Basic3LabelCell * theCell = nil;
+  Room *theRoom = nil;
+  
+  theRoom = [[self myFetchedResultsController] objectAtIndexPath:indexPath];
+  if (theCell == nil) {
+    theCell = [[Basic3LabelCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                     reuseIdentifier:ROOM_CELL_ID];
+  }
+  
+  [self cellLayout:theCell forRoom:theRoom atIndexPath:indexPath];
+  theCell.backgroundColor = [UIColor blackColor];
+  return theCell;
+  
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // make a reservationVC.
+  // make a reservationVC.
+  
+  if (self.myFromDate != nil && self.myToDate != nil) {
+    MakeReservationTableViewController *theReservationVC = [[MakeReservationTableViewController alloc] init];
+    // pass the start date
+    theReservationVC.myFromDate = self.myFromDate;
+    // pass the end date
+    theReservationVC.myToDate = self.myToDate;
     
-    if (self.myFromDate != nil && self.myToDate != nil) {
-        MakeReservationTableViewController *theReservationVC = [[MakeReservationTableViewController alloc] init];
-        // pass the start date
-        theReservationVC.myFromDate = self.myFromDate;
-        // pass the end date
-        theReservationVC.myToDate = self.myToDate;
-        
-        Room * theRoom = [self.myFetchedResultsController  objectAtIndexPath:indexPath];
-        
-        // pass the NSManagedEntity Object IDs
-        theReservationVC.myRoomID = theRoom.objectID;
-        theReservationVC.myHotelID = theRoom.hotel.objectID;
-        
-#if DEBUG 
-        NSLog(@"AvailabilityTVC:  did select row at index room object = %@",theRoom);
-        NSLog(@"AvailabilityTVC:  did select row at index room ID = %@",theReservationVC.myRoomID);
-        NSLog(@"AvailabilityTVC:  did select row at index hotel ID = %@",theReservationVC.myHotelID);
+    Room * theRoom = [self.myFetchedResultsController  objectAtIndexPath:indexPath];
+    
+    // pass the NSManagedEntity Object IDs
+    theReservationVC.myRoomID = theRoom.objectID;
+    theReservationVC.myHotelID = theRoom.hotel.objectID;
+    
+#if DEBUG
+    NSLog(@"AvailabilityTVC:  did select row at index room object = %@",theRoom);
+    NSLog(@"AvailabilityTVC:  did select row at index room ID = %@",theReservationVC.myRoomID);
+    NSLog(@"AvailabilityTVC:  did select row at index hotel ID = %@",theReservationVC.myHotelID);
 #endif
-        // attempting to release the hotel rooms from memory so they can be picket up by the next MOC.
-        [self.navigationController pushViewController:theReservationVC animated:true];
-    }
+    // attempting to release the hotel rooms from memory so they can be picket up by the next MOC.
+    [self.navigationController pushViewController:theReservationVC animated:true];
+  }
 }
 
 
@@ -136,32 +135,43 @@ CGFloat CELL_HEIGHT = 60.0;
  *  @return List of reservations during requested time period.
  */
 -(NSArray *) fetchReservationsBetween: (NSDate *)theStart to: (NSDate *)theEnd {
-    
-    // fetch all reservations occuring during the requested period.
-    NSFetchRequest *bookedReservationFetchRequest = [NSFetchRequest fetchRequestWithEntityName:RESERVATION_ENTITY];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(startDate <= %@) AND (endDate >= %@)", theStart, theEnd];
-    bookedReservationFetchRequest.predicate = predicate;
-    
-    NSError *fetchError;
-    // as the FRC calls the setup fetch upon init the controller may not be initiailized yet.
-    // Check to see if it is and if not, initialize it prior to any fetching to ensure use of theMainMOC.
-    if ([self myPersistenceController].theMainMOC == nil) {
-        [self setPersistenceControllerFromDelegate:nil];
-    }
-    
-    NSManagedObjectContext *theContext = [[self myPersistenceController]  theMainMOC];
-    NSArray *reservationList = [theContext executeFetchRequest:bookedReservationFetchRequest
-                                                         error:&fetchError];
+  
+  
+//  let date = NSDate()
+//  let calendar = NSCalendar.currentCalendar(calendarIdentifier: NSGregorianCalendar)
+//  let dateAtStartOfDay = calendar.startOfDayForDate(date)
+//  endOfDay = NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: startOfDay, options: NSCalendarOptions())
+
+  NSCalendar *theCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+  NSDate *startDate = [theCalendar startOfDayForDate:theStart];
+  
+  // fetch all reservations occuring during the requested period.
+  NSFetchRequest *bookedReservationFetchRequest = [NSFetchRequest fetchRequestWithEntityName:RESERVATION_ENTITY];
+  NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(startDate >= %@) AND (endDate <= %@)", startDate, theEnd];
+ // NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(date >= %@) AND (date <= %@)", startDate, endDate];
+  bookedReservationFetchRequest.predicate = predicate;
+  
+  NSError *fetchError;
+  // as the FRC calls the setup fetch upon init the controller may not be initiailized yet.
+  // Check to see if it is and if not, initialize it prior to any fetching to ensure use of theMainMOC.
+  if ([self myPersistenceController].theMainMOC == nil) {
+    [self setPersistenceControllerFromDelegate:nil];
+  }
+  
+  NSManagedObjectContext *theContext = [[self myPersistenceController]  theMainMOC];
+  NSArray *reservationList = [theContext executeFetchRequest:bookedReservationFetchRequest
+                                                       error:&fetchError];
 #if DEBUG
-    NSLog(@"AvailabilityTVC: Fetch for reservations has been executed.");
-    NSLog(@"AvailabilityTVC: The MOC is %@.", theContext.description);
-    NSLog(@"AvailabilityTVC: The count of current reservations in this time period is: %lu", (unsigned long)reservationList.count);
+  NSLog(@"AvailabilityTVC: ThePredicate for this fetch is : %@", predicate.description);
+  NSLog(@"AvailabilityTVC: Fetch for reservations has been executed.");
+  NSLog(@"AvailabilityTVC: The MOC is %@.", theContext.description);
+  NSLog(@"AvailabilityTVC: The count of current reservations in this time period is: %lu", (unsigned long)reservationList.count);
 #endif
-    
-    if (fetchError) {
-        NSLog(@"%@", fetchError.localizedDescription);
-    }
-    return reservationList;
+  
+  if (fetchError) {
+    NSLog(@"%@", fetchError.localizedDescription);
+  }
+  return reservationList;
 }
 
 #pragma mark - NSFetchResultsController.
@@ -169,46 +179,46 @@ CGFloat CELL_HEIGHT = 60.0;
 {
   [NSFetchedResultsController deleteCacheWithName: FRC_AVAILABILITY_CACHE_NAME];
   if (_myFetchedResultsController) return _myFetchedResultsController;
-    
-    NSArray *reservationsForDates = [self fetchReservationsBetween:self.myFromDate to:self.myToDate];
-    NSMutableArray *bookedRooms = [[NSMutableArray alloc] init];
-    for (Reservation *reservation in reservationsForDates) {
-        [bookedRooms addObject:reservation.rooms];
-    }
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:ROOM_ENTITY];
-    [fetchRequest setFetchBatchSize:20];
-    
-    //TODO: How to set sort descriptor based on relationship between the hotels and rooms, not just on room number.
-    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc]
-                                                               initWithKey:FRC_ROOM_SORT_DESCRIPTOR_KEY
-                                                               ascending:YES]]];
-    
-    //  Any room that has a reservation between the dates will not be returned.
-    NSPredicate *mainPredicate = [NSPredicate predicateWithFormat:@"NOT self IN %@",  bookedRooms];
-    fetchRequest.predicate = mainPredicate;
-    
-    NSManagedObjectContext *moc = [self myPersistenceController].theMainMOC;
-    
+  
+  NSArray *reservationsForDates = [self fetchReservationsBetween:self.myFromDate to:self.myToDate];
+  NSMutableArray *bookedRooms = [[NSMutableArray alloc] init];
+  for (Reservation *reservation in reservationsForDates) {
+    [bookedRooms addObject:reservation.rooms];
+  }
+  NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:ROOM_ENTITY];
+  [fetchRequest setFetchBatchSize:20];
+  
+  //TODO: How to set sort descriptor based on relationship between the hotels and rooms, not just on room number.
+  [fetchRequest setSortDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc]
+                                                             initWithKey:FRC_ROOM_SORT_DESCRIPTOR_KEY
+                                                             ascending:YES]]];
+  
+  //  Any room that has a reservation between the dates will not be returned.
+  NSPredicate *mainPredicate = [NSPredicate predicateWithFormat:@"NOT self IN %@",  bookedRooms];
+  fetchRequest.predicate = mainPredicate;
+  
+  NSManagedObjectContext *moc = [self myPersistenceController].theMainMOC;
+  
 #if DEBUG
-    NSLog(@"AvailabilityTVC:  NS-FRC moc = %@", moc.description);
-    NSLog(@"AvailabilityTVC:  NS-FRC fetchRequest = %@", fetchRequest.description);
+  NSLog(@"AvailabilityTVC:  NS-FRC moc = %@", moc.description);
+  NSLog(@"AvailabilityTVC:  NS-FRC fetchRequest = %@", fetchRequest.description);
 #endif
-    _myFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
-                                                                      managedObjectContext:moc
-                                                                        sectionNameKeyPath:nil
-                                                                                 cacheName:FRC_AVAILABILITY_CACHE_NAME];
-    [_myFetchedResultsController setDelegate:self];
-    
-    NSError *error = nil;
-    NSAssert([_myFetchedResultsController performFetch:&error], @"Unresolved error %@\n%@", [error localizedDescription], [error userInfo]);
+  _myFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+                                                                    managedObjectContext:moc
+                                                                      sectionNameKeyPath:nil
+                                                                               cacheName:FRC_AVAILABILITY_CACHE_NAME];
+  [_myFetchedResultsController setDelegate:self];
   
- 
-#if DEBUG 
+  NSError *error = nil;
+  NSAssert([_myFetchedResultsController performFetch:&error], @"Unresolved error %@\n%@", [error localizedDescription], [error userInfo]);
   
-    NSLog(@"AvailabilityTVC: The number of rooms fetched is %lu", [moc countForFetchRequest:fetchRequest  error:&error]);
+  
+#if DEBUG
+  
+  NSLog(@"AvailabilityTVC: The number of rooms fetched is %lu", [moc countForFetchRequest:fetchRequest  error:&error]);
 #endif
-    
-    return _myFetchedResultsController;
+  
+  return _myFetchedResultsController;
 }
 
 
@@ -222,13 +232,13 @@ CGFloat CELL_HEIGHT = 60.0;
  *  @return the app delegate containing the myPersistenceController property.
  */
 -(AppDelegate *) setAppDelegate: (AppDelegate *)theAppDelegate {
-    
-    if (theAppDelegate == nil) {
-        UIApplication *app = [UIApplication sharedApplication];
-        return (AppDelegate *)[app delegate];
-    } else {
-        return theAppDelegate;
-    }
+  
+  if (theAppDelegate == nil) {
+    UIApplication *app = [UIApplication sharedApplication];
+    return (AppDelegate *)[app delegate];
+  } else {
+    return theAppDelegate;
+  }
 }
 
 /**
@@ -237,11 +247,11 @@ CGFloat CELL_HEIGHT = 60.0;
  *  @param theAppDelegate either the application app delegate or a stub.
  */
 -(void) setPersistenceControllerFromDelegate: (AppDelegate *)theAppDelegate {
-    
-    if (self.myPersistenceController == nil) {
-        self.myPersistenceController = [self setAppDelegate:theAppDelegate].myPersistenceController;
-    }
-    
+  
+  if (self.myPersistenceController == nil) {
+    self.myPersistenceController = [self setAppDelegate:theAppDelegate].myPersistenceController;
+  }
+  
 }
 
 
@@ -251,19 +261,19 @@ CGFloat CELL_HEIGHT = 60.0;
  *
  *  @param cell      the relevent cell to setup.
  *  @param theRoom   the Room based on the array of objects within the FRC.
- *  @param indexPath The index within the TV.  
+ *  @param indexPath The index within the TV.
  */
 -(void)cellLayout:(Basic3LabelCell *)cell forRoom:(Room *)theRoom atIndexPath:(NSIndexPath *)indexPath {
-    
-    cell.leftLabel.text = [NSString stringWithFormat:@"Room #%@",theRoom.number];
-    cell.topRightLabel.text = [NSString stringWithFormat:@"$%@ / night",theRoom.rate];
-    cell.bottomRightLabel.text = [NSString stringWithFormat:@"# of Beds is %@", theRoom.beds];
-    
+  
+  cell.leftLabel.text = [NSString stringWithFormat:@"Room #%@",theRoom.number];
+  cell.topRightLabel.text = [NSString stringWithFormat:@"$%@ / night",theRoom.rate];
+  cell.bottomRightLabel.text = [NSString stringWithFormat:@"# of Beds is %@", theRoom.beds];
+  
 }
 
 - (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+  [super didReceiveMemoryWarning];
+  // Dispose of any resources that can be recreated.
 }
 
 @end

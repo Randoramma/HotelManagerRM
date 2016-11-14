@@ -19,18 +19,6 @@
 
 @implementation HotelService
 
-//+(HotelService *)sharedInstance
-//{
-//    static HotelService * sharedInstance;
-//    static dispatch_once_t onceToken;
-//    dispatch_once(&onceToken, ^{
-//        sharedInstance = [[self alloc] init];
-//
-//    });
-//
-//    return sharedInstance;
-//}//eom
-
 -(instancetype) init {
     
     if ( self = [super init]) {

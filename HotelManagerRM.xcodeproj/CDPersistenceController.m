@@ -116,7 +116,6 @@ typedef NS_ENUM(NSUInteger, CDPError) {
     NSManagedObjectContext *theWriteContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
     [theWriteContext setParentContext:_theMainMOC];
     
-    __block NSError *saveError;
 #if DEBUG
  long theCount = [theWriteContext registeredObjects].count;
   NSLog(@"The number of objects within the writeContext is %ld", theCount);

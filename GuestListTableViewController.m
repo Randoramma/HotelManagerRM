@@ -14,6 +14,7 @@
 #import "CDPersistenceController.h"
 #import "Guest+CoreDataProperties.h"
 #import "GuestListTableViewController.h"
+#import "GuestReservationsTableViewController.h"
 
 
 /**
@@ -31,65 +32,75 @@ NSString * MY_TABLE_VIEW_CELL = @"GuestListTableCellReuseIdentifier";
 
 #pragma mark - TVC lifecycle methods.
 -(void) loadView {
-    [super loadView];
-    [self tableView].backgroundColor = [UIColor blackColor];
-    
+  [super loadView];
+  [self tableView].backgroundColor = [UIColor blackColor];
+  
 }
 
-
 -(void) viewDidLoad {
-    [super viewDidLoad];
-    
-    NSString * vcTitle = [NSString stringWithFormat:@"Guests matching %@ : %@", self.myGuestFirstName, self.myGuestLastName];
-    [self setTitle: vcTitle];
-    [[self tableView] registerClass:[Basic3LabelCell class] forCellReuseIdentifier:MY_TABLE_VIEW_CELL];
-    [self setPersistenceControllerFromDelegate: nil];
+  [super viewDidLoad];
+  
+  NSString * vcTitle = [NSString stringWithFormat:@"Guests matching %@ : %@", self.myGuestFirstName, self.myGuestLastName];
+  [self setTitle: vcTitle];
+  [[self tableView] registerClass:[Basic3LabelCell class] forCellReuseIdentifier:MY_TABLE_VIEW_CELL];
+  [self setPersistenceControllerFromDelegate: nil];
 }
 
 #pragma mark - Table View Data Source
 
 -(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
-    NSInteger theSections = [[[self myFetchController] sections] count];
-    
+  NSInteger theSections = [[[self myFetchController] sections] count];
+  
 #if DEBUG
-    NSLog(@"GuestListTVC: The number of sections is %lu",theSections);
+  NSLog(@"GuestListTVC: The number of sections is %lu",theSections);
 #endif
-    
-    return theSections;
+  return theSections;
 }
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return GUEST_CELL_HEIGHT; 
+  return GUEST_CELL_HEIGHT;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
-    if ([[[self myFetchController] sections] count] > 0) {
-        id <NSFetchedResultsSectionInfo> sectionInfo = [[[self myFetchController] sections] objectAtIndex:section];
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+  
+  if ([[[self myFetchController] sections] count] > 0) {
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[[self myFetchController] sections] objectAtIndex:section];
 #if DEBUG
-        NSLog(@"AvailabilityTVC: The number of rows is %lu",[sectionInfo numberOfObjects]);
+    NSLog(@"AvailabilityTVC: The number of rows is %lu",[sectionInfo numberOfObjects]);
 #endif
-        return [sectionInfo numberOfObjects];
-    } else
-        return 0;
-    
+    return [sectionInfo numberOfObjects];
+  } else
+    return 0;
+  
 }
 
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+  Basic3LabelCell * theCell = nil;
+  Guest *theGuest = nil;
+  
+  theGuest = [[self myFetchController] objectAtIndexPath:indexPath];
+  if (theCell == nil) {
+    theCell = [[Basic3LabelCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                     reuseIdentifier:MY_TABLE_VIEW_CELL];
+  }
+  
+  [self cellLayout:theCell forGuest:theGuest atIndexPath:indexPath];
+  theCell.backgroundColor = [UIColor blackColor];
+  return theCell;
+  
+}
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Basic3LabelCell * theCell = nil;
-    Guest *theGuest = nil;
-    
-    theGuest = [[self myFetchController] objectAtIndexPath:indexPath];
-    if (theCell == nil) {
-        theCell = [[Basic3LabelCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                    reuseIdentifier:MY_TABLE_VIEW_CELL];
-    }
-    
-    [self cellLayout:theCell forGuest:theGuest atIndexPath:indexPath];
-    theCell.backgroundColor = [UIColor blackColor];
-    return theCell;
-    
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+  
+  Guest *theGuest = nil;
+  theGuest = [[self myFetchController] objectAtIndexPath:indexPath];
+  // generate the next VC
+  GuestReservationsTableViewController *GRTVC = [[GuestReservationsTableViewController alloc] initWithStyle:UITableViewStylePlain];
+  
+  // pass the object id for this guest to the next vc
+  GRTVC.fromGuest = theGuest;
+  [[self navigationController] pushViewController:GRTVC animated:TRUE];
+
 }
 
 #pragma mark - Cell Layout
@@ -101,52 +112,51 @@ NSString * MY_TABLE_VIEW_CELL = @"GuestListTableCellReuseIdentifier";
  *  @param indexPath The index within the TV.
  */
 -(void)cellLayout:(Basic3LabelCell *)cell forGuest:(Guest *)theGuest atIndexPath:(NSIndexPath *)indexPath {
-    
-    cell.leftLabel.text = [NSString stringWithFormat:@"Name: %@ %@",theGuest.firstName, theGuest.lastName];
-    cell.topRightLabel.text = [NSString stringWithFormat:@"Reservations"];
-    cell.bottomRightLabel.text = [NSString stringWithFormat:@"%lu", theGuest.reservations.count];
-    
+  
+  cell.leftLabel.text = [NSString stringWithFormat:@"Name: %@ %@",theGuest.firstName, theGuest.lastName];
+  cell.topRightLabel.text = [NSString stringWithFormat:@"Reservations"];
+  cell.bottomRightLabel.text = [NSString stringWithFormat:@"%lu", theGuest.reservations.count];
+  
 }
 
-
 #pragma mark - NSFetchResultsController.
-- (NSFetchedResultsController *)myFetchController
-{
-    [NSFetchedResultsController deleteCacheWithName: FRC_GUEST_LIST_CACHE_NAME];
-    if (_myFetchController) return _myFetchController;
-    
-    
-//    NSFetchRequest *guestListFetch = [[NSFetchRequest alloc]fetchRequestWithEntityName:GUEST_ENTITY];
-    NSFetchRequest *guestListFetch = [[NSFetchRequest alloc] initWithEntityName:GUEST_ENTITY];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(firstName == %@) OR (lastName == %@)", self.myGuestFirstName, self.myGuestLastName];
-    [guestListFetch setPredicate:predicate];
-    
-    [guestListFetch setSortDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc]
+- (NSFetchedResultsController *)myFetchController {
+  [NSFetchedResultsController deleteCacheWithName: FRC_GUEST_LIST_CACHE_NAME];
+  if (_myFetchController) return _myFetchController;
+  
+  
+  //    NSFetchRequest *guestListFetch = [[NSFetchRequest alloc]fetchRequestWithEntityName:GUEST_ENTITY];
+  NSFetchRequest *guestListFetch = [[NSFetchRequest alloc] initWithEntityName:GUEST_ENTITY];
+  NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(firstName == %@) OR (lastName == %@)", self.myGuestFirstName, self.myGuestLastName];
+  [guestListFetch setPredicate:predicate];
+  
+  [guestListFetch setSortDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc]
                                                                initWithKey:FRC_GUEST_SORT_DESCRIPTOR_KEY
                                                                ascending:YES]]];
-    
-    NSManagedObjectContext *moc = [self myPersistenceController].theMainMOC;
+  
+  NSManagedObjectContext *moc = [self myPersistenceController].theMainMOC;
 #if DEBUG
-    NSLog(@"GuestListTVC:  NS-FRC moc = %@", moc.description);
-    NSLog(@"GuestListTVC:  NS-FRC fetchRequest = %@", guestListFetch.description);
+  NSLog(@"GuestListTVC:  NS-FRC moc = %@", moc.description);
+  NSLog(@"GuestListTVC:  NS-FRC fetchRequest = %@", guestListFetch.description);
 #endif
-    _myFetchController = [[NSFetchedResultsController alloc] initWithFetchRequest:guestListFetch
-                                                                 managedObjectContext:moc
-                                                                   sectionNameKeyPath:nil
-                                                                            cacheName:FRC_AVAILABILITY_CACHE_NAME];
-    
-
-    [_myFetchController setDelegate:self];
-    NSError *error = nil;
-    NSAssert([self.myFetchController performFetch:&error], @"Unresolved error %@\n%@", [error localizedDescription], [error userInfo]);
-    
-    
+  _myFetchController = [[NSFetchedResultsController alloc] initWithFetchRequest:guestListFetch
+                                                           managedObjectContext:moc
+                                                             sectionNameKeyPath:nil
+                                                                      cacheName:FRC_AVAILABILITY_CACHE_NAME];
+  
+  
+  [_myFetchController setDelegate:self];
+  NSError *error = nil;
+  NSAssert([self.myFetchController performFetch:&error], @"Unresolved error %@\n%@", [error localizedDescription], [error userInfo]);
+  
+  
 #if DEBUG
-    
-    NSLog(@"AvailabilityTVC: The number of rooms fetched is %lu", [moc countForFetchRequest:guestListFetch  error:&error]);
+  
+  NSLog(@"AvailabilityTVC: The number of rooms fetched is %lu", [moc countForFetchRequest:guestListFetch
+                                                                                    error:&error]);
 #endif
-    
-    return _myFetchController;
+  
+  return _myFetchController;
 }
 
 #pragma mark - Custom Method Injection Setter.
@@ -158,13 +168,13 @@ NSString * MY_TABLE_VIEW_CELL = @"GuestListTableCellReuseIdentifier";
  *  @return the app delegate containing the myPersistenceController property.
  */
 -(AppDelegate *) setAppDelegate: (AppDelegate *)theAppDelegate {
-    
-    if (theAppDelegate == nil) {
-        UIApplication *app = [UIApplication sharedApplication];
-        return (AppDelegate *)[app delegate];
-    } else {
-        return theAppDelegate;
-    }
+  
+  if (theAppDelegate == nil) {
+    UIApplication *app = [UIApplication sharedApplication];
+    return (AppDelegate *)[app delegate];
+  } else {
+    return theAppDelegate;
+  }
 }
 
 /**
@@ -173,11 +183,11 @@ NSString * MY_TABLE_VIEW_CELL = @"GuestListTableCellReuseIdentifier";
  *  @param theAppDelegate either the application app delegate or a stub.
  */
 -(void) setPersistenceControllerFromDelegate: (AppDelegate *)theAppDelegate {
-    
-    if (self.myPersistenceController == nil) {
-        self.myPersistenceController = [self setAppDelegate:theAppDelegate].myPersistenceController;
-    }
-    
+  
+  if (self.myPersistenceController == nil) {
+    self.myPersistenceController = [self setAppDelegate:theAppDelegate].myPersistenceController;
+  }
+  
 }
 
 

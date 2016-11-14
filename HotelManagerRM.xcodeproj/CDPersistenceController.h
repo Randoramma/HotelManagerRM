@@ -14,11 +14,9 @@ typedef void (^CDPersistenceControllerCallbackBlock)(BOOL succeeded, NSError *er
 @interface CDPersistenceController : NSObject
 
 /**
- Main MOC only source that interacts with the PSC.
+ Main MOC only source that interacts with the PSC and the main app client.
  */
 @property (strong, readonly) NSManagedObjectContext *theMainMOC;
-
-
 - (instancetype)initWithCompletion:(CDPersistenceControllerCallbackBlock)returnBlock;
 - (void) initializeCoreDataWithCompletion: (CDPersistenceControllerCallbackBlock)returnblock;
 - (void) saveDataWithReturnBlock:(CDPersistenceControllerCallbackBlock)returnBlock;

@@ -21,7 +21,6 @@
 
 
 @interface MakeReservationTableViewController () <NSFetchedResultsControllerDelegate, UITextFieldDelegate>
-//@property (strong, nonatomic) NSFetchedResultsController *fetchResultsController;
 //instantiate the tableview cells
 @property (strong, nonatomic) RoomImageTableViewCell *myRoomImageCell;
 @property (strong, nonatomic) RoomInfoTableViewCell *myRoomInfoCell;
@@ -33,6 +32,7 @@
 @property (strong, nonatomic) UIImage *myImage;
 @property (strong, nonatomic) Room *myRoom;
 @property (strong, nonatomic) CDPersistenceController *myPersistenceController;
+@property (strong, nonatomic) AppDelegate *myAppDelegate;
 
 @end
 
@@ -75,8 +75,9 @@ typedef NS_ENUM(NSInteger, CellType){
 -(void)viewDidLoad {
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    
     self.title = @"Our Hotels";
+  
+  _myAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
     
     // registration of custom TVC's
@@ -179,12 +180,11 @@ typedef NS_ENUM(NSInteger, CellType){
                     self.myRoomDatesCell = [self.myRoomDatesCell initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomDatesCell"];
                 }
                 self.myRoomDatesCell.selectionStyle = UITableViewCellSelectionStyleNone;
-                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-                dateFormatter.dateFormat = @"EEEE, MMMM dd";
-                self.myRoomDatesCell.fromDateLabel.text = @"From :";
-                self.myRoomDatesCell.toDateLabel.text = @"To :";
-                self.myRoomDatesCell.fromDate.text = [dateFormatter stringFromDate:self.myFromDate];
-                self.myRoomDatesCell.toDate.text = [dateFormatter stringFromDate:self.myToDate];
+              
+              self.myRoomDatesCell.fromDateLabel.text = [NSString stringWithFormat:@"From : "];
+                self.myRoomDatesCell.toDateLabel.text = [NSString stringWithFormat:@"To : "];
+                self.myRoomDatesCell.fromDate.text = [_myAppDelegate.myDateFormatter stringFromDate:self.myFromDate];
+                self.myRoomDatesCell.toDate.text = [_myAppDelegate.myDateFormatter stringFromDate:self.myToDate];
                 self.myRoomDatesCell.backgroundColor = [UIColor blackColor];
                 return self.myRoomDatesCell;
                 break;
