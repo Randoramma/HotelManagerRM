@@ -115,8 +115,6 @@ long OFFSET_FOR_KEYBOARD = 00.0;
   self.myLastNameLabel.text = @"Please enter your last name.";
   
   // set textfield delegates
-  [self.myFirstNameField setPlaceholder:@"enter first name here."];
-  [self.myFirstNameField setPlaceholder:@"enter last name here."];
   self.myFirstNameField.delegate = self;
   self.myLastNameField.delegate = self;
   
@@ -232,10 +230,7 @@ long OFFSET_FOR_KEYBOARD = 00.0;
 
 #pragma mark - Layout Constraints
 -(void) addConstraintsToRootView: (UIView *)rootView forViews:(NSDictionary *)views {
-  //myGuestIntro constraints.
-  //  NSLayoutConstraint *fromGuestIntroX = [NSLayoutConstraint constraintWithItem:self.myGuestIntro attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:rootView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
-  //
-  
+
   NSArray *fromGuestIntroX = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-SS-[_myGuestIntro]-SS-|" options:0 metrics:_myMetrics views:views];
   
   NSArray *buttonX = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-SS-[_myButton]-SS-|" options:0 metrics:_myMetrics views:views];
@@ -247,19 +242,6 @@ long OFFSET_FOR_KEYBOARD = 00.0;
   NSArray *firstNameFieldX = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-SS-[_myFirstNameField]-SS-|" options:0 metrics:_myMetrics views:views];
   
   NSArray *lastNameFieldX = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-SS-[_myLastNameField]-SS-|" options:0 metrics:_myMetrics views:views];
-  
-  
-  //  NSLayoutConstraint *buttonX =  [NSLayoutConstraint constraintWithItem:(self.myButton) attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:rootView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
-  //
-  //  NSLayoutConstraint *firstNameLabelX =  [NSLayoutConstraint constraintWithItem:(self.myFirstNameLabel) attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:rootView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
-  //
-  //  NSLayoutConstraint *lastNameLabelX =  [NSLayoutConstraint constraintWithItem:(self.myLastNameLabel) attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:rootView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
-  //
-  //  NSLayoutConstraint *firstNameFieldX =  [NSLayoutConstraint constraintWithItem:(self.myFirstNameField) attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:rootView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
-  //
-  //  NSLayoutConstraint *lastNameFieldX =  [NSLayoutConstraint constraintWithItem:(self.myLastNameField) attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:rootView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
-  //
-  
   
   [rootView addConstraints:fromGuestIntroX];
   [rootView addConstraints:buttonX];
@@ -339,15 +321,6 @@ long OFFSET_FOR_KEYBOARD = 00.0;
     [self presentViewController:alertController animated:YES completion:nil];
   }
 }
-
-
-
-#pragma mark - Core Data Fetches
-
-
-
-
-
 
 #pragma mark - Navigation
 
