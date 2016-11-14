@@ -30,9 +30,6 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  // Uncomment the following line to preserve selection between presentations.
-  // self.clearsSelectionOnViewWillAppear = NO;
-  
   // instantiate options menu
   _myTitle = @"Hotel Manager";
   _myOptions = @[@"Hotel List", @"Available Rooms", @"Customer Reservations"];
