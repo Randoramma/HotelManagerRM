@@ -26,5 +26,5 @@ typedef void (^CDPersistenceControllerCallbackBlock)(BOOL succeeded, NSError *er
             withGuestFirstName:(NSString *)theFirstName
               andGuestLastName:(NSString *)theLastName
                 andReturnBlock: (CDPersistenceControllerCallbackBlock)returnblock;
-
+-(void) removeReservationWithStartDate: (NSDate *)startDate endDate: (NSDate *)endDate andRoom:(NSManagedObjectID *)room;
 @end

@@ -62,6 +62,8 @@ typedef NS_ENUM(NSUInteger, CDPError) {
     return self = [super init];;
 }
 
+
+
 -(void) seedWithJSONWithCompletion: (void (^) (void))completionHandler {
     
     NSFetchRequest *jsonDataFetch = [[NSFetchRequest alloc] initWithEntityName:HOTEL_ENTITY];
@@ -204,6 +206,29 @@ typedef NS_ENUM(NSUInteger, CDPError) {
         });
     }];
 }
+
+//Not Tested Yet.
+-(void) removeReservationWithStartDate: (NSDate *)startDate endDate: (NSDate *)endDate andRoom:(NSManagedObjectID *)room {
+    NSManagedObjectContext *theWriteContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+    [theWriteContext setParentContext:_theMainMOC];
+    
+    [theWriteContext performBlock:^{
+        NSError *theError;
+        NSFetchRequest *deleteFetch = [[NSFetchRequest alloc] init];
+        deleteFetch.entity = [NSEntityDescription entityForName:RESERVATION_ENTITY inManagedObjectContext:theWriteContext];
+        deleteFetch.predicate = [NSPredicate predicateWithFormat:@"startDate = %@, endDate = %@, rooms = %@", startDate, endDate, room];
+        NSArray *removalArray = [theWriteContext executeFetchRequest:deleteFetch error:&theError];
+        
+        for (Reservation *entity in removalArray) {
+            [theWriteContext deleteObject:entity];
+#if DEBUG
+            NSLog(@"Reservation entity deleted = %@.", entity);
+#endif
+        }
+        [theWriteContext save:&theError];
+    }];
+}
+
 
 /**
  Initialize the core data stack.  If it already exists return the main MOC.  theMainMOC is the point of contact for the rest of the app and will be interacted with via the main thread.  It (theMainMOC) has a private context which will be the only source of interaction with the PSC to prevent race conditions and concurrency violations.

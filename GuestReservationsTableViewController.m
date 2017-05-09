@@ -99,6 +99,28 @@ NSString *GRTVC_CACHE_NAME = @"TheGuestReservationCacheName";
   
 }
 
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        // Delete the row from the data source
+        Reservation * theReservation = nil;
+        theReservation = [[self myFetchedResultsController] objectAtIndexPath:indexPath];
+        [[self myPersistenceController] removeReservationWithStartDate:theReservation.startDate endDate:theReservation.endDate andRoom:theReservation.rooms.objectID];
+    }
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)aTableView  editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.editing)
+    {
+        return UITableViewCellEditingStyleDelete; //enable when editing mode is on
+    }
+    
+    return UITableViewCellEditingStyleNone;
+}
+
+
+
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
   // Dispose of any resources that can be recreated.
@@ -143,6 +165,29 @@ NSString *GRTVC_CACHE_NAME = @"TheGuestReservationCacheName";
 #endif
   
   return _myFetchedResultsController;
+}
+
+- (void) controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
+    UITableView *tableView = self.tableView;
+    
+    switch (type) {
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController*)controller
+{
+    [[self tableView] endUpdates];
+}
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController*)controller
+{
+    [[self tableView] beginUpdates];
 }
 
 

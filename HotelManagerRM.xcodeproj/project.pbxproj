@@ -366,7 +366,7 @@
 				TargetAttributes = {
 					D0EEF5861AF809DA0061905D = {
 						CreatedOnToolsVersion = 6.3;
-						DevelopmentTeam = QWRJC78833;
+						DevelopmentTeam = X7R6377LMS;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.iCloud = {
@@ -596,7 +596,7 @@
 				CODE_SIGN_ENTITLEMENTS = HotelManagerRM/HotelManagerRM.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = QWRJC78833;
+				DEVELOPMENT_TEAM = X7R6377LMS;
 				INFOPLIST_FILE = HotelManagerRM/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.RandyMcLain.HotelManager;
@@ -613,7 +613,7 @@
 				CODE_SIGN_ENTITLEMENTS = HotelManagerRM/HotelManagerRM.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = QWRJC78833;
+				DEVELOPMENT_TEAM = X7R6377LMS;
 				INFOPLIST_FILE = HotelManagerRM/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.RandyMcLain.HotelManager;
